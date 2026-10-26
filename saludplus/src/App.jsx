@@ -1,122 +1,118 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
+import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 
+const seedPatients = [
+  { id: 'A-104', arrived: '08:42', priority: 'Normal', status: 'Esperando' },
+  { id: 'A-105', arrived: '08:50', priority: 'Normal', status: 'Esperando' },
+  { id: 'A-107', arrived: '09:10', priority: 'Normal', status: 'Esperando' },
+  { id: 'A-110', arrived: '09:12', priority: 'Prioridad', status: 'Esperando' },
+  { id: 'A-112', arrived: '09:15', priority: 'Normal', status: 'Esperando' },
+  { id: 'A-115', arrived: '09:18', priority: 'Normal', status: 'Esperando' },
+]
+
+const navItems = [
+  { id: 'queue', label: 'Cola de espera', icon: 'queue' },
+  { id: 'waiting-room', label: 'Sala de espera', icon: 'display' },
+]
+
+function Icon({ name, size = 20 }) {
+  const common = { width: size, height: size, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true }
+  const paths = {
+    queue: <><path d="M4 5h16M4 10h16M4 15h10M4 20h7" /><circle cx="18" cy="17" r="3" /></>,
+    display: <><rect x="3" y="4" width="18" height="13" rx="2" /><path d="M8 21h8M12 17v4" /></>,
+    clock: <><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></>,
+    people: <><circle cx="9" cy="8" r="3" /><path d="M3 20v-1a6 6 0 0 1 12 0v1M17 5a3 3 0 0 1 0 6M18 14a5 5 0 0 1 3 5v1" /></>,
+    calendar: <><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M16 3v4M8 3v4M3 10h18" /></>,
+    chevron: <path d="m9 18 6-6-6-6" />,
+    arrow: <><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></>,
+    bell: <><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" /></>,
+    brand: <><path d="M10 2h4v8h8v4h-8v8h-4v-8H2v-4h8z" /></>,
+    refresh: <><path d="M20 7v5h-5M4 17v-5h5" /><path d="M5.5 9A7 7 0 0 1 17 5l3 2M4 17l3 2a7 7 0 0 0 11.5-4" /></>,
+    info: <><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 8h.01" /></>,
+    check: <path d="m5 12 4 4L19 6" />,
+  }
+  return <svg {...common}>{paths[name]}</svg>
+}
+
+function LocalClock() {
+  const [now, setNow] = useState(() => new Date())
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(new Date()), 30_000)
+    return () => window.clearInterval(timer)
+  }, [])
+  return <div className="clock-block" aria-label={`Hora local ${now.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })}`}>
+    <Icon name="clock" size={22} />
+    <div><strong>{now.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })}</strong><span>{now.toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' })}</span></div>
+  </div>
+}
+
+function Brand() {
+  return <div className="brand"><span className="brand-mark"><Icon name="brand" size={24} /></span><span><strong>SaludPlus</strong><small>Obra Social</small></span></div>
+}
+
+function QueueTable({ patients }) {
+  if (!patients.length) return <div className="empty-state"><span className="state-icon"><Icon name="people" size={27} /></span><h3>No hay pacientes en espera</h3><p>Cuando se registren nuevas llegadas, aparecerán en esta lista.</p></div>
+  return <div className="table-wrap"><table><thead><tr><th scope="col">N.º de turno</th><th scope="col">Hora de llegada</th><th scope="col">Prioridad</th><th scope="col">Estado</th></tr></thead><tbody>
+    {patients.map((patient) => <tr key={patient.id}><td><span className="ticket-number">{patient.id}</span></td><td>{patient.arrived}</td><td><span className={`priority ${patient.priority === 'Prioridad' ? 'priority-high' : ''}`}>{patient.priority === 'Prioridad' && <span className="priority-dot" />}{patient.priority}</span></td><td><span className="status"><span />{patient.status}</span></td></tr>)}
+  </tbody></table></div>
+}
+
+function QueuePage({ patients, setScenario, loading, error }) {
+  const waiting = patients.filter((patient) => patient.status === 'Esperando')
+  return <>
+    <header className="page-heading"><div><div className="eyebrow">CENTRO MÉDICO · CENTRO CAPITAL</div><h1>Cola de espera</h1><p>Seguimiento de pacientes para el consultorio asignado.</p></div><LocalClock /></header>
+    <section className="context-bar" aria-label="Consultorio actual"><div className="context-item"><span className="context-label">Consultorio</span><strong>3</strong></div><span className="context-divider" /><div className="context-item"><span className="context-label">Especialidad</span><strong>Cardiología</strong></div><span className="live-indicator"><span />Demo con datos ficticios</span></section>
+    <section className="stat-grid" aria-label="Resumen de la cola">
+      <article className="stat-card"><span className="stat-icon"><Icon name="people" /></span><div><strong>{waiting.length}</strong><span>En espera</span></div></article>
+      <article className="stat-card"><span className="stat-icon"><Icon name="clock" /></span><div><strong>12 min</strong><span>Espera promedio</span></div></article>
+      <article className="stat-card"><span className="stat-icon"><Icon name="calendar" /></span><div><strong>09:00–13:00</strong><span>Horario del consultorio</span></div></article>
+    </section>
+    <section className="panel queue-panel">
+      <div className="panel-heading"><div><h2>Pacientes en espera</h2><p>Ordenados por prioridad y hora de llegada</p></div><span className="count-badge">{waiting.length} pacientes</span></div>
+      {loading ? <div className="loading-state" role="status"><span className="spinner" /><span>Cargando la cola…</span></div> : error ? <div className="empty-state error-state" role="alert"><span className="state-icon"><Icon name="info" size={27} /></span><h3>No pudimos cargar la cola</h3><p>Revisá la conexión e intentá actualizar nuevamente.</p><button className="retry-button" type="button" onClick={() => setScenario('data')}><Icon name="refresh" size={15} />Reintentar</button></div> : <QueueTable patients={waiting} />}
+      {!loading && <div className="call-area"><div className="call-note"><Icon name="info" size={18} /><span>El llamado se habilitará en la siguiente etapa.</span></div><button className="primary-button" type="button" disabled title="Disponible en la próxima etapa"><Icon name="bell" />Llamar al siguiente<Icon name="arrow" size={18} /></button></div>}
+    </section>
+    <section className="demo-tools" aria-label="Controles de demostración"><span>Estados de demo</span><button type="button" onClick={() => setScenario('data')}>Con datos</button><button type="button" onClick={() => setScenario('empty')}>Cola vacía</button><button type="button" onClick={() => setScenario('error')}>Simular error</button></section>
+  </>
+}
+
+function WaitingRoomPage({ patients }) {
+  const waiting = patients.filter((patient) => patient.status === 'Esperando')
+  return <>
+    <header className="page-heading"><div><div className="eyebrow">CENTRO MÉDICO · CENTRO CAPITAL</div><h1>Sala de espera</h1><p>Información clara para orientar a las personas que esperan.</p></div><LocalClock /></header>
+    <section className="public-screen" aria-label="Pantalla pública de turnos">
+      <div className="public-call"><div className="public-kicker"><span className="public-pulse" />LLAMADO ACTUAL</div><p className="no-call">Aún no hay un turno llamado</p><div className="public-room"><Icon name="display" size={24} /><span>Consultorio 3</span></div><p className="public-caption">Por favor, espere a que su número aparezca en pantalla.</p></div>
+      <aside className="upcoming"><div className="upcoming-heading"><div><span className="eyebrow">CONSULTORIO 3</span><h2>Próximos turnos</h2></div><span className="upcoming-count">{waiting.length}</span></div>
+        {waiting.length ? <ol className="upcoming-list">{waiting.slice(0, 5).map((patient, index) => <li key={patient.id}><span className="upcoming-position">{String(index + 1).padStart(2, '0')}</span><strong>{patient.id}</strong><span className="upcoming-state">En espera</span></li>)}</ol> : <div className="upcoming-empty">No hay turnos pendientes.</div>}
+        <div className="public-message"><Icon name="info" size={19} /><span>Vista de demostración con datos ficticios.</span></div>
+      </aside>
+    </section>
+    <div className="privacy-note"><Icon name="check" size={18} /><span>Solo se muestran números de turno; no se publican nombres ni datos clínicos.</span></div>
+  </>
+}
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [page, setPage] = useState('queue')
+  const [scenario, setScenario] = useState('data')
+  const [loading, setLoading] = useState(true)
+  const patients = useMemo(() => scenario === 'empty' ? [] : seedPatients, [scenario])
 
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+  useEffect(() => {
+    const timer = window.setTimeout(() => setLoading(false), 650)
+    return () => window.clearTimeout(timer)
+  }, [scenario])
 
-      <div className="ticks"></div>
+  const selectScenario = (next) => {
+    setScenario(next)
+    setLoading(true)
+  }
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+  return <div className="app-shell">
+    <aside className="sidebar"><div className="sidebar-brand"><Brand /></div><div className="facility"><span className="facility-mark">CC</span><span><strong>Centro Capital</strong><small>Centro médico</small></span></div><nav aria-label="Navegación principal"><span className="nav-label">MÓDULO</span>{navItems.map((item) => <button key={item.id} type="button" className={`nav-link ${page === item.id ? 'active' : ''}`} aria-current={page === item.id ? 'page' : undefined} onClick={() => setPage(item.id)}><Icon name={item.icon} /><span>{item.label}</span>{page === item.id && <Icon name="chevron" size={17} />}</button>)}</nav><div className="sidebar-footer"><div className="user-avatar" aria-hidden="true">MP</div><div className="user-details"><strong>María P.</strong><span>Profesional · Cardiología</span></div><span className="online-dot" title="Sesión activa" /></div></aside>
+    <main className="main-content"><div className="topbar"><div className="breadcrumb"><span>Operación</span><Icon name="chevron" size={15} /><strong>{page === 'queue' ? 'Cola de espera' : 'Sala de espera'}</strong></div><div className="topbar-right"><span className="topbar-center"><span /> Centro Capital</span><span className="avatar-small">MP</span></div></div><div className="content-wrap">
+      {page === 'queue' ? <QueuePage patients={patients} setScenario={selectScenario} loading={loading} error={scenario === 'error' && !loading} /> : <WaitingRoomPage patients={patients} />}
+    </div><footer className="app-footer"><Brand /><span>Demo académica · Datos ficticios</span><span>SaludPlus · Gestión de sala de espera</span></footer></main>
+  </div>
 }
 
 export default App
