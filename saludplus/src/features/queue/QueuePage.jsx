@@ -1,11 +1,17 @@
+import { useState } from "react";
 import { ErrorState, LoadingState } from "../../components/AsyncState";
 import Icon from "../../components/Icon";
 import PageHeader from "../../components/PageHeader";
 import PrimaryButton from "../../components/PrimaryButton";
 import StatCard from "../../components/StatCard";
 import DemoControls from "./DemoControls";
+import CallHistory from "./CallHistory";
 import QueueTable from "./QueueTable";
-import { formatLocalCallTime, sortEligiblePatients } from "../../utils/queue";
+import {
+  formatLocalCallTime,
+  sortCallHistory,
+  sortEligiblePatients,
+} from "../../utils/queue";
 
 function ClinicContext() {
   return (
@@ -81,6 +87,7 @@ function QueueActions({ waitingCount, onCallNext, isCalling }) {
 export default function QueuePage({
   patients,
   currentCall,
+  allPatients,
   onCallNext,
   isCalling,
   onReset,
@@ -89,7 +96,9 @@ export default function QueuePage({
   error,
   storageError,
 }) {
+  const [historyOpen, setHistoryOpen] = useState(false);
   const waitingCount = sortEligiblePatients(patients).length;
+  const callHistory = sortCallHistory(allPatients);
 
   return (
     <>
@@ -122,6 +131,20 @@ export default function QueuePage({
           />
         )}
         {!error && <LastCall currentCall={currentCall} />}
+        {!error && callHistory.length > 0 && (
+          historyOpen ? (
+            <CallHistory calls={callHistory} onClose={() => setHistoryOpen(false)} />
+          ) : (
+            <button
+              className="history-toggle"
+              type="button"
+              aria-expanded="false"
+              onClick={() => setHistoryOpen(true)}
+            >
+              Ver historial de llamados <span>{callHistory.length}</span>
+            </button>
+          )
+        )}
         {storageError && (
           <p className="storage-warning" role="status">
             No se pudo guardar en este navegador. Los cambios se perderán al

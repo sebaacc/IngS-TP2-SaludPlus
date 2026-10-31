@@ -26,7 +26,10 @@ export function loadDemoState() {
   if (typeof window === "undefined") return initialDemoState();
 
   try {
-    return parseDemoState(window.localStorage.getItem(demoStorageKey)) ?? initialDemoState();
+    return (
+      parseDemoState(window.localStorage.getItem(demoStorageKey)) ??
+      initialDemoState()
+    );
   } catch {
     return initialDemoState();
   }

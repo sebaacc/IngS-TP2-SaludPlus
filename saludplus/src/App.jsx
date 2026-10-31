@@ -37,6 +37,7 @@ function App() {
       {page === "queue" ? (
         <QueuePage
           patients={previewPatients}
+          allPatients={demoState.patients}
           currentCall={demoState.currentCall}
           onCallNext={callNext}
           isCalling={isCalling}

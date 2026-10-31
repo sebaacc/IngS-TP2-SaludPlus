@@ -564,6 +564,88 @@ tbody tr:hover {
   color: #64877f;
   font-size: 12px;
 }
+.history-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 40px;
+  margin: 0 21px 18px;
+  padding: 0 12px;
+  border: 1px solid #d6e5ef;
+  border-radius: 8px;
+  color: #17699f;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.history-toggle:hover {
+  border-color: #8fbfdb;
+  background: #f5fafe;
+}
+.history-toggle span {
+  display: grid;
+  place-items: center;
+  min-width: 23px;
+  height: 23px;
+  padding: 0 5px;
+  border-radius: 20px;
+  color: #17699f;
+  background: #eaf5fc;
+  font-size: 12px;
+}
+.call-history {
+  overflow: hidden;
+  margin: 0 21px 18px;
+  border: 1px solid #dce8f0;
+  border-radius: 10px;
+  background: #fff;
+}
+.call-history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 15px;
+  border-bottom: 1px solid #e8eff4;
+  background: #f8fbfd;
+}
+.call-history-header h3 {
+  margin: 0;
+  color: #183852;
+  font-family: Manrope, sans-serif;
+  font-size: 15px;
+}
+.call-history-header p {
+  margin: 4px 0 0;
+  color: #71889b;
+  font-size: 12px;
+}
+.history-close {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  border: 1px solid #d7e3ec;
+  border-radius: 8px;
+  color: #557186;
+  background: #fff;
+  cursor: pointer;
+}
+.history-close:hover {
+  color: #0b497c;
+  border-color: #96c3de;
+  background: #eef7fc;
+}
+.call-history table {
+  min-width: 500px;
+}
+.call-history th,
+.call-history td {
+  padding-top: 11px;
+  padding-bottom: 11px;
+}
 .storage-warning {
   padding: 0 21px 14px;
   margin: 0;
@@ -1071,6 +1153,13 @@ tbody tr:hover {
   .last-call-card {
     margin-inline: 14px;
     padding-inline: 13px;
+  }
+  .history-toggle {
+    margin-inline: 14px;
+    font-size: 14px;
+  }
+  .call-history {
+    margin-inline: 14px;
   }
   .storage-warning {
     padding-inline: 14px;
