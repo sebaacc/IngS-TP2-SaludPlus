@@ -48,14 +48,15 @@ export function useQueueDemo() {
     callLock.current = true;
     setIsCalling(true);
     const calledAt = new Date().toISOString();
+    const consultorio = nextPatient.consultorio ?? 3;
     persist({
       ...demoState,
       patients: demoState.patients.map((patient) =>
         patient.id === nextPatient.id
-          ? { ...patient, status: "Llamado", calledAt }
+          ? { ...patient, status: "Llamado", calledAt, consultorio }
           : patient,
       ),
-      currentCall: { ...nextPatient, status: "Llamado", calledAt },
+      currentCall: { ...nextPatient, status: "Llamado", calledAt, consultorio },
     });
 
     callingTimer.current = window.setTimeout(() => {

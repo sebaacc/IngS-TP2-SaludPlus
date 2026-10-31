@@ -57,7 +57,8 @@ function LastCall({ currentCall }) {
       <div>
         <span className="last-call-label">ÚLTIMO TURNO LLAMADO</span>
         <strong>
-          {currentCall.id} <small>· Consultorio 3</small>
+          {currentCall.id}{" "}
+          <small>· Consultorio {currentCall.consultorio ?? 3}</small>
         </strong>
         <span className="last-call-time">
           Llamado a las {formatLocalCallTime(currentCall.calledAt)}
@@ -131,9 +132,13 @@ export default function QueuePage({
           />
         )}
         {!error && <LastCall currentCall={currentCall} />}
-        {!error && callHistory.length > 0 && (
-          historyOpen ? (
-            <CallHistory calls={callHistory} onClose={() => setHistoryOpen(false)} />
+        {!error &&
+          callHistory.length > 0 &&
+          (historyOpen ? (
+            <CallHistory
+              calls={callHistory}
+              onClose={() => setHistoryOpen(false)}
+            />
           ) : (
             <button
               className="history-toggle"
@@ -143,8 +148,7 @@ export default function QueuePage({
             >
               Ver historial de llamados <span>{callHistory.length}</span>
             </button>
-          )
-        )}
+          ))}
         {storageError && (
           <p className="storage-warning" role="status">
             No se pudo guardar en este navegador. Los cambios se perderán al

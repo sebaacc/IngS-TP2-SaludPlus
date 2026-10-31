@@ -38,7 +38,7 @@ export default function CallHistory({ calls, onClose }) {
                   <span className="ticket-number">{call.id}</span>
                 </td>
                 <td>{formatLocalCallTime(call.calledAt)}</td>
-                <td>3</td>
+                <td>{call.consultorio ?? 3}</td>
               </tr>
             ))}
           </tbody>

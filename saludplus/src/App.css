@@ -814,6 +814,7 @@ tbody tr:hover {
   margin-left: auto;
 }
 .public-screen {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1.45fr) minmax(270px, 0.8fr);
   min-height: 440px;
@@ -901,11 +902,8 @@ tbody tr:hover {
   padding-bottom: 17px;
   border-bottom: 1px solid #e9eff4;
 }
-.upcoming-heading .eyebrow {
-  font-size: 12px;
-}
 .upcoming-heading h2 {
-  margin-top: 6px;
+  margin-top: 0;
   font-size: 17px;
 }
 .upcoming-count {
@@ -919,16 +917,19 @@ tbody tr:hover {
   font-size: 13px;
   font-weight: 700;
 }
-.upcoming-list {
+.called-turn-list {
   list-style: none;
   margin: 0;
   padding: 0;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
-.upcoming-list li {
+.called-turn {
   display: flex;
   align-items: center;
   gap: 11px;
-  min-height: 59px;
+  min-height: 66px;
   border-bottom: 1px solid #eef2f5;
 }
 .upcoming-position {
@@ -936,19 +937,31 @@ tbody tr:hover {
   font-size: 12px;
   font-variant-numeric: tabular-nums;
 }
-.upcoming-list strong {
+.called-turn-details {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
   flex: 1;
+}
+.called-turn-details strong {
   color: #173b5a;
   font-family: Manrope, sans-serif;
   font-size: 16px;
 }
-.upcoming-state {
+.called-room {
   padding: 5px 8px;
   border-radius: 15px;
   color: #176a9f;
   background: #eaf5fc;
   font-size: 12px;
   font-weight: 600;
+  white-space: nowrap;
+}
+.called-turn time {
+  color: #71889c;
+  font-size: 12px;
+  white-space: nowrap;
 }
 .upcoming-empty {
   display: grid;
@@ -984,6 +997,86 @@ tbody tr:hover {
 }
 .privacy-note svg {
   color: #0d9488;
+}
+.fullscreen-toggle {
+  position: absolute;
+  z-index: 2;
+  bottom: 14px;
+  left: 14px;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(211, 235, 249, 0.55);
+  border-radius: 10px;
+  color: #fff;
+  background: rgba(7, 29, 48, 0.72);
+  cursor: pointer;
+  transition:
+    background 160ms ease,
+    transform 160ms ease;
+}
+.fullscreen-toggle:hover {
+  background: #0a6ebd;
+  transform: scale(1.04);
+}
+.fullscreen-toggle:focus-visible {
+  outline: 3px solid #8edcf0;
+  outline-offset: 3px;
+}
+.fullscreen-toggle.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: scale(0.9);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    visibility 0s linear 180ms;
+}
+.waiting-room-page.is-fullscreen {
+  position: fixed;
+  z-index: 30;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: #eaf1f7;
+  animation: waiting-room-open 360ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+.waiting-room-page.is-fullscreen .page-heading,
+.waiting-room-page.is-fullscreen .privacy-note {
+  display: none;
+}
+.waiting-room-page.is-fullscreen .public-screen {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  flex: 1;
+  border-radius: 18px;
+}
+.waiting-room-page.is-fullscreen.is-closing {
+  animation: waiting-room-close 300ms ease-in both;
+}
+@keyframes waiting-room-open {
+  from {
+    opacity: 0.65;
+    transform: scale(0.975);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes waiting-room-close {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0.65;
+    transform: scale(0.975);
+  }
 }
 
 @media (max-width: 900px) {
@@ -1183,6 +1276,12 @@ tbody tr:hover {
   .public-screen {
     grid-template-columns: 1fr;
   }
+  .waiting-room-page.is-fullscreen {
+    padding: 10px;
+  }
+  .waiting-room-page.is-fullscreen .public-screen {
+    overflow-y: auto;
+  }
   .public-call {
     min-height: 310px;
     padding: 30px 18px;
@@ -1198,7 +1297,7 @@ tbody tr:hover {
     min-height: 300px;
     padding: 19px 17px;
   }
-  .upcoming-list li {
+  .called-turn {
     min-height: 52px;
   }
 }
@@ -1211,4 +1310,73 @@ tbody tr:hover {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+.waiting-room-page.is-fullscreen .public-kicker {
+  font-size: 20px;
+}
+.waiting-room-page.is-fullscreen .public-pulse {
+  width: 12px;
+  height: 12px;
+}
+.waiting-room-page.is-fullscreen .no-call {
+  font-size: clamp(41px, 4.5vw, 60px);
+}
+.waiting-room-page.is-fullscreen .no-call.has-call {
+  font-size: clamp(87px, 12vw, 144px);
+}
+.waiting-room-page.is-fullscreen .public-room {
+  font-size: 27px;
+}
+.waiting-room-page.is-fullscreen .public-room svg {
+  width: 36px;
+  height: 36px;
+}
+.waiting-room-page.is-fullscreen .public-caption {
+  font-size: 20px;
+}
+.waiting-room-page.is-fullscreen .upcoming-heading h2 {
+  font-size: 26px;
+}
+.waiting-room-page.is-fullscreen .upcoming-count {
+  width: 45px;
+  height: 45px;
+  font-size: 20px;
+}
+.waiting-room-page.is-fullscreen .called-turn {
+  min-height: 78px;
+  gap: 16px;
+}
+.waiting-room-page.is-fullscreen .upcoming-position {
+  font-size: 18px;
+}
+.waiting-room-page.is-fullscreen .called-turn-details {
+  gap: 14px;
+}
+.waiting-room-page.is-fullscreen .called-turn-details strong {
+  font-size: 24px;
+}
+.waiting-room-page.is-fullscreen .called-room,
+.waiting-room-page.is-fullscreen .called-turn time {
+  font-size: 18px;
+}
+.waiting-room-page.is-fullscreen .upcoming-empty {
+  font-size: 20px;
+}
+.waiting-room-page.is-fullscreen .public-message {
+  gap: 14px;
+  padding: 18px;
+  font-size: 18px;
+}
+.waiting-room-page.is-fullscreen .public-message svg {
+  width: 28px;
+  height: 28px;
+}
+.waiting-room-page.is-fullscreen .fullscreen-toggle {
+  width: 56px;
+  height: 56px;
+}
+
+.waiting-room-page.is-cursor-hidden,
+.waiting-room-page.is-cursor-hidden * {
+  cursor: none !important;
 }
