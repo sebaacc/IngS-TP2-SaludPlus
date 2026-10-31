@@ -1,5 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
+
+const storageKey = 'saludplus-demo-queue-v1'
 
 const seedPatients = [
   { id: 'A-104', arrived: '08:42', priority: 'Normal', status: 'Esperando' },
@@ -9,6 +11,32 @@ const seedPatients = [
   { id: 'A-112', arrived: '09:15', priority: 'Normal', status: 'Esperando' },
   { id: 'A-115', arrived: '09:18', priority: 'Normal', status: 'Esperando' },
 ]
+
+function loadSavedDemo() {
+  if (typeof window === 'undefined') return { patients: seedPatients, currentCall: null }
+  try {
+    const saved = window.localStorage.getItem(storageKey)
+    if (!saved) return { patients: seedPatients, currentCall: null }
+    const parsed = JSON.parse(saved)
+    if (!Array.isArray(parsed.patients)) return { patients: seedPatients, currentCall: null }
+    return { patients: parsed.patients, currentCall: parsed.currentCall ?? null }
+  } catch {
+    return { patients: seedPatients, currentCall: null }
+  }
+}
+
+function sortEligiblePatients(patients) {
+  return patients
+    .filter((patient) => patient.status === 'Esperando')
+    .sort((a, b) => {
+      const priorityOrder = Number(b.priority === 'Prioridad') - Number(a.priority === 'Prioridad')
+      return priorityOrder || a.arrived.localeCompare(b.arrived)
+    })
+}
+
+function formatLocalCallTime(value) {
+  return new Date(value).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })
+}
 
 const navItems = [
   { id: 'queue', label: 'Cola de espera', icon: 'queue' },
@@ -57,8 +85,8 @@ function QueueTable({ patients }) {
   </tbody></table></div>
 }
 
-function QueuePage({ patients, setScenario, loading, error }) {
-  const waiting = patients.filter((patient) => patient.status === 'Esperando')
+function QueuePage({ patients, currentCall, setScenario, onCallNext, onReset, loading, error, storageError }) {
+  const waiting = sortEligiblePatients(patients)
   return <>
     <header className="page-heading"><div><div className="eyebrow">CENTRO MÉDICO · CENTRO CAPITAL</div><h1>Cola de espera</h1><p>Seguimiento de pacientes para el consultorio asignado.</p></div><LocalClock /></header>
     <section className="context-bar" aria-label="Consultorio actual"><div className="context-item"><span className="context-label">Consultorio</span><strong>3</strong></div><span className="context-divider" /><div className="context-item"><span className="context-label">Especialidad</span><strong>Cardiología</strong></div><span className="live-indicator"><span />Demo con datos ficticios</span></section>
@@ -70,21 +98,23 @@ function QueuePage({ patients, setScenario, loading, error }) {
     <section className="panel queue-panel">
       <div className="panel-heading"><div><h2>Pacientes en espera</h2><p>Ordenados por prioridad y hora de llegada</p></div><span className="count-badge">{waiting.length} pacientes</span></div>
       {loading ? <div className="loading-state" role="status"><span className="spinner" /><span>Cargando la cola…</span></div> : error ? <div className="empty-state error-state" role="alert"><span className="state-icon"><Icon name="info" size={27} /></span><h3>No pudimos cargar la cola</h3><p>Revisá la conexión e intentá actualizar nuevamente.</p><button className="retry-button" type="button" onClick={() => setScenario('data')}><Icon name="refresh" size={15} />Reintentar</button></div> : <QueueTable patients={waiting} />}
-      {!loading && <div className="call-area"><div className="call-note"><Icon name="info" size={18} /><span>El llamado se habilitará en la siguiente etapa.</span></div><button className="primary-button" type="button" disabled title="Disponible en la próxima etapa"><Icon name="bell" />Llamar al siguiente<Icon name="arrow" size={18} /></button></div>}
+      {!loading && !error && <div className="call-area"><div className="call-note"><Icon name="info" size={18} /><span>Se llama primero a quien tiene prioridad y luego por hora de llegada. La cola se guarda en este navegador.</span></div><button className="primary-button" type="button" disabled={!waiting.length} onClick={onCallNext}><Icon name="bell" />Llamar al siguiente<Icon name="arrow" size={18} /></button></div>}
+      {currentCall && !error && <div className="last-call-card" role="status"><span className="last-call-icon"><Icon name="check" size={20} /></span><div><span className="last-call-label">ÚLTIMO TURNO LLAMADO</span><strong>{currentCall.id} <small>· Consultorio 3</small></strong><span className="last-call-time">Llamado a las {formatLocalCallTime(currentCall.calledAt)}</span></div></div>}
+      {storageError && <p className="storage-warning" role="status">No se pudo guardar en este navegador. Los cambios se perderán al cerrar la página.</p>}
     </section>
-    <section className="demo-tools" aria-label="Controles de demostración"><span>Estados de demo</span><button type="button" onClick={() => setScenario('data')}>Con datos</button><button type="button" onClick={() => setScenario('empty')}>Cola vacía</button><button type="button" onClick={() => setScenario('error')}>Simular error</button></section>
+    <section className="demo-tools" aria-label="Controles de demostración"><span>Estados de demo</span><button type="button" onClick={() => setScenario('data')}>Con datos</button><button type="button" onClick={() => setScenario('empty')}>Cola vacía</button><button type="button" onClick={() => setScenario('error')}>Simular error</button><button type="button" onClick={onReset}>Reiniciar demo</button></section>
   </>
 }
 
-function WaitingRoomPage({ patients }) {
-  const waiting = patients.filter((patient) => patient.status === 'Esperando')
+function WaitingRoomPage({ patients, currentCall }) {
+  const waiting = sortEligiblePatients(patients)
   return <>
     <header className="page-heading"><div><div className="eyebrow">CENTRO MÉDICO · CENTRO CAPITAL</div><h1>Sala de espera</h1><p>Información clara para orientar a las personas que esperan.</p></div><LocalClock /></header>
     <section className="public-screen" aria-label="Pantalla pública de turnos">
-      <div className="public-call"><div className="public-kicker"><span className="public-pulse" />LLAMADO ACTUAL</div><p className="no-call">Aún no hay un turno llamado</p><div className="public-room"><Icon name="display" size={24} /><span>Consultorio 3</span></div><p className="public-caption">Por favor, espere a que su número aparezca en pantalla.</p></div>
+      <div className="public-call"><div className="public-kicker"><span className="public-pulse" />LLAMADO ACTUAL</div><p className={`no-call ${currentCall ? 'has-call' : ''}`}>{currentCall ? currentCall.id : 'Aún no hay un turno llamado'}</p><div className="public-room"><Icon name="display" size={24} /><span>Diríjase al consultorio 3</span></div><p className="public-caption">{currentCall ? `Turno llamado a las ${formatLocalCallTime(currentCall.calledAt)}` : 'Por favor, espere a que su número aparezca en pantalla.'}</p></div>
       <aside className="upcoming"><div className="upcoming-heading"><div><span className="eyebrow">CONSULTORIO 3</span><h2>Próximos turnos</h2></div><span className="upcoming-count">{waiting.length}</span></div>
         {waiting.length ? <ol className="upcoming-list">{waiting.slice(0, 5).map((patient, index) => <li key={patient.id}><span className="upcoming-position">{String(index + 1).padStart(2, '0')}</span><strong>{patient.id}</strong><span className="upcoming-state">En espera</span></li>)}</ol> : <div className="upcoming-empty">No hay turnos pendientes.</div>}
-        <div className="public-message"><Icon name="info" size={19} /><span>Vista de demostración con datos ficticios.</span></div>
+        <div className="public-message"><Icon name="info" size={19} /><span>Vista de demostración con datos ficticios. Turno actual: {currentCall?.id ?? 'ninguno'}.</span></div>
       </aside>
     </section>
     <div className="privacy-note"><Icon name="check" size={18} /><span>Solo se muestran números de turno; no se publican nombres ni datos clínicos.</span></div>
@@ -95,7 +125,10 @@ function App() {
   const [page, setPage] = useState('queue')
   const [scenario, setScenario] = useState('data')
   const [loading, setLoading] = useState(true)
-  const patients = useMemo(() => scenario === 'empty' ? [] : seedPatients, [scenario])
+  const [demoState, setDemoState] = useState(loadSavedDemo)
+  const [storageError, setStorageError] = useState(false)
+  const actualWaiting = sortEligiblePatients(demoState.patients)
+  const patients = scenario === 'empty' ? [] : scenario === 'error' ? [] : demoState.patients
 
   useEffect(() => {
     const timer = window.setTimeout(() => setLoading(false), 650)
@@ -107,10 +140,38 @@ function App() {
     setLoading(true)
   }
 
+  const saveDemoState = (nextState) => {
+    setDemoState(nextState)
+    try {
+      window.localStorage.setItem(storageKey, JSON.stringify(nextState))
+      setStorageError(false)
+    } catch {
+      setStorageError(true)
+    }
+  }
+
+  const callNext = () => {
+    const nextPatient = actualWaiting[0]
+    if (!nextPatient) return
+    const calledAt = new Date().toISOString()
+    saveDemoState({
+      ...demoState,
+      patients: demoState.patients.map((patient) => patient.id === nextPatient.id
+        ? { ...patient, status: 'Llamado', calledAt }
+        : patient),
+      currentCall: { ...nextPatient, status: 'Llamado', calledAt },
+    })
+  }
+
+  const resetDemo = () => {
+    saveDemoState({ patients: seedPatients.map((patient) => ({ ...patient })), currentCall: null })
+    setScenario('data')
+  }
+
   return <div className="app-shell">
     <aside className="sidebar"><div className="sidebar-brand"><Brand /></div><div className="facility"><span className="facility-mark">CC</span><span><strong>Centro Capital</strong><small>Centro médico</small></span></div><nav aria-label="Navegación principal"><span className="nav-label">MÓDULO</span>{navItems.map((item) => <button key={item.id} type="button" className={`nav-link ${page === item.id ? 'active' : ''}`} aria-current={page === item.id ? 'page' : undefined} onClick={() => setPage(item.id)}><Icon name={item.icon} /><span>{item.label}</span>{page === item.id && <Icon name="chevron" size={17} />}</button>)}</nav><div className="sidebar-footer"><div className="user-avatar" aria-hidden="true">MP</div><div className="user-details"><strong>María P.</strong><span>Profesional · Cardiología</span></div><span className="online-dot" title="Sesión activa" /></div></aside>
     <main className="main-content"><div className="topbar"><div className="breadcrumb"><span>Operación</span><Icon name="chevron" size={15} /><strong>{page === 'queue' ? 'Cola de espera' : 'Sala de espera'}</strong></div><div className="topbar-right"><span className="topbar-center"><span /> Centro Capital</span><span className="avatar-small">MP</span></div></div><div className="content-wrap">
-      {page === 'queue' ? <QueuePage patients={patients} setScenario={selectScenario} loading={loading} error={scenario === 'error' && !loading} /> : <WaitingRoomPage patients={patients} />}
+      {page === 'queue' ? <QueuePage patients={patients} currentCall={demoState.currentCall} setScenario={selectScenario} onCallNext={callNext} onReset={resetDemo} loading={loading} error={scenario === 'error' && !loading} storageError={storageError} /> : <WaitingRoomPage patients={demoState.patients} currentCall={demoState.currentCall} />}
     </div><footer className="app-footer"><Brand /><span>Demo académica · Datos ficticios</span><span>SaludPlus · Gestión de sala de espera</span></footer></main>
   </div>
 }

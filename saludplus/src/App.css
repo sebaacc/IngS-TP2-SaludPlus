@@ -79,6 +79,14 @@ tbody tr:hover { background: #f9fbfd; }
 .call-note svg { color: #7d9ab2; flex: 0 0 auto; }
 .primary-button { display: inline-flex; align-items: center; justify-content: center; gap: 11px; min-height: 48px; min-width: 225px; padding: 0 19px; border: 0; border-radius: 9px; background: #0a6ebd; color: white; font-size: 12px; font-weight: 700; box-shadow: 0 5px 12px rgba(10,110,189,.17); }
 .primary-button:disabled { background: #94b9d3; box-shadow: none; cursor: not-allowed; }
+.last-call-card { display: flex; align-items: center; gap: 12px; padding: 14px 20px; margin: 0 21px 18px; border: 1px solid #cce9df; border-radius: 9px; background: #f2faf7; }
+.last-call-icon { display: grid; place-items: center; width: 36px; height: 36px; flex: 0 0 36px; border-radius: 50%; color: #087f70; background: #dff4ed; }
+.last-call-card div > span, .last-call-card strong { display: block; }
+.last-call-label { color: #438779; font-size: 8px; font-weight: 700; letter-spacing: .9px; }
+.last-call-card strong { margin-top: 3px; color: #123e53; font-family: Manrope, sans-serif; font-size: 15px; }
+.last-call-card strong small { color: #517a78; font-family: 'Segoe UI', sans-serif; font-size: 10px; font-weight: 500; }
+.last-call-time { margin-top: 2px; color: #64877f; font-size: 9px; }
+.storage-warning { padding: 0 21px 14px; margin: 0; color: #a45b20; font-size: 10px; }
 .empty-state { display: grid; justify-items: center; padding: 39px 20px 42px; text-align: center; }
 .state-icon { display: grid; place-items: center; width: 54px; height: 54px; margin-bottom: 13px; border-radius: 50%; color: #3285ba; background: #eaf5fc; }
 .empty-state h3 { margin: 0 0 6px; color: #294860; font-size: 13px; }
@@ -110,6 +118,7 @@ tbody tr:hover { background: #f9fbfd; }
 .public-kicker { display: flex; align-items: center; gap: 9px; color: #8edcf0; font-size: 11px; font-weight: 700; letter-spacing: 2px; }
 .public-pulse { width: 8px; height: 8px; border-radius: 50%; background: #43c8ad; box-shadow: 0 0 0 5px rgba(67,200,173,.15); }
 .no-call { margin: 35px 0 34px; color: #fff; font-family: Manrope, sans-serif; font-size: clamp(25px, 3vw, 38px); font-weight: 700; letter-spacing: -1px; line-height: 1.2; }
+.no-call.has-call { font-size: clamp(56px, 8vw, 94px); letter-spacing: -3px; font-variant-numeric: tabular-nums; }
 .public-room { display: flex; align-items: center; gap: 10px; padding: 13px 20px; border: 1px solid rgba(195,231,249,.29); border-radius: 9px; color: #fff; font-size: 16px; font-weight: 600; }
 .public-room svg { color: #8edcf0; }
 .public-caption { margin: 20px 0 0; color: #c1d5e5; font-size: 11px; }
@@ -173,6 +182,8 @@ tbody tr:hover { background: #f9fbfd; }
   td { padding: 12px; font-size: 10px; }
   .call-area { align-items: stretch; flex-direction: column; padding: 14px; }
   .primary-button { min-width: 0; width: 100%; }
+  .last-call-card { margin-inline: 14px; padding-inline: 13px; }
+  .storage-warning { padding-inline: 14px; }
   .demo-tools { justify-content: flex-start; flex-wrap: wrap; }
   .demo-tools > span { width: 100%; }
   .app-footer { flex-wrap: wrap; gap: 7px 10px; min-height: 55px; padding-inline: 17px; }
