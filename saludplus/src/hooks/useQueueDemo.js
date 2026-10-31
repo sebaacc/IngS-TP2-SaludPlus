@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { demoPatients } from "../data/demoPatients";
-import { loadDemoState, saveDemoState } from "../services/demoStorage";
+import {
+  demoStorageKey,
+  loadDemoState,
+  parseDemoState,
+  saveDemoState,
+} from "../services/demoStorage";
 import { sortEligiblePatients } from "../utils/queue";
 
 export function useQueueDemo() {
@@ -10,7 +15,24 @@ export function useQueueDemo() {
   const callLock = useRef(false);
   const callingTimer = useRef(null);
 
-  useEffect(() => () => window.clearTimeout(callingTimer.current), []);
+  useEffect(() => {
+    const handleStorage = (event) => {
+      if (event.key !== demoStorageKey && event.key !== null) return;
+
+      const updatedState = parseDemoState(event.newValue);
+      if (!updatedState) return;
+
+      setDemoState(updatedState);
+      setStorageError(false);
+    };
+
+    // The storage event is delivered to other tabs sharing this origin.
+    window.addEventListener("storage", handleStorage);
+    return () => {
+      window.removeEventListener("storage", handleStorage);
+      window.clearTimeout(callingTimer.current);
+    };
+  }, []);
 
   const persist = (nextState) => {
     setDemoState(nextState);

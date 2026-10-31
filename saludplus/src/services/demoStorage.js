@@ -1,25 +1,32 @@
 import { demoPatients } from "../data/demoPatients";
 
-const storageKey = "saludplus-demo-queue-v1";
+export const demoStorageKey = "saludplus-demo-queue-v1";
 
 function initialDemoState() {
   return { patients: demoPatients, currentCall: null };
+}
+
+export function parseDemoState(serializedState) {
+  if (!serializedState) return initialDemoState();
+
+  try {
+    const parsed = JSON.parse(serializedState);
+    if (!Array.isArray(parsed.patients)) return null;
+
+    return {
+      patients: parsed.patients,
+      currentCall: parsed.currentCall ?? null,
+    };
+  } catch {
+    return null;
+  }
 }
 
 export function loadDemoState() {
   if (typeof window === "undefined") return initialDemoState();
 
   try {
-    const saved = window.localStorage.getItem(storageKey);
-    if (!saved) return initialDemoState();
-
-    const parsed = JSON.parse(saved);
-    if (!Array.isArray(parsed.patients)) return initialDemoState();
-
-    return {
-      patients: parsed.patients,
-      currentCall: parsed.currentCall ?? null,
-    };
+    return parseDemoState(window.localStorage.getItem(demoStorageKey)) ?? initialDemoState();
   } catch {
     return initialDemoState();
   }
@@ -27,7 +34,7 @@ export function loadDemoState() {
 
 export function saveDemoState(state) {
   try {
-    window.localStorage.setItem(storageKey, JSON.stringify(state));
+    window.localStorage.setItem(demoStorageKey, JSON.stringify(state));
     return true;
   } catch {
     return false;
