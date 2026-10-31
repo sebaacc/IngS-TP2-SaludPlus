@@ -8,8 +8,13 @@ export function sortEligiblePatients(patients) {
 }
 
 export function formatLocalCallTime(value) {
-  return new Date(value).toLocaleTimeString('es-AR', {
-    hour: '2-digit',
-    minute: '2-digit',
-  })
+  return formatLocalTime(new Date(value))
+}
+
+export function formatLocalTime(value = new Date()) {
+  const hour = value.getHours() % 12 || 12
+  const minute = String(value.getMinutes()).padStart(2, '0')
+  const period = value.getHours() >= 12 ? 'pm' : 'am'
+
+  return `${String(hour).padStart(2, '0')}:${minute} ${period}`
 }

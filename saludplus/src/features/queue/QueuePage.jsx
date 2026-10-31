@@ -61,7 +61,7 @@ function LastCall({ currentCall }) {
   );
 }
 
-function QueueActions({ waitingCount, onCallNext }) {
+function QueueActions({ waitingCount, onCallNext, isCalling }) {
   return (
     <div className="call-area">
       <div className="call-note">
@@ -71,8 +71,8 @@ function QueueActions({ waitingCount, onCallNext }) {
           La cola se guarda en este navegador.
         </span>
       </div>
-      <PrimaryButton disabled={!waitingCount} onClick={onCallNext}>
-        Llamar al siguiente
+      <PrimaryButton disabled={!waitingCount || isCalling} onClick={onCallNext}>
+        {isCalling ? "Llamando…" : "Llamar al siguiente"}
       </PrimaryButton>
     </div>
   );
@@ -82,6 +82,7 @@ export default function QueuePage({
   patients,
   currentCall,
   onCallNext,
+  isCalling,
   onReset,
   onScenarioChange,
   loading,
@@ -114,7 +115,11 @@ export default function QueuePage({
           <QueueTable patients={patients} />
         )}
         {!loading && !error && (
-          <QueueActions waitingCount={waitingCount} onCallNext={onCallNext} />
+          <QueueActions
+            waitingCount={waitingCount}
+            onCallNext={onCallNext}
+            isCalling={isCalling}
+          />
         )}
         {!error && <LastCall currentCall={currentCall} />}
         {storageError && (

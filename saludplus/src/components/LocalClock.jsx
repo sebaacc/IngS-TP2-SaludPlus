@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Icon from "./Icon";
+import { formatLocalTime } from "../utils/queue";
 
 export default function LocalClock() {
   const [now, setNow] = useState(() => new Date());
@@ -12,15 +13,12 @@ export default function LocalClock() {
   return (
     <div
       className="clock-block"
-      aria-label={`Hora local ${now.toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" })}`}
+      aria-label={`Hora local ${formatLocalTime(now)}`}
     >
       <Icon name="clock" size={22} />
       <div>
         <strong>
-          {now.toLocaleTimeString("es-AR", {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
+          {formatLocalTime(now)}
         </strong>
         <span>
           {now.toLocaleDateString("es-AR", {
