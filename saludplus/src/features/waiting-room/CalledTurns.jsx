@@ -35,7 +35,7 @@ export default function CalledTurns({ patients, currentCall }) {
       <div className="public-message">
         <Icon name="info" size={19} />
         <span>
-          Vista de demostración con datos ficticios. Turno actual:{" "}
+          Turno actual:{" "}
           {currentCall?.id ?? "ninguno"}.
         </span>
       </div>

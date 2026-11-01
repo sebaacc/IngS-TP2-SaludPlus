@@ -1,5 +1,6 @@
 import Brand from "../components/Brand";
 import Icon from "../components/Icon";
+import AccountMenu from "../components/AccountMenu";
 
 const roleNames = { professional: "Profesional · Cardiología", reception: "Recepción · Admisión", patients: "Pantalla pública · Sala de espera", admin: "Administrador · Centro Capital" };
 const roleUsers = { professional: ["MP", "María P."], reception: ["RC", "Recepción"], patients: ["TV", "Pacientes"], admin: ["AD", "Admin"] };
@@ -62,7 +63,7 @@ function Sidebar({ page, onNavigate, role }) {
   );
 }
 
-export default function AppLayout({ page, onNavigate, children, role, onSwitchProfile }) {
+export default function AppLayout({ page, onNavigate, children, role, onSwitchProfile, onSignOut }) {
   const titles = { queue: "Cola de espera", "waiting-room": "Sala de espera", overview: role === "admin" ? "Administración" : "Recepción", "manual-entry": "Ingreso manual" };
   const pageTitle = titles[page] || "SaludPlus";
 
@@ -80,15 +81,15 @@ export default function AppLayout({ page, onNavigate, children, role, onSwitchPr
             <span className="topbar-center">
               <span /> Centro Capital
             </span>
-            <span className="avatar-small">{roleUsers[role]?.[0] || "SP"}</span>
             <button type="button" className="switch-profile" onClick={onSwitchProfile}>Cambiar perfil</button>
+            <AccountMenu onSignOut={onSignOut} />
           </div>
         </div>
         <div className="content-wrap">{children}</div>
         <footer className="app-footer">
           <Brand />
-          <span>Demo académica · Datos ficticios</span>
-          <span>SaludPlus · Gestión de sala de espera</span>
+          <span>Gestión de atención y turnos</span>
+          <span>SaludPlus · Centro Capital</span>
         </footer>
       </main>
     </div>

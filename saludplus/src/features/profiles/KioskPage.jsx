@@ -181,7 +181,7 @@ export default function KioskPage({ onCheckIn }) {
         )}
       </section>
       <p className="kiosk-footnote">
-        Centro Capital · Tus datos se usan solo para esta demostración.
+        Centro Capital · Tus datos se utilizan para gestionar tu atención.
       </p>
     </main>
   );

@@ -39,8 +39,7 @@ export default function RoleDashboard({
         <section className="panel role-panel">
           <h2>Actividad del centro</h2>
           <p>
-            La cola está sincronizada entre los perfiles de esta demo en este
-            navegador.
+            La cola está sincronizada entre los perfiles en este navegador.
           </p>
           <p>
             Último turno llamado:{" "}

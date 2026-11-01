@@ -4,7 +4,6 @@ import Icon from "../../components/Icon";
 import PageHeader from "../../components/PageHeader";
 import PrimaryButton from "../../components/PrimaryButton";
 import StatCard from "../../components/StatCard";
-import DemoControls from "./DemoControls";
 import CallHistory from "./CallHistory";
 import QueueTable from "./QueueTable";
 import {
@@ -27,7 +26,7 @@ function ClinicContext() {
       </div>
       <span className="live-indicator">
         <span />
-        Demo con datos ficticios
+        Sistema operativo
       </span>
     </section>
   );
@@ -91,7 +90,6 @@ export default function QueuePage({
   allPatients,
   onCallNext,
   isCalling,
-  onReset,
   onScenarioChange,
   loading,
   error,
@@ -156,7 +154,6 @@ export default function QueuePage({
           </p>
         )}
       </section>
-      <DemoControls onScenarioChange={onScenarioChange} onReset={onReset} />
     </>
   );
 }

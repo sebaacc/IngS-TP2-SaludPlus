@@ -720,28 +720,6 @@ tbody tr:hover {
     transform: rotate(360deg);
   }
 }
-.demo-tools {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 7px;
-  margin-top: 13px;
-  color: #8a9aa9;
-  font-size: 12px;
-}
-.demo-tools button {
-  padding: 6px 9px;
-  border: 1px solid #dce6ee;
-  border-radius: 6px;
-  color: #567086;
-  background: #fff;
-  font-size: 12px;
-  cursor: pointer;
-}
-.demo-tools button:hover {
-  border-color: #9bc9e6;
-  color: #0a6ebd;
-}
 .error-banner {
   display: flex;
   align-items: center;
@@ -1257,13 +1235,6 @@ tbody tr:hover {
   .storage-warning {
     padding-inline: 14px;
   }
-  .demo-tools {
-    justify-content: flex-start;
-    flex-wrap: wrap;
-  }
-  .demo-tools > span {
-    width: 100%;
-  }
   .app-footer {
     flex-wrap: wrap;
     gap: 7px 10px;
@@ -1380,6 +1351,39 @@ tbody tr:hover {
 .waiting-room-page.is-cursor-hidden * {
   cursor: none !important;
 }
+.login-screen {
+  min-height: 100vh;
+  padding: 42px 24px;
+  background: radial-gradient(ellipse at 50% 0%, #e2f2fc 0, #f5f9fc 48%, #f5f9fc 100%);
+  color: #18324b;
+}
+.login-brand { max-width: 460px; }
+.login-card {
+  width: min(100%, 440px);
+  margin: 72px auto 0;
+  padding: 34px;
+  border: 1px solid #e0eaf1;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 12px 36px #18324b0d;
+}
+.login-card h1 { margin: 10px 0 7px; font-size: 30px; letter-spacing: -0.8px; }
+.login-intro { margin: 0 0 26px; color: #6d8192; font-size: 14px; }
+.login-card form { display: grid; gap: 9px; }
+.login-card label { margin-top: 8px; font-size: 13px; font-weight: 700; }
+.login-card input {
+  width: 100%; min-height: 46px; padding: 0 13px;
+  border: 1px solid #dbe7ef; border-radius: 9px;
+  color: #18324b; background: #fff; font: inherit;
+}
+.login-card input:focus { outline: 3px solid #d8effc; border-color: #56a9db; }
+.login-submit {
+  display: flex; justify-content: space-between; align-items: center;
+  min-height: 46px; margin-top: 12px; padding: 0 15px;
+  border: 0; border-radius: 9px; color: #fff; background: #0a6ebd;
+  font-weight: 700; cursor: pointer;
+}
+.login-submit:hover { background: #075e9f; }
 .profile-screen {
   min-height: 100vh;
   padding: 42px 24px 28px;
@@ -1524,6 +1528,36 @@ tbody tr:hover {
   font-weight: 600;
   cursor: pointer;
 }
+.account-menu { position: relative; z-index: 30; }
+.account-menu-floating { position: fixed; top: 18px; right: 24px; }
+.account-trigger {
+  display: flex; align-items: center; gap: 9px; min-height: 40px;
+  padding: 4px 10px 4px 5px; border: 1px solid #dbe7ef; border-radius: 10px;
+  background: #fff; color: #294b64; cursor: pointer;
+}
+.account-avatar { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; background: #e9f5fc; color: #0874bd; font-size: 11px; font-weight: 800; }
+.account-name { font-size: 12px; font-weight: 650; }
+.account-caret { color: #71889a; font-size: 15px; }
+.account-dropdown {
+  position: absolute; top: calc(100% + 8px); right: 0; width: 230px; padding: 7px;
+  border: 1px solid #e0eaf1; border-radius: 12px; background: #fff;
+  box-shadow: 0 14px 35px #18324b1c;
+}
+.account-dropdown-heading { display: grid; gap: 3px; padding: 10px 11px; border-bottom: 1px solid #edf2f6; }
+.account-dropdown-heading strong { color: #18324b; font-size: 13px; }
+.account-dropdown-heading small, .account-settings small { color: #8496a4; font-size: 11px; }
+.account-dropdown > button, .account-settings button {
+  display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 11px;
+  border: 0; border-radius: 7px; background: transparent; color: #38576e; text-align: left; font: inherit; font-size: 12px; cursor: pointer;
+}
+.account-dropdown > button:hover, .account-settings button:hover { background: #f2f8fc; }
+.account-dropdown > .account-signout { color: #b42318; }
+.account-settings { display: grid; gap: 7px; padding: 10px; }
+.account-settings strong { font-size: 13px; }
+.account-settings span { margin-top: 4px; color: #5f7688; font-size: 12px; }
+.account-settings button { padding-left: 0; color: #0a6ebd; }
+.profile-screen > .account-menu { position: absolute; top: 30px; right: max(24px, calc((100vw - 920px) / 2)); }
+.public-demo-page > .account-menu { position: fixed; top: 18px; right: 24px; }
 .role-panel {
   margin: 22px 0;
   padding: 24px;

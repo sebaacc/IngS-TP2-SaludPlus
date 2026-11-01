@@ -27,8 +27,8 @@ export function patientFromDni(dni, id, arrived) {
   const hour12 = hour24 % 12 || 12;
   const meridiem = hour24 >= 12 ? "pm" : "am";
   return {
-    id, dni, nombre: "Paciente de demostración", sexo: "No especificado",
-    obraSocial: "Salud Plus", nroAfiliado: `${dni.slice(-6)}-DEMO`,
+    id, dni, nombre: "Paciente nuevo", sexo: "No especificado",
+    obraSocial: "Salud Plus", nroAfiliado: `${dni.slice(-6)}-001`,
     estadoObraSocial: "Activa", telefono: "351 555-0000",
     motivo: "Consulta programada", medico: "Dra. María Pérez",
     especialidad: "Cardiología", fecha: "31/10/2026", hora: `${String(hour12).padStart(2, "0")}:${minuteText || "00"} ${meridiem}`,
