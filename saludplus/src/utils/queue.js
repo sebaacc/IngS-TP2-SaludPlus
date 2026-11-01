@@ -8,6 +8,12 @@ export function sortEligiblePatients(patients) {
     });
 }
 
+export function sortReceptionPatients(patients) {
+  return patients
+    .filter((patient) => patient.status === "Recepción")
+    .sort((a, b) => a.arrived.localeCompare(b.arrived));
+}
+
 export function formatLocalCallTime(value) {
   return formatLocalTime(new Date(value));
 }

@@ -1,9 +1,13 @@
 import { demoPatients } from "../data/demoPatients";
 
-export const demoStorageKey = "saludplus-demo-queue-v1";
+export const demoStorageKey = "saludplus-demo-queue-v3";
 
 function initialDemoState() {
-  return { patients: demoPatients, currentCall: null };
+  return { patients: demoPatients.map(withDemoInsurance), currentCall: null, receptionCall: null };
+}
+
+function withDemoInsurance(patient) {
+  return { ...patient, obraSocial: "Salud Plus" };
 }
 
 export function parseDemoState(serializedState) {
@@ -14,8 +18,9 @@ export function parseDemoState(serializedState) {
     if (!Array.isArray(parsed.patients)) return null;
 
     return {
-      patients: parsed.patients,
-      currentCall: parsed.currentCall ?? null,
+      patients: parsed.patients.map(withDemoInsurance),
+      currentCall: parsed.currentCall ? withDemoInsurance(parsed.currentCall) : null,
+      receptionCall: parsed.receptionCall ? withDemoInsurance(parsed.receptionCall) : null,
     };
   } catch {
     return null;
