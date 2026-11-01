@@ -119,13 +119,13 @@ export function useQueueDemo() {
     });
   };
 
-  const registerArrival = (dni) => {
+  const registerArrival = (dni, tipoTurno = "con") => {
     const nextNumber = demoState.patients.reduce((max, patient) => {
       const match = patient.id.match(/^A-(\d+)$/);
       return match ? Math.max(max, Number(match[1])) : max;
     }, 100) + 1;
     const arrived = new Date().toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" });
-    const patient = patientFromDni(dni, `A-${nextNumber}`, arrived);
+    const patient = { ...patientFromDni(dni, `A-${nextNumber}`, arrived), tipoTurno };
     persist({ ...demoState, patients: [...demoState.patients, patient] });
     return patient;
   };
