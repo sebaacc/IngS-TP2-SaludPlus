@@ -8,30 +8,99 @@ const appointments = [
   ["A-115", "32457890", "Tomás Castro", "Masculino", "Salud Plus", "Activa", "351 555-0163", "Primera consulta", "Dra. María Pérez", "Cardiología", "31/10/2026", "10:15 am", 8500],
 ];
 
-export const demoPatients = appointments.map(([id, dni, nombre, sexo, obraSocial, estadoObraSocial, telefono, motivo, medico, especialidad, fecha, hora, monto]) => ({
+const extraNames = [
+  ["Ana", "Femenino"], ["Juan", "Masculino"], ["Carolina", "Femenino"],
+  ["Pablo", "Masculino"], ["Micaela", "Femenino"], ["Andrés", "Masculino"],
+  ["Camila", "Femenino"], ["Nicolás", "Masculino"], ["Florencia", "Femenino"],
+  ["Mateo", "Masculino"], ["Julieta", "Femenino"], ["Santiago", "Masculino"],
+];
+const extraSurnames = ["Pereyra", "Gutiérrez", "Romero", "Herrera"];
+const specialties = [
+  ["Cardiología", "Dra. María Pérez", "Control cardiológico"],
+  ["Clínica médica", "Dr. Pablo Sosa", "Consulta clínica"],
+  ["Pediatría", "Dra. Laura Ríos", "Control de salud"],
+  ["Traumatología", "Dr. Martín Acosta", "Dolor articular"],
+  ["Dermatología", "Dra. Paula Medina", "Control dermatológico"],
+  ["Ginecología", "Dra. Valeria Suárez", "Consulta programada"],
+  ["Oftalmología", "Dr. Diego Luna", "Control de visión"],
+  ["Endocrinología", "Dra. Sofía Molina", "Seguimiento"],
+];
+
+function formatAppointmentTime(minutesAfterMidnight) {
+  const hour24 = Math.floor(minutesAfterMidnight / 60);
+  const hour12 = hour24 % 12 || 12;
+  const minutes = String(minutesAfterMidnight % 60).padStart(2, "0");
+  return `${String(hour12).padStart(2, "0")}:${minutes} ${hour24 >= 12 ? "pm" : "am"}`;
+}
+
+export function normalizeAppointmentTime(value) {
+  const match = String(value || "").match(
+    /^(\d{1,2}):(\d{2})(?:\s*([ap])\.?\s*m\.?)?/i,
+  );
+  if (!match) return value;
+
+  let hour = Number(match[1]);
+  const minute = match[2];
+  let period = match[3]?.toLowerCase();
+  if (!period) {
+    period = hour >= 12 ? "p" : "a";
+    hour = hour % 12 || 12;
+  }
+  return `${String(hour).padStart(2, "0")}:${minute} ${period}m`;
+}
+
+const extraAppointments = Array.from({ length: 44 }, (_, index) => {
+  const [firstName, sexo] = extraNames[index % extraNames.length];
+  const surname = extraSurnames[Math.floor(index / extraNames.length)];
+  const [especialidad, medico, motivo] = specialties[index % specialties.length];
+  const turnNumber = 120 + index;
+  const dni = String(20000000 + index * 73421);
+  return [
+    `A-${turnNumber}`,
+    dni,
+    `${firstName} ${surname}`,
+    sexo,
+    "Salud Plus",
+    index % 13 === 0 ? "Vencida" : "Activa",
+    `351 555-${String(2000 + index).slice(-4)}`,
+    motivo,
+    medico,
+    especialidad,
+    "31/10/2026",
+    formatAppointmentTime(7 * 60 + index * 12),
+    index % 4 === 0 ? 8500 : 0,
+  ];
+});
+
+export const demoPatients = [...appointments, ...extraAppointments].map(([id, dni, nombre, sexo, obraSocial, estadoObraSocial, telefono, motivo, medico, especialidad, fecha, hora, monto], index) => ({
   id, dni, nombre, sexo, obraSocial, estadoObraSocial, telefono, motivo, medico, especialidad, fecha, hora, monto,
   nroAfiliado: `${dni.slice(-6)}-${id.slice(-3)}`,
   arrived: hora,
+  origenIngreso: "Tótem",
+  presentedAt: hora,
   priority: id === "A-110" ? "Prioridad" : "Normal",
-  status: ["A-104", "A-105", "A-107"].includes(id) ? "Recepción" : "Esperando",
+  status: index < 12 ? "Recepción" : "Esperando",
 }));
 
 const recordsByDni = new Map(demoPatients.map((patient) => [patient.dni, patient]));
 
 export function patientFromDni(dni, id, arrived) {
   const record = recordsByDni.get(dni);
-  if (record) return { ...record, id, arrived, status: "Recepción" };
+  if (record)
+    return {
+      ...record,
+      id,
+      hora: normalizeAppointmentTime(record.hora),
+      arrived: normalizeAppointmentTime(arrived),
+      status: "Recepción",
+    };
 
-  const [hourText, minuteText] = arrived.split(":");
-  const hour24 = Number(hourText) || 0;
-  const hour12 = hour24 % 12 || 12;
-  const meridiem = hour24 >= 12 ? "pm" : "am";
   return {
     id, dni, nombre: "Paciente nuevo", sexo: "No especificado",
     obraSocial: "Salud Plus", nroAfiliado: `${dni.slice(-6)}-001`,
     estadoObraSocial: "Activa", telefono: "351 555-0000",
     motivo: "Consulta programada", medico: "Dra. María Pérez",
-    especialidad: "Cardiología", fecha: "31/10/2026", hora: `${String(hour12).padStart(2, "0")}:${minuteText || "00"} ${meridiem}`,
-    monto: 8500, arrived, priority: "Normal", status: "Recepción",
+    especialidad: "Cardiología", fecha: "31/10/2026", hora: normalizeAppointmentTime(arrived),
+    monto: 8500, arrived: normalizeAppointmentTime(arrived), origenIngreso: "Tótem", presentedAt: new Date().toISOString(), priority: "Normal", status: "Recepción",
   };
 }

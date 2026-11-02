@@ -14,6 +14,8 @@ export default function RoleDashboard({
   onMarkReceptionAbsent,
   onRegisterManual,
   onBack,
+  onMarkPresent,
+  onRecall,
 }) {
   if (role === "reception")
     return (
@@ -26,6 +28,8 @@ export default function RoleDashboard({
         onMarkAbsent={onMarkReceptionAbsent}
         onRegisterManual={onRegisterManual}
         onBack={onBack}
+        onMarkPresent={onMarkPresent}
+        onRecall={onRecall}
       />
     );
   if (role === "admin")

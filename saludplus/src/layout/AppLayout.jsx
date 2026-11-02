@@ -9,6 +9,7 @@ function Sidebar({ page, onNavigate, role }) {
       : role === "reception"
         ? [
             { id: "overview", label: "Atención en recepción", icon: "people" },
+            { id: "appointments", label: "Turnos del día", icon: "calendar" },
             { id: "manual-entry", label: "Ingreso manual", icon: "check" },
           ]
         : role === "admin"
@@ -41,15 +42,19 @@ function Sidebar({ page, onNavigate, role }) {
             onClick={() => {
               onNavigate(item.id);
               if (role === "reception") {
-                window.setTimeout(() => {
-                  document
-                    .getElementById(
-                      item.id === "manual-entry"
-                        ? "manual-entry"
-                        : "reception-queue",
-                    )
-                    ?.scrollIntoView({ behavior: "smooth", block: "start" });
-                }, 0);
+                if (item.id === "appointments") {
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                } else {
+                  window.setTimeout(() => {
+                    document
+                      .getElementById(
+                        item.id === "manual-entry"
+                          ? "manual-entry"
+                          : "reception-queue",
+                      )
+                      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }, 0);
+                }
               }
             }}
           >
@@ -77,6 +82,7 @@ export default function AppLayout({
     "waiting-room": "Sala de espera",
     overview: role === "admin" ? "Administración" : "Recepción",
     "manual-entry": "Ingreso manual",
+    appointments: "Turnos del día",
   };
   const pageTitle = titles[page] || "SaludPlus";
 

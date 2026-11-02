@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PageHeader from "../../components/PageHeader";
 import PrimaryButton from "../../components/PrimaryButton";
+import DayAppointments from "./DayAppointments";
 import { sortReceptionPatients } from "../../utils/queue";
 
 const money = (value) =>
@@ -28,11 +29,24 @@ export default function ReceptionDashboard({
   onMarkAbsent,
   onRegisterManual,
   onBack,
+  onMarkPresent,
+  onRecall,
 }) {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [manualDni, setManualDni] = useState("");
   const [manualMessage, setManualMessage] = useState("");
   const waiting = sortReceptionPatients(patients);
+
+  if (page === "appointments") {
+    return (
+      <DayAppointments
+        patients={patients}
+        onMarkPresent={onMarkPresent}
+        onRecall={onRecall}
+        onBack={onBack}
+      />
+    );
+  }
 
   return (
     <>

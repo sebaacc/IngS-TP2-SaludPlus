@@ -26,6 +26,8 @@ function App() {
     callReceptionNext,
     confirmReceptionPayment,
     markReceptionAbsent,
+    markPresent,
+    recallPatient,
     registerArrival,
     registerManualPatient,
     isCalling,
@@ -64,6 +66,25 @@ function App() {
     });
   };
 
+  const handleMarkPresent = (patient) => {
+    markPresent(patient.id);
+    setNotification({
+      id: Date.now(),
+      title: "Paciente presente",
+      message: `El turno ${patient.id} volvió a la sala de espera.`,
+    });
+  };
+
+  const handleRecallPatient = (patient) => {
+    const recalled = recallPatient(patient.id);
+    if (!recalled) return;
+    setNotification({
+      id: Date.now(),
+      title: "Turno llamado nuevamente",
+      message: `Se volvió a llamar al turno ${patient.id}.`,
+    });
+  };
+
   const handleCallNext = () => {
     if (isCalling) return;
     const nextPatient = sortEligiblePatients(demoState.patients)[0];
@@ -83,7 +104,7 @@ function App() {
   };
 
   const goBack = () => {
-    if (role === "reception" && page === "manual-entry") {
+    if (role === "reception" && ["manual-entry", "appointments"].includes(page)) {
       setPage("overview");
       return;
     }
@@ -173,6 +194,8 @@ function App() {
           onConfirmReceptionPayment={handleConfirmReceptionPayment}
           onMarkReceptionAbsent={markReceptionAbsent}
           onRegisterManual={registerManualPatient}
+          onMarkPresent={handleMarkPresent}
+          onRecall={handleRecallPatient}
         />
       ) : page === "queue" ? (
         <QueuePage
