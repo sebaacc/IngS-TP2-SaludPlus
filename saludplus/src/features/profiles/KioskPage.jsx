@@ -24,8 +24,9 @@ function createTicketPdf(ticket, date) {
     "BT /F1 10 Tf 0.35 0.43 0.51 rg 20 190 Td (TU NUMERO) Tj ET",
     `BT /F1 38 Tf 0.04 0.43 0.74 rg 20 139 Td (${pdfText(ticket.id)}) Tj ET`,
     `BT /F1 10 Tf 0.10 0.20 0.29 rg 20 113 Td (${pdfText(ticket.tipoTurno === "con" ? "Con turno" : "Sin turno")}) Tj ET`,
-    `BT /F1 9 Tf 0.35 0.43 0.51 rg 20 86 Td (${pdfText(date.toLocaleDateString("es-AR"))}) Tj ET`,
-    `BT /F1 9 Tf 0.35 0.43 0.51 rg 20 70 Td (${pdfText(date.toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" }))}) Tj ET`,
+    `BT /F1 8 Tf 0.35 0.43 0.51 rg 20 96 Td (HORARIO DEL TURNO: ${pdfText(ticket.horaTurno || ticket.hora || "Sin turno")}) Tj ET`,
+    `BT /F1 8 Tf 0.35 0.43 0.51 rg 20 82 Td (PRESENTACION: ${pdfText(date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }).toLowerCase())}) Tj ET`,
+    `BT /F1 8 Tf 0.35 0.43 0.51 rg 20 68 Td (FECHA: ${pdfText(date.toLocaleDateString("es-AR"))}) Tj ET`,
     "0.85 0.89 0.92 RG 20 56 m 144 56 l S",
     "BT /F1 8 Tf 0.45 0.52 0.58 rg 20 38 Td (Conserva este ticket) Tj 0 -12 Td (y espera tu llamado.) Tj ET",
   ].join("\n");

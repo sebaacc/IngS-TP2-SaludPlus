@@ -5,7 +5,10 @@ import AccountMenu from "../components/AccountMenu";
 function Sidebar({ page, onNavigate, role }) {
   const navItems =
     role === "professional"
-      ? [{ id: "queue", label: "Pacientes en espera", icon: "queue" }]
+      ? [
+          { id: "queue", label: "Pacientes en espera", icon: "queue" },
+          { id: "consultation", label: "Consulta médica", icon: "check" },
+        ]
       : role === "reception"
         ? [
             { id: "overview", label: "Atención en recepción", icon: "people" },
@@ -83,6 +86,7 @@ export default function AppLayout({
     overview: role === "admin" ? "Administración" : "Recepción",
     "manual-entry": "Ingreso manual",
     appointments: "Turnos del día",
+    consultation: "Consulta médica",
   };
   const pageTitle = titles[page] || "SaludPlus";
 

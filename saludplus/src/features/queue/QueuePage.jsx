@@ -13,6 +13,8 @@ import {
   sortEligiblePatients,
 } from "../../utils/queue";
 
+const PAGE_SIZE = 10;
+
 function ClinicContext() {
   return (
     <section className="context-bar" aria-label="Consultorio actual">
@@ -99,7 +101,15 @@ export default function QueuePage({
   onReset,
 }) {
   const [historyOpen, setHistoryOpen] = useState(false);
-  const waitingCount = sortEligiblePatients(patients).length;
+  const [page, setPage] = useState(1);
+  const waitingPatients = sortEligiblePatients(patients);
+  const waitingCount = waitingPatients.length;
+  const pageCount = Math.max(1, Math.ceil(waitingCount / PAGE_SIZE));
+  const currentPage = Math.min(page, pageCount);
+  const visiblePatients = waitingPatients.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE,
+  );
   const callHistory = sortCallHistory(allPatients);
 
   return (
@@ -124,7 +134,32 @@ export default function QueuePage({
         ) : error ? (
           <ErrorState onRetry={() => onScenarioChange("data")} />
         ) : (
-          <QueueTable patients={patients} />
+          <QueueTable patients={visiblePatients} />
+        )}
+        {!loading && !error && waitingCount > PAGE_SIZE && (
+          <div className="queue-pagination" aria-label="Paginación de pacientes">
+            <span>
+              Mostrando {(currentPage - 1) * PAGE_SIZE + 1}–
+              {Math.min(currentPage * PAGE_SIZE, waitingCount)} de {waitingCount} pacientes
+            </span>
+            <div>
+              <button
+                type="button"
+                disabled={currentPage <= 1}
+                onClick={() => setPage(currentPage - 1)}
+              >
+                Anterior
+              </button>
+              <strong>Página {currentPage} de {pageCount}</strong>
+              <button
+                type="button"
+                disabled={currentPage >= pageCount}
+                onClick={() => setPage(currentPage + 1)}
+              >
+                Siguiente
+              </button>
+            </div>
+          </div>
         )}
         {!loading && !error && (
           <QueueActions

@@ -18,7 +18,8 @@ export default function QueueTable({ patients }) {
         <thead>
           <tr>
             <th scope="col">N.º de turno</th>
-            <th scope="col">Hora de llegada</th>
+            <th scope="col">Horario del turno</th>
+            <th scope="col">Presentación</th>
             <th scope="col">Prioridad</th>
             <th scope="col">Estado</th>
           </tr>
@@ -29,7 +30,8 @@ export default function QueueTable({ patients }) {
               <td>
                 <span className="ticket-number">{patient.id}</span>
               </td>
-              <td>{patient.arrived}</td>
+              <td>{patient.horaTurno || patient.hora || "Sin turno"}</td>
+              <td>{patient.horaPresentacion || patient.arrived || "—"}</td>
               <td>
                 <span
                   className={`priority ${patient.priority === "Prioridad" ? "priority-high" : ""}`}

@@ -1130,6 +1130,9 @@ tbody tr:hover {
 }
 
 @media (max-width: 900px) {
+  .admin-insights-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .sidebar {
     width: 215px;
     flex-basis: 215px;
@@ -1149,6 +1152,9 @@ tbody tr:hover {
   }
 }
 @media (max-width: 680px) {
+  .admin-insights-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
   .app-shell {
     display: block;
     padding-bottom: 66px;
@@ -1832,6 +1838,126 @@ tbody tr:hover {
   border-radius: 13px;
   background: #fff;
 }
+.admin-insights-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+  margin-bottom: 20px;
+}
+.admin-metric-card {
+  min-width: 0;
+  min-height: 218px;
+  padding: 19px;
+  border: 1px solid #e1eaf2;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 5px 18px rgba(26, 65, 97, 0.025);
+}
+.admin-metric-card h2 {
+  margin: 0 0 18px;
+  color: #183852;
+  font-family: Manrope, sans-serif;
+  font-size: 15px;
+  line-height: 1.35;
+}
+.admin-pie-layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 2vw, 23px);
+}
+.admin-pie-chart {
+  display: grid;
+  width: 112px;
+  height: 112px;
+  flex: 0 0 112px;
+  place-items: center;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(13, 47, 75, 0.04);
+}
+.admin-pie-chart span {
+  color: #183852;
+  font-family: Manrope, sans-serif;
+  font-size: 23px;
+  font-weight: 800;
+}
+.admin-pie-legend {
+  display: grid;
+  min-width: 0;
+  gap: 9px;
+}
+.admin-pie-legend > div {
+  display: grid;
+  grid-template-columns: 9px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 7px;
+  color: #6c8192;
+  font-size: 12px;
+}
+.admin-pie-legend i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.admin-pie-legend strong {
+  color: #28475f;
+  font-size: 13px;
+}
+.admin-pie-legend small {
+  margin-top: 3px;
+  color: #8a9aa8;
+  font-size: 10px;
+}
+.network-health-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.network-health-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  color: #526a7f;
+}
+.network-health-indicator strong {
+  font-family: Manrope, sans-serif;
+  font-size: 23px;
+}
+.network-signal {
+  display: flex;
+  height: 28px;
+  align-items: flex-end;
+  gap: 3px;
+}
+.network-signal i {
+  display: block;
+  width: 5px;
+  border-radius: 3px 3px 1px 1px;
+  background: #d5dfe6;
+}
+.network-signal i:nth-child(1) { height: 8px; }
+.network-signal i:nth-child(2) { height: 14px; }
+.network-signal i:nth-child(3) { height: 21px; }
+.network-signal i:nth-child(4) { height: 28px; }
+.network-health-indicator.is-good { color: #16745f; }
+.network-health-indicator.is-good .network-signal i { background: #20a080; }
+.network-health-indicator.is-fair { color: #9a7418; }
+.network-health-indicator.is-fair .network-signal i:nth-child(-n + 3) { background: #d0a32b; }
+.network-health-indicator.is-poor,
+.network-health-indicator.is-offline,
+.network-health-indicator.is-unreachable { color: #ad4946; }
+.network-health-indicator.is-poor .network-signal i:first-child,
+.network-health-indicator.is-offline .network-signal i:first-child,
+.network-health-indicator.is-unreachable .network-signal i:first-child { background: #c84d48; }
+.network-health-card p {
+  margin: 17px 0 5px;
+  color: #60788b;
+  font-size: 13px;
+}
+.network-health-card > small {
+  color: #8a9aa8;
+  font-size: 11px;
+}
 .role-panel h2 {
   margin: 0 0 13px;
   font-size: 19px;
@@ -2090,7 +2216,117 @@ tbody tr:hover {
   accent-color: var(--brand-primary);
 }
 .day-appointments-table {
-  min-width: 1120px;
+  min-width: 1280px;
+}
+
+.consultation-session-note {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 16px;
+  color: #5e7890;
+  font-size: 14px;
+}
+.consultation-session-note svg { color: var(--brand-primary); }
+.consultation-panel { padding: 24px 28px; margin-bottom: 18px; }
+.consultation-panel .panel-heading { margin-bottom: 22px; }
+.consultation-status {
+  padding: 8px 13px;
+  border-radius: 999px;
+  color: #147a68;
+  background: #e5f5f1;
+  font-weight: 650;
+  white-space: nowrap;
+}
+.consultation-fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+}
+.consultation-fields label,
+.prescription-fields label {
+  display: grid;
+  gap: 7px;
+  color: #506d84;
+  font-size: 13px;
+  font-weight: 650;
+}
+.consultation-fields input,
+.prescription-fields input,
+.prescription-fields textarea {
+  width: 100%;
+  min-height: 42px;
+  padding: 9px 11px;
+  border: 1px solid #dbe6ee;
+  border-radius: 9px;
+  color: #173650;
+  background: white;
+  font: inherit;
+  font-size: 14px;
+}
+.prescription-fields textarea { resize: vertical; }
+.consultation-secondary-button,
+.consultation-primary-button,
+.consultation-finish-button,
+.prescription-list article button,
+.consultation-empty button {
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid #cddce8;
+  border-radius: 9px;
+  color: #17669f;
+  background: white;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+.consultation-secondary-button { margin-top: 18px; }
+.consultation-primary-button {
+  color: white;
+  border-color: #0b70bd;
+  background: #0b70bd;
+}
+.consultation-finish-button {
+  min-height: 50px;
+  padding: 0 24px;
+  color: white;
+  border-color: #147a68;
+  background: #147a68;
+  font-size: 15px;
+}
+.prescription-fields {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 0.7fr;
+  gap: 15px;
+  margin-bottom: 17px;
+}
+.prescription-list { margin-top: 22px; }
+.prescription-list h3 { margin: 0 0 10px; color: #173650; font-size: 16px; }
+.prescription-list article {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 0;
+  border-top: 1px solid #e2eaf0;
+}
+.prescription-list article strong { color: #173650; }
+.prescription-list article p { margin: 5px 0; color: #667f94; }
+.prescription-list article small { color: #8295a6; }
+.consultation-message { color: #147a68; font-size: 14px; }
+.consultation-final-actions { display: flex; justify-content: flex-end; margin: 22px 0 8px; }
+.consultation-empty { padding: 28px; }
+.consultation-empty h2 { margin-top: 0; color: #173650; }
+.consultation-empty p { color: #667f94; }
+
+@media (max-width: 800px) {
+  .consultation-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .prescription-fields { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .consultation-fields { grid-template-columns: 1fr; }
+  .consultation-panel { padding: 18px; }
+  .prescription-list article { align-items: flex-start; flex-direction: column; }
 }
 .appointment-filter-row th {
   padding: 4px 10px 12px;
@@ -2150,6 +2386,40 @@ tbody tr:hover {
   cursor: pointer;
 }
 .appointments-pagination button:disabled {
+  color: #a6b2bc;
+  background: #f5f7f8;
+  cursor: not-allowed;
+}
+.queue-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 13px 20px;
+  color: #708496;
+  border-top: 1px solid #e7eef3;
+  font-size: 12px;
+}
+.queue-pagination > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.queue-pagination strong {
+  color: #38556d;
+  white-space: nowrap;
+}
+.queue-pagination button {
+  min-height: 32px;
+  padding: 0 10px;
+  color: #176ba7;
+  background: #fff;
+  border: 1px solid #d7e5ef;
+  border-radius: 7px;
+  font: inherit;
+  cursor: pointer;
+}
+.queue-pagination button:disabled {
   color: #a6b2bc;
   background: #f5f7f8;
   cursor: not-allowed;

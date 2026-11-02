@@ -179,8 +179,16 @@ export default function ReceptionDashboard({
                     value={receptionCall.especialidad}
                   />
                   <Detail
-                    label="Fecha y hora"
-                    value={`${receptionCall.fecha} · ${receptionCall.hora}`}
+                    label="Fecha del turno"
+                    value={receptionCall.fecha}
+                  />
+                  <Detail
+                    label="Horario del turno"
+                    value={receptionCall.horaTurno || receptionCall.hora || "Sin turno"}
+                  />
+                  <Detail
+                    label="Hora de presentación"
+                    value={receptionCall.horaPresentacion || receptionCall.arrived || "—"}
                   />
                 </div>
               </section>

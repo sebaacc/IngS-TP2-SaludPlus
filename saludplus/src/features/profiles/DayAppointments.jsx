@@ -51,12 +51,13 @@ export default function DayAppointments({
     turn: "",
     patient: "",
     specialty: "",
-    time: "",
+    scheduledTime: "",
+    presentationTime: "",
     origin: "",
     status: "",
   });
   const sortedPatients = [...patients].sort((a, b) =>
-    String(a.hora || "").localeCompare(String(b.hora || "")),
+    String(a.horaTurno || a.hora || "").localeCompare(String(b.horaTurno || b.hora || "")),
   );
   const kioskFilteredPatients = onlyKioskArrivals
     ? sortedPatients.filter(hasKioskArrival)
@@ -66,7 +67,8 @@ export default function DayAppointments({
       turn: patient.id,
       patient: patient.nombre,
       specialty: patient.especialidad,
-      time: patient.hora,
+      scheduledTime: patient.horaTurno || patient.hora,
+      presentationTime: patient.horaPresentacion || patient.arrived,
       origin:
         patient.origenIngreso ||
         (patient.ingresoManual ? "Manual" : isPresent(patient) ? "Tótem" : "Agenda"),
@@ -89,7 +91,8 @@ export default function DayAppointments({
     ["turn", "Turno", "Ej. A-104"],
     ["patient", "Paciente", "Nombre"],
     ["specialty", "Especialidad", "Especialidad"],
-    ["time", "Horario", "Hora"],
+    ["scheduledTime", "Horario del turno", "Horario planificado"],
+    ["presentationTime", "Presentación", "Hora real"],
     ["origin", "Ingreso", "Origen"],
     ["status", "Estado", "Estado"],
   ];
@@ -181,7 +184,8 @@ export default function DayAppointments({
                       <td><strong className="ticket-number">{patient.id}</strong></td>
                       <td>{patient.nombre}</td>
                       <td>{patient.especialidad}</td>
-                      <td>{patient.hora}</td>
+                      <td>{patient.horaTurno || patient.hora || "Sin turno"}</td>
+                      <td>{patient.horaPresentacion || patient.arrived || "—"}</td>
                       <td>{patient.origenIngreso || (patient.ingresoManual ? "Manual" : present ? "Tótem" : "Agenda")}</td>
                       <td>
                         <span className={`appointment-status ${statusTone}`}>
@@ -213,7 +217,7 @@ export default function DayAppointments({
                 })}
                 {!visiblePatients.length && (
                   <tr>
-                    <td className="appointments-no-results" colSpan={7}>
+                    <td className="appointments-no-results" colSpan={8}>
                       No hay turnos que coincidan con esos filtros.
                     </td>
                   </tr>

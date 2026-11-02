@@ -17,6 +17,7 @@ const extraNames = [
 const extraSurnames = ["Pereyra", "Gutiérrez", "Romero", "Herrera"];
 const specialties = [
   ["Cardiología", "Dra. María Pérez", "Control cardiológico"],
+  ["Cardiología", "Dra. María Pérez", "Seguimiento cardiológico"],
   ["Clínica médica", "Dr. Pablo Sosa", "Consulta clínica"],
   ["Pediatría", "Dra. Laura Ríos", "Control de salud"],
   ["Traumatología", "Dr. Martín Acosta", "Dolor articular"],
@@ -49,6 +50,17 @@ export function normalizeAppointmentTime(value) {
   return `${String(hour).padStart(2, "0")}:${minute} ${period}m`;
 }
 
+export function formatLocalAppointmentTime(value) {
+  if (!value) return null;
+  const date = new Date(value);
+  if (!Number.isFinite(date.getTime())) return normalizeAppointmentTime(value);
+  return new Intl.DateTimeFormat("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  }).format(date).toLowerCase();
+}
+
 const extraAppointments = Array.from({ length: 44 }, (_, index) => {
   const [firstName, sexo] = extraNames[index % extraNames.length];
   const surname = extraSurnames[Math.floor(index / extraNames.length)];
@@ -72,15 +84,36 @@ const extraAppointments = Array.from({ length: 44 }, (_, index) => {
   ];
 });
 
-export const demoPatients = [...appointments, ...extraAppointments].map(([id, dni, nombre, sexo, obraSocial, estadoObraSocial, telefono, motivo, medico, especialidad, fecha, hora, monto], index) => ({
-  id, dni, nombre, sexo, obraSocial, estadoObraSocial, telefono, motivo, medico, especialidad, fecha, hora, monto,
-  nroAfiliado: `${dni.slice(-6)}-${id.slice(-3)}`,
-  arrived: hora,
-  origenIngreso: "Tótem",
-  presentedAt: hora,
-  priority: id === "A-110" ? "Prioridad" : "Normal",
-  status: index < 12 ? "Recepción" : "Esperando",
-}));
+export const demoPatients = [...appointments, ...extraAppointments].map(
+  ([id, dni, nombre, sexo, obraSocial, estadoObraSocial, telefono, motivo, medico, especialidad, fecha, hora, monto], index) => {
+    const status =
+      index >= 45
+        ? "Pendiente"
+        : index >= 32
+          ? "Ausente"
+          : index < 12 && especialidad !== "Cardiología"
+            ? "Recepción"
+            : "Esperando";
+    const hasPresented = index < 32;
+    const minutesWaiting = 8 + ((index * 7) % 49);
+    const presentedAt = hasPresented
+      ? new Date(Date.now() - minutesWaiting * 60_000).toISOString()
+      : null;
+    const presentationTime = formatLocalAppointmentTime(presentedAt);
+    return {
+      id, dni, nombre, sexo, obraSocial, estadoObraSocial, telefono, motivo, medico, especialidad, fecha, hora, monto,
+      horaTurno: hora,
+      nroAfiliado: `${dni.slice(-6)}-${id.slice(-3)}`,
+      email: `${nombre.toLocaleLowerCase("es-AR").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, ".")}@correo.com`,
+      arrived: presentationTime,
+      horaPresentacion: presentationTime,
+      origenIngreso: hasPresented ? "Tótem" : "Agenda",
+      presentedAt,
+      priority: id === "A-110" ? "Prioridad" : "Normal",
+      status,
+    };
+  },
+);
 
 const recordsByDni = new Map(demoPatients.map((patient) => [patient.dni, patient]));
 
@@ -90,8 +123,11 @@ export function patientFromDni(dni, id, arrived) {
     return {
       ...record,
       id,
-      hora: normalizeAppointmentTime(record.hora),
+      hora: normalizeAppointmentTime(record.horaTurno || record.hora),
+      horaTurno: normalizeAppointmentTime(record.horaTurno || record.hora),
       arrived: normalizeAppointmentTime(arrived),
+      horaPresentacion: normalizeAppointmentTime(arrived),
+      presentedAt: new Date().toISOString(),
       status: "Recepción",
     };
 
@@ -99,8 +135,9 @@ export function patientFromDni(dni, id, arrived) {
     id, dni, nombre: "Paciente nuevo", sexo: "No especificado",
     obraSocial: "Salud Plus", nroAfiliado: `${dni.slice(-6)}-001`,
     estadoObraSocial: "Activa", telefono: "351 555-0000",
+    email: "paciente@correo.com",
     motivo: "Consulta programada", medico: "Dra. María Pérez",
-    especialidad: "Cardiología", fecha: "31/10/2026", hora: normalizeAppointmentTime(arrived),
-    monto: 8500, arrived: normalizeAppointmentTime(arrived), origenIngreso: "Tótem", presentedAt: new Date().toISOString(), priority: "Normal", status: "Recepción",
+    especialidad: "Cardiología", fecha: "31/10/2026", hora: "Sin turno", horaTurno: "Sin turno",
+    monto: 8500, arrived: normalizeAppointmentTime(arrived), horaPresentacion: normalizeAppointmentTime(arrived), origenIngreso: "Tótem", presentedAt: new Date().toISOString(), priority: "Normal", status: "Recepción",
   };
 }

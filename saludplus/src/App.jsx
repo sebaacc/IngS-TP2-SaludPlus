@@ -6,10 +6,13 @@ import KioskPage from "./features/profiles/KioskPage";
 import RoleDashboard from "./features/profiles/RoleDashboard";
 import WaitingRoomPage from "./features/waiting-room/WaitingRoomPage";
 import QueuePage from "./features/queue/QueuePage";
+import ConsultationPage from "./features/profiles/ConsultationPage";
 import AccountMenu from "./components/AccountMenu";
 import { useQueueDemo } from "./hooks/useQueueDemo";
 import { sortEligiblePatients } from "./utils/queue";
 import "./App.css";
+
+const PROFESSIONAL_SPECIALTY = "Cardiología";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -19,6 +22,7 @@ function App() {
   const [loadVersion, setLoadVersion] = useState(0);
   const [loading, setLoading] = useState(true);
   const [notification, setNotification] = useState(null);
+  const [consultationPatientId, setConsultationPatientId] = useState(null);
   const {
     demoState,
     storageError,
@@ -28,6 +32,9 @@ function App() {
     markReceptionAbsent,
     markPresent,
     recallPatient,
+    updatePatient,
+    finishConsultation,
+    resumeConsultation,
     registerArrival,
     registerManualPatient,
     isCalling,
@@ -85,12 +92,19 @@ function App() {
     });
   };
 
-  const handleCallNext = () => {
+  const handleCallNext = (specialty) => {
     if (isCalling) return;
-    const nextPatient = sortEligiblePatients(demoState.patients)[0];
+    const eligiblePatients = specialty
+      ? demoState.patients.filter((patient) => patient.especialidad === specialty)
+      : demoState.patients;
+    const nextPatient = sortEligiblePatients(eligiblePatients)[0];
     if (!nextPatient) return;
 
-    callNext();
+    callNext(specialty);
+    if (role === "professional") {
+      setConsultationPatientId(nextPatient.id);
+      setPage("consultation");
+    }
     setNotification({
       id: Date.now(),
       title: "Turno llamado",
@@ -121,6 +135,26 @@ function App() {
 
   const previewPatients =
     scenario === "empty" || scenario === "error" ? [] : demoState.patients;
+  const queuePatients =
+    role === "professional"
+      ? previewPatients.filter(
+          (patient) => patient.especialidad === PROFESSIONAL_SPECIALTY,
+        )
+      : previewPatients;
+  const queueAllPatients =
+    role === "professional"
+      ? demoState.patients.filter(
+          (patient) => patient.especialidad === PROFESSIONAL_SPECIALTY,
+        )
+      : demoState.patients;
+  const queueCurrentCall =
+    role === "professional" &&
+    demoState.currentCall?.especialidad !== PROFESSIONAL_SPECIALTY
+      ? null
+      : demoState.currentCall;
+  const consultationPatient = demoState.patients.find(
+    (patient) => patient.id === consultationPatientId,
+  ) || (role === "professional" ? queueCurrentCall : null);
 
   if (!authenticated)
     return <LoginPage onLogin={() => setAuthenticated(true)} />;
@@ -200,16 +234,35 @@ function App() {
       ) : page === "queue" ? (
         <QueuePage
           onBack={goBack}
-          patients={previewPatients}
-          allPatients={demoState.patients}
-          currentCall={demoState.currentCall}
-          onCallNext={handleCallNext}
+          patients={queuePatients}
+          allPatients={queueAllPatients}
+          currentCall={queueCurrentCall}
+          onCallNext={() =>
+            handleCallNext(
+              role === "professional" ? PROFESSIONAL_SPECIALTY : undefined,
+            )
+          }
           isCalling={isCalling}
           onScenarioChange={selectScenario}
           onReset={resetDemoScenario}
           loading={loading}
           error={scenario === "error" && !loading}
           storageError={storageError}
+        />
+      ) : page === "consultation" && role === "professional" ? (
+        <ConsultationPage
+          key={consultationPatient?.id || "no-active-consultation"}
+          patient={consultationPatient}
+          onBack={() => setPage("queue")}
+          onSave={updatePatient}
+          onFinish={(patientId) => {
+            finishConsultation(patientId);
+            setNotification({ id: Date.now(), title: "Consulta finalizada", message: `Se registró la atención del turno ${patientId}.` });
+          }}
+          onResume={(patientId) => {
+            resumeConsultation(patientId);
+            setNotification({ id: Date.now(), title: "Consulta reanudada", message: `Se reanudó la consulta del turno ${patientId}.` });
+          }}
         />
       ) : (
         <WaitingRoomPage

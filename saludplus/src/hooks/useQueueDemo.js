@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   demoPatients,
+  formatLocalAppointmentTime,
   normalizeAppointmentTime,
   patientFromDni,
 } from "../data/demoPatients";
@@ -43,10 +44,13 @@ export function useQueueDemo() {
     setStorageError(!saveDemoState(nextState));
   };
 
-  const callNext = () => {
+  const callNext = (specialty) => {
     if (callLock.current) return;
 
-    const nextPatient = sortEligiblePatients(demoState.patients)[0];
+    const eligiblePatients = specialty
+      ? demoState.patients.filter((patient) => patient.especialidad === specialty)
+      : demoState.patients;
+    const nextPatient = sortEligiblePatients(eligiblePatients)[0];
     if (!nextPatient) return;
 
     callLock.current = true;
@@ -125,6 +129,7 @@ export function useQueueDemo() {
 
   const markPresent = (patientId) => {
     const presentedAt = new Date().toISOString();
+    const presentationTime = formatLocalAppointmentTime(presentedAt);
     persist({
       ...demoState,
       patients: demoState.patients.map((patient) =>
@@ -133,6 +138,8 @@ export function useQueueDemo() {
               ...patient,
               status: "Esperando",
               presentedAt,
+              arrived: presentationTime,
+              horaPresentacion: presentationTime,
               origenIngreso: patient.origenIngreso || "Recepción",
             }
           : patient,
@@ -162,6 +169,26 @@ export function useQueueDemo() {
     return recalledPatient;
   };
 
+  const updatePatient = (patientId, updates) => {
+    const updated = demoState.patients.find((patient) => patient.id === patientId);
+    if (!updated) return null;
+    const patient = { ...updated, ...updates };
+    persist({
+      ...demoState,
+      patients: demoState.patients.map((item) => item.id === patientId ? patient : item),
+      currentCall: demoState.currentCall?.id === patientId ? patient : demoState.currentCall,
+    });
+    return patient;
+  };
+
+  const finishConsultation = (patientId) => updatePatient(patientId, {
+    status: "Atendido", attendedAt: new Date().toISOString(),
+  });
+
+  const resumeConsultation = (patientId) => updatePatient(patientId, {
+    status: "Llamado", attendedAt: null, calledAt: new Date().toISOString(),
+  });
+
   const registerArrival = (dni, tipoTurno = "con") => {
     const nextNumber = demoState.patients.reduce((max, patient) => {
       const match = patient.id.match(/^A-(\d+)$/);
@@ -173,7 +200,14 @@ export function useQueueDemo() {
         minute: "2-digit",
       }),
     );
-    const patient = { ...patientFromDni(dni, `A-${nextNumber}`, arrived), tipoTurno };
+    const registeredPatient = patientFromDni(dni, `A-${nextNumber}`, arrived);
+    const patient = {
+      ...registeredPatient,
+      tipoTurno,
+      ...(tipoTurno === "sin"
+        ? { hora: "Sin turno", horaTurno: "Sin turno" }
+        : {}),
+    };
     persist({ ...demoState, patients: [...demoState.patients, patient] });
     return patient;
   };
@@ -216,5 +250,5 @@ export function useQueueDemo() {
     });
   };
 
-  return { demoState, storageError, callNext, callReceptionNext, confirmReceptionPayment, markReceptionAbsent, markPresent, recallPatient, registerArrival, registerManualPatient, isCalling, resetDemo };
+  return { demoState, storageError, callNext, callReceptionNext, confirmReceptionPayment, markReceptionAbsent, markPresent, recallPatient, updatePatient, finishConsultation, resumeConsultation, registerArrival, registerManualPatient, isCalling, resetDemo };
 }
