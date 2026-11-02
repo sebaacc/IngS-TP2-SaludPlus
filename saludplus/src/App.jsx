@@ -17,6 +17,7 @@ function App() {
   const [scenario, setScenario] = useState("data");
   const [loadVersion, setLoadVersion] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [notification, setNotification] = useState(null);
   const {
     demoState,
     storageError,
@@ -34,10 +35,26 @@ function App() {
     return () => window.clearTimeout(timer);
   }, [scenario, loadVersion]);
 
+  useEffect(() => {
+    if (!notification) return undefined;
+    const timer = window.setTimeout(() => setNotification(null), 4000);
+    return () => window.clearTimeout(timer);
+  }, [notification]);
+
   const selectScenario = (nextScenario) => {
     setScenario(nextScenario);
     setLoading(true);
     setLoadVersion((version) => version + 1);
+  };
+
+  const handleConfirmReceptionPayment = () => {
+    const paidPatient = demoState.receptionCall;
+    confirmReceptionPayment();
+    setNotification({
+      id: Date.now(),
+      title: "Pago recibido",
+      message: `Se registró el pago del turno ${paidPatient?.id ?? ""}.`,
+    });
   };
 
   const signOut = () => {
@@ -105,6 +122,7 @@ function App() {
       role={role}
       onSwitchProfile={() => setRole(null)}
       onSignOut={signOut}
+      notification={notification}
     >
       {role === "reception" || (role === "admin" && page === "overview") ? (
         <RoleDashboard
@@ -114,7 +132,7 @@ function App() {
           currentCall={demoState.currentCall}
           receptionCall={demoState.receptionCall}
           onCallReceptionNext={callReceptionNext}
-          onConfirmReceptionPayment={confirmReceptionPayment}
+          onConfirmReceptionPayment={handleConfirmReceptionPayment}
           onMarkReceptionAbsent={markReceptionAbsent}
           onRegisterManual={registerManualPatient}
         />

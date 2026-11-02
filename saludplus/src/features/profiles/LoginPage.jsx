@@ -1,10 +1,20 @@
 import { useState } from "react";
+import { testAccounts } from "../../data/testAccounts";
 
 export default function LoginPage({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const handleSubmit = (event) => {
     event.preventDefault();
+    const account = testAccounts.find(
+      (item) => item.email.trim().toLowerCase() === email.trim().toLowerCase() && item.password === password,
+    );
+    if (!account) {
+      setError("El correo o la contraseña no son correctos.");
+      return;
+    }
+    setError("");
     onLogin();
   };
 
@@ -23,6 +33,7 @@ export default function LoginPage({ onLogin }) {
           <input id="login-email" type="email" autoComplete="username" placeholder="nombre@ejemplo.com" value={email} onChange={(event) => setEmail(event.target.value)} required />
           <label htmlFor="login-password">Contraseña</label>
           <input id="login-password" type="password" autoComplete="current-password" placeholder="Tu contraseña" value={password} onChange={(event) => setPassword(event.target.value)} required />
+          {error && <p className="login-error" role="alert">{error}</p>}
           <button className="login-submit" type="submit">Ingresar <span aria-hidden="true">→</span></button>
         </form>
       </section>

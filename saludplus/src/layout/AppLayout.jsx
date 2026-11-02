@@ -7,7 +7,7 @@ const roleUsers = { professional: ["MP", "María P."], reception: ["RC", "Recepc
 
 function Sidebar({ page, onNavigate, role }) {
   const navItems = role === "professional"
-    ? [{ id: "queue", label: "Cola de espera", icon: "queue" }, { id: "waiting-room", label: "Sala de espera", icon: "display" }]
+    ? [{ id: "queue", label: "Cola de espera", icon: "queue" }]
     : role === "reception"
       ? [{ id: "overview", label: "Atención en recepción", icon: "people" }, { id: "manual-entry", label: "Ingreso manual", icon: "check" }]
       : role === "admin"
@@ -63,7 +63,7 @@ function Sidebar({ page, onNavigate, role }) {
   );
 }
 
-export default function AppLayout({ page, onNavigate, children, role, onSwitchProfile, onSignOut }) {
+export default function AppLayout({ page, onNavigate, children, role, onSwitchProfile, onSignOut, notification }) {
   const titles = { queue: "Cola de espera", "waiting-room": "Sala de espera", overview: role === "admin" ? "Administración" : "Recepción", "manual-entry": "Ingreso manual" };
   const pageTitle = titles[page] || "SaludPlus";
 
@@ -86,6 +86,10 @@ export default function AppLayout({ page, onNavigate, children, role, onSwitchPr
           </div>
         </div>
         <div className="content-wrap">{children}</div>
+        {notification && <div className="toast-notification" role="status" key={notification.id}>
+          <span className="toast-check" aria-hidden="true">✓</span>
+          <span className="toast-copy"><strong>{notification.title}</strong><small>{notification.message}</small></span>
+        </div>}
         <footer className="app-footer">
           <Brand />
           <span>Gestión de atención y turnos</span>
