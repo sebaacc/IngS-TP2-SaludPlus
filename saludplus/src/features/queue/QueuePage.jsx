@@ -5,6 +5,7 @@ import PageHeader from "../../components/PageHeader";
 import PrimaryButton from "../../components/PrimaryButton";
 import StatCard from "../../components/StatCard";
 import CallHistory from "./CallHistory";
+import DemoControls from "./DemoControls";
 import QueueTable from "./QueueTable";
 import {
   formatLocalCallTime,
@@ -94,6 +95,8 @@ export default function QueuePage({
   loading,
   error,
   storageError,
+  onBack,
+  onReset,
 }) {
   const [historyOpen, setHistoryOpen] = useState(false);
   const waitingCount = sortEligiblePatients(patients).length;
@@ -104,6 +107,7 @@ export default function QueuePage({
       <PageHeader
         title="Cola de espera"
         description="Seguimiento de pacientes para el consultorio asignado."
+        onBack={onBack}
       />
       <ClinicContext />
       <QueueSummary waitingCount={waitingCount} />
@@ -154,6 +158,7 @@ export default function QueuePage({
           </p>
         )}
       </section>
+      <DemoControls onScenarioChange={onScenarioChange} onReset={onReset} />
     </>
   );
 }

@@ -39,7 +39,7 @@ const profiles = [
   ],
 ];
 
-export default function ProfilePicker({ onSelect, onSignOut }) {
+export default function ProfilePicker({ onSelect, onSignOut, onBack }) {
   return (
     <main className="profile-screen">
       <AccountMenu onSignOut={onSignOut} />
@@ -53,6 +53,15 @@ export default function ProfilePicker({ onSelect, onSignOut }) {
         </div>
       </div>
       <header className="profile-heading">
+        <button
+          className="view-back-button profile-back-button"
+          type="button"
+          onClick={onBack}
+          aria-label="Volver atrás"
+          title="Volver atrás"
+        >
+          <Icon name="back" size={19} />
+        </button>
         <span className="eyebrow">ACCESO AL SISTEMA</span>
         <h1>¿Qué perfil querés explorar?</h1>
         <p>Elegí un perfil para continuar.</p>

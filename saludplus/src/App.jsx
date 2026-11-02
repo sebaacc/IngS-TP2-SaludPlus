@@ -8,6 +8,7 @@ import WaitingRoomPage from "./features/waiting-room/WaitingRoomPage";
 import QueuePage from "./features/queue/QueuePage";
 import AccountMenu from "./components/AccountMenu";
 import { useQueueDemo } from "./hooks/useQueueDemo";
+import { sortEligiblePatients } from "./utils/queue";
 import "./App.css";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
     registerArrival,
     registerManualPatient,
     isCalling,
+    resetDemo,
   } = useQueueDemo();
 
   useEffect(() => {
@@ -42,9 +44,14 @@ function App() {
   }, [notification]);
 
   const selectScenario = (nextScenario) => {
+    if (nextScenario === "data") resetDemo();
     setScenario(nextScenario);
     setLoading(true);
     setLoadVersion((version) => version + 1);
+  };
+
+  const resetDemoScenario = () => {
+    selectScenario("data");
   };
 
   const handleConfirmReceptionPayment = () => {
@@ -57,9 +64,38 @@ function App() {
     });
   };
 
+  const handleCallNext = () => {
+    if (isCalling) return;
+    const nextPatient = sortEligiblePatients(demoState.patients)[0];
+    if (!nextPatient) return;
+
+    callNext();
+    setNotification({
+      id: Date.now(),
+      title: "Turno llamado",
+      message: `Se llamó al turno ${nextPatient.id}.`,
+    });
+  };
+
   const signOut = () => {
     setRole(null);
     setAuthenticated(false);
+  };
+
+  const goBack = () => {
+    if (role === "reception" && page === "manual-entry") {
+      setPage("overview");
+      return;
+    }
+    if (role === "admin" && page === "waiting-room") {
+      setPage("queue");
+      return;
+    }
+    if (role === "admin" && page === "queue") {
+      setPage("overview");
+      return;
+    }
+    setRole(null);
   };
 
   const previewPatients =
@@ -72,6 +108,7 @@ function App() {
     return (
       <ProfilePicker
         onSignOut={signOut}
+        onBack={signOut}
         onSelect={(selected) => {
           setRole(selected);
           setPage(
@@ -83,7 +120,7 @@ function App() {
                   ? "overview"
                   : selected === "reception"
                     ? "overview"
-                  : "queue",
+                    : "queue",
           );
         }}
       />
@@ -92,17 +129,17 @@ function App() {
   if (role === "kiosk")
     return (
       <>
-        <AccountMenu onSignOut={signOut} floating />
+        <AccountMenu onSignOut={signOut} floating role={role} />
         <button className="kiosk-switch" onClick={() => setRole(null)}>
           Cambiar perfil
         </button>
-        <KioskPage onCheckIn={registerArrival} />
+        <KioskPage onCheckIn={registerArrival} onBack={goBack} />
       </>
     );
   if (role === "patients")
     return (
       <main className="public-demo-page">
-        <AccountMenu onSignOut={signOut} />
+        <AccountMenu onSignOut={signOut} role={role} />
         <div className="public-demo-toolbar">
           <button className="switch-profile" onClick={() => setRole(null)}>
             Cambiar perfil
@@ -111,6 +148,7 @@ function App() {
         <WaitingRoomPage
           patients={demoState.patients}
           currentCall={demoState.currentCall}
+          onBack={goBack}
         />
       </main>
     );
@@ -128,6 +166,7 @@ function App() {
         <RoleDashboard
           role={role}
           page={page}
+          onBack={goBack}
           patients={demoState.patients}
           currentCall={demoState.currentCall}
           receptionCall={demoState.receptionCall}
@@ -138,12 +177,14 @@ function App() {
         />
       ) : page === "queue" ? (
         <QueuePage
+          onBack={goBack}
           patients={previewPatients}
           allPatients={demoState.patients}
           currentCall={demoState.currentCall}
-          onCallNext={callNext}
+          onCallNext={handleCallNext}
           isCalling={isCalling}
           onScenarioChange={selectScenario}
+          onReset={resetDemoScenario}
           loading={loading}
           error={scenario === "error" && !loading}
           storageError={storageError}
@@ -152,6 +193,7 @@ function App() {
         <WaitingRoomPage
           patients={demoState.patients}
           currentCall={demoState.currentCall}
+          onBack={goBack}
         />
       )}
     </AppLayout>

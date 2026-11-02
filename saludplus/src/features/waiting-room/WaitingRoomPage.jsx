@@ -4,7 +4,7 @@ import PageHeader from "../../components/PageHeader";
 import { formatLocalCallTime } from "../../utils/queue";
 import CalledTurns from "./CalledTurns";
 
-export default function WaitingRoomPage({ patients, currentCall }) {
+export default function WaitingRoomPage({ patients, currentCall, onBack }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [showFullscreenControl, setShowFullscreenControl] = useState(true);
@@ -103,6 +103,7 @@ export default function WaitingRoomPage({ patients, currentCall }) {
       <PageHeader
         title="Sala de espera"
         description="Información clara para orientar a las personas que esperan."
+        onBack={onBack}
       />
       <section
         className="public-screen"

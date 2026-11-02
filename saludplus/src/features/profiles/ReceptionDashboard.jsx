@@ -27,6 +27,7 @@ export default function ReceptionDashboard({
   onConfirmPayment,
   onMarkAbsent,
   onRegisterManual,
+  onBack,
 }) {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [manualDni, setManualDni] = useState("");
@@ -42,6 +43,7 @@ export default function ReceptionDashboard({
             ? "Podés registrar por dni un paciente y sumarlo a la cola."
             : "Llamá al paciente, verificá su cobertura y confirmá el pago."
         }
+        onBack={onBack}
       />
       {page === "manual-entry" && (
         <section className="panel manual-entry-panel" id="manual-entry">

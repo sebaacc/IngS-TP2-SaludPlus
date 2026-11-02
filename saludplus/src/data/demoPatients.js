@@ -13,7 +13,7 @@ export const demoPatients = appointments.map(([id, dni, nombre, sexo, obraSocial
   nroAfiliado: `${dni.slice(-6)}-${id.slice(-3)}`,
   arrived: hora,
   priority: id === "A-110" ? "Prioridad" : "Normal",
-  status: "Recepción",
+  status: ["A-104", "A-105", "A-107"].includes(id) ? "Recepción" : "Esperando",
 }));
 
 const recordsByDni = new Map(demoPatients.map((patient) => [patient.dni, patient]));

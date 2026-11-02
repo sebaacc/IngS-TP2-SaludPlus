@@ -58,7 +58,7 @@ function downloadTicket(ticket, date) {
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-export default function KioskPage({ onCheckIn }) {
+export default function KioskPage({ onCheckIn, onBack }) {
   const [dni, setDni] = useState("");
   const [tipoTurno, setTipoTurno] = useState(null);
   const [ticket, setTicket] = useState(null);
@@ -80,6 +80,15 @@ export default function KioskPage({ onCheckIn }) {
   };
   return (
     <main className="kiosk-screen">
+      <button
+        className="view-back-button kiosk-view-back"
+        type="button"
+        onClick={onBack}
+        aria-label="Volver atrás"
+        title="Volver atrás"
+      >
+        <Icon name="back" size={19} />
+      </button>
       <div className="kiosk-brand">
         <span>
           <Icon name="brand" size={24} />

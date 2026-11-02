@@ -2,18 +2,22 @@ import Brand from "../components/Brand";
 import Icon from "../components/Icon";
 import AccountMenu from "../components/AccountMenu";
 
-const roleNames = { professional: "Profesional · Cardiología", reception: "Recepción · Admisión", patients: "Pantalla pública · Sala de espera", admin: "Administrador · Centro Capital" };
-const roleUsers = { professional: ["MP", "María P."], reception: ["RC", "Recepción"], patients: ["TV", "Pacientes"], admin: ["AD", "Admin"] };
-
 function Sidebar({ page, onNavigate, role }) {
-  const navItems = role === "professional"
-    ? [{ id: "queue", label: "Cola de espera", icon: "queue" }]
-    : role === "reception"
-      ? [{ id: "overview", label: "Atención en recepción", icon: "people" }, { id: "manual-entry", label: "Ingreso manual", icon: "check" }]
-      : role === "admin"
-        ? [{ id: "overview", label: "Resumen", icon: "calendar" }, { id: "queue", label: "Cola de espera", icon: "queue" }, { id: "waiting-room", label: "Sala de espera", icon: "display" }]
-        : [];
-  const [initials, name] = roleUsers[role] || roleUsers.professional;
+  const navItems =
+    role === "professional"
+      ? [{ id: "queue", label: "Cola de espera", icon: "queue" }]
+      : role === "reception"
+        ? [
+            { id: "overview", label: "Atención en recepción", icon: "people" },
+            { id: "manual-entry", label: "Ingreso manual", icon: "check" },
+          ]
+        : role === "admin"
+          ? [
+              { id: "overview", label: "Resumen", icon: "calendar" },
+              { id: "queue", label: "Cola de espera", icon: "queue" },
+              { id: "waiting-room", label: "Sala de espera", icon: "display" },
+            ]
+          : [];
   return (
     <aside className="sidebar">
       <div className="sidebar-brand">
@@ -38,7 +42,13 @@ function Sidebar({ page, onNavigate, role }) {
               onNavigate(item.id);
               if (role === "reception") {
                 window.setTimeout(() => {
-                  document.getElementById(item.id === "manual-entry" ? "manual-entry" : "reception-queue")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  document
+                    .getElementById(
+                      item.id === "manual-entry"
+                        ? "manual-entry"
+                        : "reception-queue",
+                    )
+                    ?.scrollIntoView({ behavior: "smooth", block: "start" });
                 }, 0);
               }
             }}
@@ -49,22 +59,25 @@ function Sidebar({ page, onNavigate, role }) {
           </button>
         ))}
       </nav>
-      <div className="sidebar-footer">
-        <div className="user-avatar" aria-hidden="true">
-          {initials}
-        </div>
-        <div className="user-details">
-          <strong>{name}</strong>
-          <span>{roleNames[role]}</span>
-        </div>
-        <span className="online-dot" title="Sesión activa" />
-      </div>
     </aside>
   );
 }
 
-export default function AppLayout({ page, onNavigate, children, role, onSwitchProfile, onSignOut, notification }) {
-  const titles = { queue: "Cola de espera", "waiting-room": "Sala de espera", overview: role === "admin" ? "Administración" : "Recepción", "manual-entry": "Ingreso manual" };
+export default function AppLayout({
+  page,
+  onNavigate,
+  children,
+  role,
+  onSwitchProfile,
+  onSignOut,
+  notification,
+}) {
+  const titles = {
+    queue: "Cola de espera",
+    "waiting-room": "Sala de espera",
+    overview: role === "admin" ? "Administración" : "Recepción",
+    "manual-entry": "Ingreso manual",
+  };
   const pageTitle = titles[page] || "SaludPlus";
 
   return (
@@ -81,15 +94,32 @@ export default function AppLayout({ page, onNavigate, children, role, onSwitchPr
             <span className="topbar-center">
               <span /> Centro Capital
             </span>
-            <button type="button" className="switch-profile" onClick={onSwitchProfile}>Cambiar perfil</button>
-            <AccountMenu onSignOut={onSignOut} />
+            <button
+              type="button"
+              className="switch-profile"
+              onClick={onSwitchProfile}
+            >
+              Cambiar perfil
+            </button>
+            <AccountMenu onSignOut={onSignOut} role={role} />
           </div>
         </div>
         <div className="content-wrap">{children}</div>
-        {notification && <div className="toast-notification" role="status" key={notification.id}>
-          <span className="toast-check" aria-hidden="true">✓</span>
-          <span className="toast-copy"><strong>{notification.title}</strong><small>{notification.message}</small></span>
-        </div>}
+        {notification && (
+          <div
+            className="toast-notification"
+            role="status"
+            key={notification.id}
+          >
+            <span className="toast-check" aria-hidden="true">
+              ✓
+            </span>
+            <span className="toast-copy">
+              <strong>{notification.title}</strong>
+              <small>{notification.message}</small>
+            </span>
+          </div>
+        )}
         <footer className="app-footer">
           <Brand />
           <span>Gestión de atención y turnos</span>

@@ -13,15 +13,28 @@ export default function RoleDashboard({
   onConfirmReceptionPayment,
   onMarkReceptionAbsent,
   onRegisterManual,
+  onBack,
 }) {
   if (role === "reception")
-    return <ReceptionDashboard page={page} patients={patients} receptionCall={receptionCall} onCallNext={onCallReceptionNext} onConfirmPayment={onConfirmReceptionPayment} onMarkAbsent={onMarkReceptionAbsent} onRegisterManual={onRegisterManual} />;
+    return (
+      <ReceptionDashboard
+        page={page}
+        patients={patients}
+        receptionCall={receptionCall}
+        onCallNext={onCallReceptionNext}
+        onConfirmPayment={onConfirmReceptionPayment}
+        onMarkAbsent={onMarkReceptionAbsent}
+        onRegisterManual={onRegisterManual}
+        onBack={onBack}
+      />
+    );
   if (role === "admin")
     return (
       <>
         <PageHeader
           title="Panel de administración"
           description="Resumen de la operación de Centro Capital."
+          onBack={onBack}
         />
         <section className="stat-grid">
           <StatCard
@@ -38,9 +51,7 @@ export default function RoleDashboard({
         </section>
         <section className="panel role-panel">
           <h2>Actividad del centro</h2>
-          <p>
-            La cola está sincronizada entre los perfiles en este navegador.
-          </p>
+          <p>La cola está sincronizada entre los perfiles en este navegador.</p>
           <p>
             Último turno llamado:{" "}
             <strong>{currentCall?.id || "Sin llamados todavía"}</strong>
