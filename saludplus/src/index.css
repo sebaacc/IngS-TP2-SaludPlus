@@ -1,12 +1,16 @@
 :root {
+  --brand-primary: #0a6ebd;
+  --brand-secondary: #0b2440;
+  --brand-accent: #0d9488;
+  --brand-background: #f4f8fc;
   font-family:
     "Segoe UI",
     -apple-system,
     BlinkMacSystemFont,
     "Helvetica Neue",
     sans-serif;
-  color: #18324b;
-  background: #f4f8fc;
+  color: var(--brand-secondary);
+  background: var(--brand-background);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -32,5 +36,5 @@ button:focus-visible {
 }
 ::selection {
   color: #fff;
-  background: #0a6ebd;
+  background: var(--brand-primary);
 }

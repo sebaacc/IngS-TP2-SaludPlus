@@ -81,7 +81,9 @@ export default function KioskPage({ onCheckIn }) {
   return (
     <main className="kiosk-screen">
       <div className="kiosk-brand">
-        <span>+</span>
+        <span>
+          <Icon name="brand" size={24} />
+        </span>
         <strong>SaludPlus</strong>
       </div>
       <section className="kiosk-card">

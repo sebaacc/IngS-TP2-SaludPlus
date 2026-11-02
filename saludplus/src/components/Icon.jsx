@@ -55,7 +55,8 @@ export default function Icon({ name, size = 20 }) {
     ),
     brand: (
       <>
-        <path d="M10 2h4v8h8v4h-8v8h-4v-8H2v-4h8z" />
+        <path d="M20.8 8.7c0 4.9-8.8 10.1-8.8 10.1S3.2 13.6 3.2 8.7a4.6 4.6 0 0 1 8.8-1.8 4.6 4.6 0 0 1 8.8 1.8Z" />
+        <path d="M6.5 11.2h3l1.4-2.4 2.1 4.5 1.4-2.1h3.1" />
       </>
     ),
     refresh: (
