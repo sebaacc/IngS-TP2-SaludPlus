@@ -105,7 +105,7 @@ export default function QueuePage({
   return (
     <>
       <PageHeader
-        title="Cola de espera"
+        title="Pacientes en espera"
         description="Seguimiento de pacientes para el consultorio asignado."
         onBack={onBack}
       />
@@ -114,7 +114,7 @@ export default function QueuePage({
       <section className="panel queue-panel">
         <div className="panel-heading">
           <div>
-            <h2>Pacientes en espera</h2>
+            <h2>Pacientes</h2>
             <p>Ordenados por prioridad y hora de llegada</p>
           </div>
           <span className="count-badge">{waitingCount} pacientes</span>

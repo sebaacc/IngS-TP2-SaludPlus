@@ -5,7 +5,7 @@ import AccountMenu from "../components/AccountMenu";
 function Sidebar({ page, onNavigate, role }) {
   const navItems =
     role === "professional"
-      ? [{ id: "queue", label: "Cola de espera", icon: "queue" }]
+      ? [{ id: "queue", label: "Pacientes en espera", icon: "queue" }]
       : role === "reception"
         ? [
             { id: "overview", label: "Atención en recepción", icon: "people" },
@@ -14,7 +14,7 @@ function Sidebar({ page, onNavigate, role }) {
         : role === "admin"
           ? [
               { id: "overview", label: "Resumen", icon: "calendar" },
-              { id: "queue", label: "Cola de espera", icon: "queue" },
+              { id: "queue", label: "Pacientes en espera", icon: "queue" },
               { id: "waiting-room", label: "Sala de espera", icon: "display" },
             ]
           : [];
@@ -73,7 +73,7 @@ export default function AppLayout({
   notification,
 }) {
   const titles = {
-    queue: "Cola de espera",
+    queue: "Pacientes en espera",
     "waiting-room": "Sala de espera",
     overview: role === "admin" ? "Administración" : "Recepción",
     "manual-entry": "Ingreso manual",

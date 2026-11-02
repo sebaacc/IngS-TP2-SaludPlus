@@ -129,7 +129,6 @@ function App() {
   if (role === "kiosk")
     return (
       <>
-        <AccountMenu onSignOut={signOut} floating role={role} />
         <button className="kiosk-switch" onClick={() => setRole(null)}>
           Cambiar perfil
         </button>

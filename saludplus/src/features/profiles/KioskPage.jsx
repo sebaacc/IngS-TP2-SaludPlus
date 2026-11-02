@@ -15,8 +15,10 @@ function createTicketPdf(ticket, date) {
   const width = 164.4; // 58 mm
   const height = 283.5; // 100 mm
   const lines = [
-    "q 10 0 0 10 20 244 cm 0.04 0.43 0.74 rg 0 0 1 1 re f 1 1 1 rg 0.42 0.15 0.16 0.7 re f 0.15 0.42 0.7 0.16 re f Q",
-    "BT /F1 18 Tf 0.04 0.19 0.31 rg 37 252 Td (SaludPlus) Tj ET",
+    "q 0.04 0.43 0.74 rg 24 244 m 40 244 l 42.2 244 44 245.8 44 248 c 44 264 l 44 266.2 42.2 268 40 268 c 24 268 l 21.8 268 20 266.2 20 264 c 20 248 l 20 245.8 21.8 244 24 244 c f Q",
+    "q 0.5 0 0 -0.5 20 268 cm 1 1 1 RG 2.5 w 24 36 m 24 36 9 26.5 9 17.5 c 9 9.7 19.6 6.4 24 14.3 c 28.4 6.4 39 9.7 39 17.5 c 39 26.5 24 36 24 36 c S 14.5 21.5 m 19.5 21.5 l 22 17.3 l 25.7 25.3 l 28.2 21.5 l 33.5 21.5 l S Q",
+    "BT /F1 15 Tf 0.04 0.19 0.31 rg 49 257 Td (SaludPlus) Tj ET",
+    "BT /F1 8 Tf 0.35 0.43 0.51 rg 49 246 Td (Obra Social) Tj ET",
     "BT /F1 9 Tf 0.35 0.43 0.51 rg 20 224 Td (TICKET DE INGRESO) Tj ET",
     "0.85 0.89 0.92 RG 20 213 m 144 213 l S",
     "BT /F1 10 Tf 0.35 0.43 0.51 rg 20 190 Td (TU NUMERO) Tj ET",
