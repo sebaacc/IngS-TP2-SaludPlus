@@ -66,10 +66,17 @@ export function parseDemoState(serializedState) {
         patient.receptionCalledAt ||
         patient.status === "Ausente" ||
         patient.status === "Atendido";
-      if (!seed || hasActivity) return { ...normalized, email: normalized.email || seed?.email };
+      if (!seed || hasActivity) return {
+        ...normalized,
+        email: normalized.email || seed?.email,
+        historialTurnos: normalized.historialTurnos || seed?.historialTurnos || [],
+        destinoLlamado: normalized.destinoLlamado || seed?.destinoLlamado,
+        consultorio: normalized.consultorio ?? seed?.consultorio,
+      };
       return {
         ...normalized,
         email: normalized.email || seed.email,
+        historialTurnos: normalized.historialTurnos || seed.historialTurnos || [],
         especialidad: seed.especialidad,
         medico: seed.medico,
         motivo: seed.motivo,
@@ -78,6 +85,9 @@ export function parseDemoState(serializedState) {
         arrived: seed.horaPresentacion,
         horaPresentacion: seed.horaPresentacion,
         status: seed.status,
+        calledAt: seed.calledAt,
+        destinoLlamado: seed.destinoLlamado,
+        consultorio: seed.consultorio,
         origenIngreso: seed.origenIngreso,
         presentedAt: seed.presentedAt,
       };

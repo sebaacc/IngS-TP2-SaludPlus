@@ -7,7 +7,7 @@ import RoleDashboard from "./features/profiles/RoleDashboard";
 import WaitingRoomPage from "./features/waiting-room/WaitingRoomPage";
 import QueuePage from "./features/queue/QueuePage";
 import ConsultationPage from "./features/profiles/ConsultationPage";
-import AccountMenu from "./components/AccountMenu";
+import FinishedAbsentPage from "./features/profiles/FinishedAbsentPage";
 import { useQueueDemo } from "./hooks/useQueueDemo";
 import { sortEligiblePatients } from "./utils/queue";
 import "./App.css";
@@ -193,7 +193,6 @@ function App() {
   if (role === "patients")
     return (
       <main className="public-demo-page">
-        <AccountMenu onSignOut={signOut} role={role} />
         <div className="public-demo-toolbar">
           <button className="switch-profile" onClick={() => setRole(null)}>
             Cambiar perfil
@@ -201,7 +200,7 @@ function App() {
         </div>
         <WaitingRoomPage
           patients={demoState.patients}
-          currentCall={demoState.currentCall}
+          currentCall={demoState.receptionCall || demoState.currentCall}
           onBack={goBack}
         />
       </main>
@@ -255,8 +254,8 @@ function App() {
           patient={consultationPatient}
           onBack={() => setPage("queue")}
           onSave={updatePatient}
-          onFinish={(patientId) => {
-            finishConsultation(patientId);
+          onFinish={(patientId, updates) => {
+            finishConsultation(patientId, updates);
             setNotification({ id: Date.now(), title: "Consulta finalizada", message: `Se registró la atención del turno ${patientId}.` });
           }}
           onResume={(patientId) => {
@@ -264,10 +263,15 @@ function App() {
             setNotification({ id: Date.now(), title: "Consulta reanudada", message: `Se reanudó la consulta del turno ${patientId}.` });
           }}
         />
+      ) : page === "finished-absent" && role === "professional" ? (
+        <FinishedAbsentPage
+          patients={queueAllPatients}
+          onBack={() => setPage("queue")}
+        />
       ) : (
         <WaitingRoomPage
           patients={demoState.patients}
-          currentCall={demoState.currentCall}
+          currentCall={demoState.receptionCall || demoState.currentCall}
           onBack={goBack}
         />
       )}

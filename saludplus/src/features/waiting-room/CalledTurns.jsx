@@ -1,8 +1,8 @@
 import Icon from "../../components/Icon";
-import { formatLocalCallTime, sortCallHistory } from "../../utils/queue";
+import { formatLocalCallTime, sortActiveCalls } from "../../utils/queue";
 
 export default function CalledTurns({ patients, currentCall }) {
-  const calledTurns = sortCallHistory(patients);
+  const calledTurns = sortActiveCalls(patients);
 
   return (
     <aside className="upcoming called-turns" aria-label="Turnos llamados hoy">
@@ -20,7 +20,7 @@ export default function CalledTurns({ patients, currentCall }) {
               <div className="called-turn-details">
                 <strong>{turn.id}</strong>
                 <span className="called-room">
-                  Consultorio {turn.consultorio ?? 3}
+                  {turn.destinoLlamado}
                 </span>
               </div>
               <time dateTime={turn.calledAt}>

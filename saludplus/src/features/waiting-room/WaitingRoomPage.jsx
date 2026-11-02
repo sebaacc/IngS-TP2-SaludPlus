@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import Icon from "../../components/Icon";
 import PageHeader from "../../components/PageHeader";
-import { formatLocalCallTime } from "../../utils/queue";
+import { formatLocalCallTime, sortActiveCalls } from "../../utils/queue";
 import CalledTurns from "./CalledTurns";
 
-export default function WaitingRoomPage({ patients, currentCall, onBack }) {
+export default function WaitingRoomPage({ patients, onBack }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [showFullscreenControl, setShowFullscreenControl] = useState(true);
   const [showCursor, setShowCursor] = useState(true);
+  const activeCalls = sortActiveCalls(patients);
+  const activeCall = activeCalls[0] || null;
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -114,16 +116,16 @@ export default function WaitingRoomPage({ patients, currentCall, onBack }) {
             <span className="public-pulse" />
             LLAMADO ACTUAL
           </div>
-          <p className={`no-call ${currentCall ? "has-call" : ""}`}>
-            {currentCall ? currentCall.id : "Aún no hay un turno llamado"}
+          <p className={`no-call ${activeCall ? "has-call" : ""}`}>
+            {activeCall ? activeCall.id : "Aún no hay un turno llamado"}
           </p>
           <div className="public-room">
             <Icon name="display" size={24} />
-            <span>Diríjase al consultorio {currentCall?.consultorio ?? 3}</span>
+            <span>{activeCall?.destinoLlamado ? `Dirigirse al ${activeCall.destinoLlamado}` : "Esperá a que llamen tu turno"}</span>
           </div>
           <p className="public-caption">
-            {currentCall
-              ? `Turno llamado a las ${formatLocalCallTime(currentCall.calledAt)}`
+            {activeCall
+              ? `Turno llamado a las ${formatLocalCallTime(activeCall.calledAt)}`
               : "Por favor, espere a que su número aparezca en pantalla."}
           </p>
         </div>
@@ -145,7 +147,7 @@ export default function WaitingRoomPage({ patients, currentCall, onBack }) {
         >
           <Icon name={isFullscreen ? "compress" : "expand"} size={22} />
         </button>
-        <CalledTurns patients={patients} currentCall={currentCall} />
+        <CalledTurns patients={patients} currentCall={activeCall} />
       </section>
       <div className="privacy-note">
         <Icon name="check" size={18} />

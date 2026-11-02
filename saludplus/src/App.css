@@ -866,7 +866,7 @@ tbody tr:hover {
 .public-screen {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(270px, 0.8fr);
+  grid-template-columns: minmax(0, 1.1fr) minmax(340px, 0.9fr);
   min-height: 440px;
   overflow: hidden;
   border-radius: 15px;
@@ -954,17 +954,17 @@ tbody tr:hover {
 }
 .upcoming-heading h2 {
   margin-top: 0;
-  font-size: 17px;
+  font-size: 20px;
 }
 .upcoming-count {
   display: grid;
   place-items: center;
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   color: var(--brand-primary);
   background: #eaf5fc;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 700;
 }
 .called-turn-list {
@@ -979,12 +979,12 @@ tbody tr:hover {
   display: flex;
   align-items: center;
   gap: 11px;
-  min-height: 66px;
+  min-height: 78px;
   border-bottom: 1px solid #eef2f5;
 }
 .upcoming-position {
   color: #a0afbb;
-  font-size: 12px;
+  font-size: 14px;
   font-variant-numeric: tabular-nums;
 }
 .called-turn-details {
@@ -997,20 +997,20 @@ tbody tr:hover {
 .called-turn-details strong {
   color: #173b5a;
   font-family: Manrope, sans-serif;
-  font-size: 16px;
+  font-size: 19px;
 }
 .called-room {
   padding: 5px 8px;
   border-radius: 15px;
   color: #176a9f;
   background: #eaf5fc;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   white-space: nowrap;
 }
 .called-turn time {
   color: #71889c;
-  font-size: 12px;
+  font-size: 14px;
   white-space: nowrap;
 }
 .upcoming-empty {
@@ -1141,7 +1141,7 @@ tbody tr:hover {
     padding-inline: 25px;
   }
   .public-screen {
-    grid-template-columns: minmax(0, 1.15fr) minmax(240px, 0.85fr);
+    grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
   }
   .upcoming {
     padding-inline: 17px;
@@ -2252,6 +2252,7 @@ tbody tr:hover {
   font-weight: 650;
 }
 .consultation-fields input,
+.consultation-fields select,
 .prescription-fields input,
 .prescription-fields textarea {
   width: 100%;
@@ -2263,6 +2264,11 @@ tbody tr:hover {
   background: white;
   font: inherit;
   font-size: 14px;
+}
+.consultation-fields input[readonly] {
+  color: #5d758a;
+  background: #f7f9fb;
+  cursor: default;
 }
 .prescription-fields textarea { resize: vertical; }
 .consultation-secondary-button,
@@ -2314,10 +2320,30 @@ tbody tr:hover {
 .prescription-list article p { margin: 5px 0; color: #667f94; }
 .prescription-list article small { color: #8295a6; }
 .consultation-message { color: #147a68; font-size: 14px; }
+.consultation-panel .consultation-message { margin: 14px 0 0; }
 .consultation-final-actions { display: flex; justify-content: flex-end; margin: 22px 0 8px; }
 .consultation-empty { padding: 28px; }
 .consultation-empty h2 { margin-top: 0; color: #173650; }
 .consultation-empty p { color: #667f94; }
+.consultation-history-table,
+.finished-patients-table { width: 100%; border-collapse: collapse; text-align: left; }
+.consultation-history-table th,
+.consultation-history-table td,
+.finished-patients-table th,
+.finished-patients-table td { padding: 14px 16px; border-bottom: 1px solid #e6edf2; }
+.consultation-history-table th,
+.finished-patients-table th { color: #6f879c; background: #f6f9fc; font-size: 13px; font-weight: 650; }
+.consultation-history-table td,
+.finished-patients-table td { color: #456179; }
+.consultation-history-table td:first-child,
+.finished-patients-table td:first-child { color: #173650; font-weight: 650; }
+.consultation-history-empty,
+.finished-patients-empty { padding: 28px !important; color: #7e93a5 !important; text-align: center; }
+.finished-patients-panel { overflow: hidden; }
+.finished-patients-table { min-width: 780px; }
+.finished-patient-status { display: inline-flex; padding: 6px 11px; border-radius: 999px; font-size: 13px; font-weight: 650; }
+.finished-patient-status.is-finished { color: #126d5b; background: #e3f4ef; }
+.finished-patient-status.is-absent { color: #936612; background: #fff3d8; }
 
 @media (max-width: 800px) {
   .consultation-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }

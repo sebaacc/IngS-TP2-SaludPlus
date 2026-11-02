@@ -42,3 +42,26 @@ export function sortCallHistory(patients) {
     })
     .sort((a, b) => new Date(b.calledAt) - new Date(a.calledAt));
 }
+
+export function sortActiveCalls(patients) {
+  const today = new Date();
+  return patients
+    .filter((patient) => patient.status === "Llamado" || patient.status === "Llamado recepción")
+    .map((patient) => ({
+      ...patient,
+      calledAt: patient.status === "Llamado recepción"
+        ? patient.receptionCalledAt || patient.calledAt
+        : patient.calledAt,
+      destinoLlamado: patient.status === "Llamado recepción"
+        ? "Box 1"
+        : patient.destinoLlamado || `Consultorio ${patient.consultorio ?? 3}`,
+    }))
+    .filter((patient) => {
+      if (!patient.calledAt) return false;
+      const calledAt = new Date(patient.calledAt);
+      return calledAt.getFullYear() === today.getFullYear() &&
+        calledAt.getMonth() === today.getMonth() &&
+        calledAt.getDate() === today.getDate();
+    })
+    .sort((a, b) => new Date(b.calledAt) - new Date(a.calledAt));
+}

@@ -8,6 +8,7 @@ function Sidebar({ page, onNavigate, role }) {
       ? [
           { id: "queue", label: "Pacientes en espera", icon: "queue" },
           { id: "consultation", label: "Consulta médica", icon: "check" },
+          { id: "finished-absent", label: "Finalizados/Ausentes", icon: "calendar" },
         ]
       : role === "reception"
         ? [
@@ -87,6 +88,7 @@ export default function AppLayout({
     "manual-entry": "Ingreso manual",
     appointments: "Turnos del día",
     consultation: "Consulta médica",
+    "finished-absent": "Finalizados/Ausentes",
   };
   const pageTitle = titles[page] || "SaludPlus";
 

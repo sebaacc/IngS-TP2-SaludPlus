@@ -78,12 +78,12 @@ export function useQueueDemo() {
     const nextPatient = sortReceptionPatients(demoState.patients)[0];
     if (!nextPatient) return null;
     const calledAt = new Date().toISOString();
-    const receptionCall = { ...nextPatient, calledAt };
+    const receptionCall = { ...nextPatient, calledAt, destinoLlamado: "Box 1" };
     persist({
       ...demoState,
       patients: demoState.patients.map((patient) =>
         patient.id === nextPatient.id
-          ? { ...patient, status: "Llamado recepción", receptionCalledAt: calledAt }
+          ? { ...patient, status: "Llamado recepción", receptionCalledAt: calledAt, destinoLlamado: "Box 1" }
           : patient,
       ),
       receptionCall,
@@ -119,11 +119,11 @@ export function useQueueDemo() {
           return { ...patient, status: "Ausente", absentAt: new Date().toISOString() };
         }
         if (nextPatient && patient.id === nextPatient.id) {
-          return { ...patient, status: "Llamado recepción", receptionCalledAt: calledAt };
+          return { ...patient, status: "Llamado recepción", receptionCalledAt: calledAt, destinoLlamado: "Box 1" };
         }
         return patient;
       }),
-      receptionCall: nextPatient ? { ...nextPatient, calledAt } : null,
+      receptionCall: nextPatient ? { ...nextPatient, calledAt, destinoLlamado: "Box 1" } : null,
     });
   };
 
@@ -181,7 +181,8 @@ export function useQueueDemo() {
     return patient;
   };
 
-  const finishConsultation = (patientId) => updatePatient(patientId, {
+  const finishConsultation = (patientId, updates = {}) => updatePatient(patientId, {
+    ...updates,
     status: "Atendido", attendedAt: new Date().toISOString(),
   });
 

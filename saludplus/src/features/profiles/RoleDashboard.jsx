@@ -37,7 +37,6 @@ function PieMetric({
           aria-label={`${title}: ${primaryLabel} ${primaryValue}, ${secondaryLabel} ${secondaryValue}`}
           style={{ background }}
         >
-          <span>{total ? `${Math.round(primaryPercent)}%` : "—"}</span>
         </div>
         <div className="admin-pie-legend">
           <div><i style={{ background: primaryColor }} /><span>{primaryLabel}</span><strong>{primaryValue}</strong></div>

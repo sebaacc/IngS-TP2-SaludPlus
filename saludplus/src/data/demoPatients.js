@@ -14,6 +14,8 @@ const extraNames = [
   ["Camila", "Femenino"], ["Nicolás", "Masculino"], ["Florencia", "Femenino"],
   ["Mateo", "Masculino"], ["Julieta", "Femenino"], ["Santiago", "Masculino"],
 ];
+const historyReasons = ["Control de seguimiento", "Consulta de rutina", "Evaluación clínica"];
+const demoCallDestinations = { 3: "Consultorio 9", 6: "Box 2", 15: "Consultorio 3" };
 const extraSurnames = ["Pereyra", "Gutiérrez", "Romero", "Herrera"];
 const specialties = [
   ["Cardiología", "Dra. María Pérez", "Control cardiológico"],
@@ -86,8 +88,9 @@ const extraAppointments = Array.from({ length: 44 }, (_, index) => {
 
 export const demoPatients = [...appointments, ...extraAppointments].map(
   ([id, dni, nombre, sexo, obraSocial, estadoObraSocial, telefono, motivo, medico, especialidad, fecha, hora, monto], index) => {
-    const status =
-      index >= 45
+    const status = demoCallDestinations[index]
+      ? "Llamado"
+      : index >= 45
         ? "Pendiente"
         : index >= 32
           ? "Ausente"
@@ -100,17 +103,33 @@ export const demoPatients = [...appointments, ...extraAppointments].map(
       ? new Date(Date.now() - minutesWaiting * 60_000).toISOString()
       : null;
     const presentationTime = formatLocalAppointmentTime(presentedAt);
+    const historialTurnos = Array.from({ length: 1 + (index % 3) }, (_, historyIndex) => {
+      const visitDate = new Date();
+      visitDate.setMonth(visitDate.getMonth() - historyIndex - 1);
+      return {
+        fecha: visitDate.toLocaleDateString("es-AR"),
+        motivo: historyIndex === 0 ? motivo : historyReasons[(index + historyIndex) % historyReasons.length],
+      };
+    });
     return {
       id, dni, nombre, sexo, obraSocial, estadoObraSocial, telefono, motivo, medico, especialidad, fecha, hora, monto,
       horaTurno: hora,
       nroAfiliado: `${dni.slice(-6)}-${id.slice(-3)}`,
       email: `${nombre.toLocaleLowerCase("es-AR").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, ".")}@correo.com`,
+      historialTurnos,
       arrived: presentationTime,
       horaPresentacion: presentationTime,
       origenIngreso: hasPresented ? "Tótem" : "Agenda",
       presentedAt,
       priority: id === "A-110" ? "Prioridad" : "Normal",
       status,
+      ...(demoCallDestinations[index]
+        ? {
+            calledAt: new Date(Date.now() - (index + 3) * 60_000).toISOString(),
+            destinoLlamado: demoCallDestinations[index],
+            consultorio: Number(demoCallDestinations[index].match(/\d+/)?.[0]) || 3,
+          }
+        : {}),
     };
   },
 );

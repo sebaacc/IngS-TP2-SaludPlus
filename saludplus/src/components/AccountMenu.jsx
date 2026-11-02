@@ -48,13 +48,14 @@ export default function AccountMenu({ onSignOut, floating = false, role }) {
         className="account-trigger"
         type="button"
         aria-expanded={open}
+        aria-label={role === "patients" ? "Abrir menú de sesión" : `Cuenta ${account.name}`}
         onClick={() => {
           setOpen((value) => !value);
           setShowSettings(false);
         }}
       >
         <span className="account-avatar">SP</span>
-        <span className="account-name">{account.name}</span>
+        {role !== "patients" && <span className="account-name">{account.name}</span>}
         <span className="account-caret" aria-hidden="true">
           ⌄
         </span>
