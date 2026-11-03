@@ -2255,8 +2255,10 @@ tbody tr:hover {
 .consultation-fields select,
 .prescription-fields input,
 .prescription-fields textarea {
+  box-sizing: border-box;
   width: 100%;
-  min-height: 42px;
+  height: 54px;
+  min-height: 54px;
   padding: 9px 11px;
   border: 1px solid #dbe6ee;
   border-radius: 9px;
@@ -2302,10 +2304,40 @@ tbody tr:hover {
 }
 .prescription-fields {
   display: grid;
-  grid-template-columns: 1fr 1.5fr 0.7fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) minmax(0, 0.7fr);
+  align-items: end;
   gap: 15px;
   margin-bottom: 17px;
 }
+.prescription-add-button { margin: 0 14px 0 0; }
+.prescription-save-button { margin-top: 14px; }
+.prescription-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.prescription-draft-list { display: grid; gap: 8px; margin-top: 14px; }
+.prescription-draft-list article {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 14px;
+  border: 1px solid #e2eaf0;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+.prescription-draft-list strong { color: #173650; }
+.prescription-draft-list p { margin: 4px 0 0; color: #667f94; font-size: 13px; }
+.prescription-remove-button {
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  color: #71879a;
+  background: #eaf0f5;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+.prescription-remove-button:hover { color: #a33b3b; background: #f8e8e8; }
 .prescription-list { margin-top: 22px; }
 .prescription-list h3 { margin: 0 0 10px; color: #173650; font-size: 16px; }
 .prescription-list article {
@@ -2353,6 +2385,7 @@ tbody tr:hover {
   .consultation-fields { grid-template-columns: 1fr; }
   .consultation-panel { padding: 18px; }
   .prescription-list article { align-items: flex-start; flex-direction: column; }
+  .prescription-actions { width: 100%; }
 }
 .appointment-filter-row th {
   padding: 4px 10px 12px;

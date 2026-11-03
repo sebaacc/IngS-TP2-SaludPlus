@@ -40,9 +40,17 @@ function displayTime(value) {
   return `${String(hour24 % 12 || 12).padStart(2, "0")}:${match[2]} ${hour24 >= 12 ? "pm" : "am"}`;
 }
 
+function escapeHtml(value) {
+  return String(value || "—").replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  })[character]);
+}
+
 export default function ConsultationPage({ patient, onBack, onSave, onFinish, onResume }) {
   const [form, setForm] = useState(() => patient || {});
-  const [prescription, setPrescription] = useState({ medication: "", instructions: "", duration: "" });
+  const emptyPrescription = () => ({ medication: "", instructions: "", duration: "" });
+  const [prescription, setPrescription] = useState(emptyPrescription);
+  const [draftPrescriptions, setDraftPrescriptions] = useState([]);
   const [dataMessage, setDataMessage] = useState("");
   const [prescriptionMessage, setPrescriptionMessage] = useState("");
   const [secondsLeft, setSecondsLeft] = useState(60);
@@ -96,15 +104,24 @@ export default function ConsultationPage({ patient, onBack, onSave, onFinish, on
     updateFormDisplayValues(normalized);
     setDataMessage("Datos guardados al finalizar la consulta.");
   };
-  const addPrescription = () => {
+  const addPrescriptionMedicine = () => {
     if (!prescription.medication.trim()) {
       setPrescriptionMessage("Ingresá el medicamento para crear la prescripción.");
       return;
     }
-    const item = { ...prescription, createdAt: new Date().toISOString() };
-    const prescriptions = [...(patient.prescriptions || []), item];
-    onSave(patient.id, { prescriptions });
-    setPrescription({ medication: "", instructions: "", duration: "" });
+    setDraftPrescriptions((items) => [...items, { ...prescription, id: `${Date.now()}-${items.length}` }]);
+    setPrescription(emptyPrescription());
+    setPrescriptionMessage("");
+  };
+  const savePrescription = () => {
+    if (!draftPrescriptions.length) {
+      setPrescriptionMessage("Agregá al menos un medicamento a la prescripción.");
+      return;
+    }
+    const createdAt = new Date().toISOString();
+    const items = draftPrescriptions.map(({ id, ...item }) => ({ ...item, createdAt }));
+    onSave(patient.id, { prescriptions: [...(patient.prescriptions || []), ...items] });
+    setDraftPrescriptions([]);
     setPrescriptionMessage("Prescripción guardada.");
   };
   const sendPrescription = (item) => {
@@ -113,6 +130,15 @@ export default function ConsultationPage({ patient, onBack, onSave, onFinish, on
     window.open(`mailto:${patient.email || ""}?subject=${subject}&body=${body}`, "_self");
     onSave(patient.id, { prescriptions: (patient.prescriptions || []).map((prescriptionItem) => prescriptionItem === item ? { ...item, sentAt: new Date().toISOString() } : prescriptionItem) });
     setPrescriptionMessage(`Se preparó el correo para ${patient.email || "el paciente"}.`);
+  };
+  const printPrescription = (item) => {
+    const printWindow = window.open("", "_blank");
+    if (!printWindow) {
+      setPrescriptionMessage("Permití las ventanas emergentes para imprimir o guardar la receta en PDF.");
+      return;
+    }
+    printWindow.document.write(`<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Prescripción médica · ${escapeHtml(patient.nombre)}</title><style>body{font:16px Arial,sans-serif;color:#173650;margin:48px;line-height:1.5}h1{font-size:24px;margin-bottom:8px}.muted{color:#667f94}.card{border:1px solid #dbe6ee;border-radius:10px;padding:20px;margin-top:24px}h2{font-size:18px;margin:0 0 14px}p{margin:8px 0}.signature{margin-top:70px;border-top:1px solid #9aabb9;width:280px;padding-top:8px;color:#667f94}@media print{body{margin:18mm}}</style></head><body><h1>Prescripción médica</h1><p class="muted">SaludPlus · Centro Capital</p><p><strong>Paciente:</strong> ${escapeHtml(patient.nombre)}<br><strong>DNI:</strong> ${escapeHtml(patient.dni)}<br><strong>Obra social:</strong> ${escapeHtml(patient.obraSocial)}</p><div class="card"><h2>${escapeHtml(item.medication)}</h2><p><strong>Indicaciones:</strong> ${escapeHtml(item.instructions || "Sin indicaciones")}</p><p><strong>Duración:</strong> ${escapeHtml(item.duration || "No indicada")}</p></div><p><strong>Profesional:</strong> ${escapeHtml(patient.medico)}</p><div class="signature">Firma y sello profesional</div><script>window.onload=()=>window.print();</script></body></html>`);
+    printWindow.document.close();
   };
 
   return (
@@ -150,8 +176,10 @@ export default function ConsultationPage({ patient, onBack, onSave, onFinish, on
           <label>Indicaciones<textarea value={prescription.instructions} onChange={(event) => setPrescription({ ...prescription, instructions: event.target.value })} placeholder="Dosis y frecuencia" rows={3} /></label>
           <label>Duración<input value={prescription.duration} onChange={(event) => setPrescription({ ...prescription, duration: event.target.value })} placeholder="Ej. 7 días" /></label>
         </div>
-        <button className="consultation-primary-button" type="button" onClick={addPrescription}>Guardar prescripción</button>
-        {(patient.prescriptions || []).length > 0 && <div className="prescription-list"><h3>Prescripciones</h3>{patient.prescriptions.map((item, index) => <article key={`${item.createdAt}-${index}`}><div><strong>{item.medication}</strong><p>{item.instructions || "Sin indicaciones"} · {item.duration || "Duración no indicada"}</p><small>{item.sentAt ? `Correo preparado · ${patient.email}` : `Destinatario: ${patient.email || "sin correo cargado"}`}</small></div><button type="button" onClick={() => sendPrescription(item)}>Enviar por mail</button></article>)}</div>}
+        <button className="consultation-secondary-button prescription-add-button" type="button" onClick={addPrescriptionMedicine}>Agregar medicamento</button>
+        {draftPrescriptions.length > 0 && <div className="prescription-draft-list" aria-label="Medicamentos de la prescripción">{draftPrescriptions.map((item, index) => <article key={item.id}><div><strong>{item.medication}</strong><p>{item.instructions || "Sin indicaciones"} · {item.duration || "Duración no indicada"}</p></div><button className="prescription-remove-button" type="button" aria-label={`Quitar ${item.medication}`} title="Quitar medicamento" onClick={() => setDraftPrescriptions((items) => items.filter((draft) => draft.id !== item.id))}>×</button></article>)}</div>}
+        <button className="consultation-primary-button prescription-save-button" type="button" onClick={savePrescription}>Guardar prescripción</button>
+        {(patient.prescriptions || []).length > 0 && <div className="prescription-list"><h3>Prescripciones</h3>{patient.prescriptions.map((item, index) => <article key={`${item.createdAt}-${index}`}><div><strong>{item.medication}</strong><p>{item.instructions || "Sin indicaciones"} · {item.duration || "Duración no indicada"}</p><small>{item.sentAt ? `Correo preparado · ${patient.email}` : `Destinatario: ${patient.email || "sin correo cargado"}`}</small></div><div className="prescription-actions"><button type="button" onClick={() => printPrescription(item)}>Imprimir / PDF</button><button type="button" onClick={() => sendPrescription(item)}>Enviar por mail</button></div></article>)}</div>}
         {prescriptionMessage && <p className="consultation-message" role="status">{prescriptionMessage}</p>}
       </section>
       <div className="consultation-final-actions">
