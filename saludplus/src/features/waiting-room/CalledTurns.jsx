@@ -18,10 +18,13 @@ export default function CalledTurns({ patients, currentCall }) {
                 {String(index + 1).padStart(2, "0")}
               </span>
               <div className="called-turn-details">
-                <strong>{turn.id}</strong>
-                <span className="called-room">
-                  {turn.destinoLlamado}
-                </span>
+                <div className="called-turn-identity">
+                  <strong>{turn.id}</strong>
+                  {turn.nombre && (
+                    <span className="called-patient-name">{turn.nombre}</span>
+                  )}
+                </div>
+                <span className="called-room">{turn.destinoLlamado}</span>
               </div>
               <time dateTime={turn.calledAt}>
                 {formatLocalCallTime(turn.calledAt)}
@@ -34,10 +37,7 @@ export default function CalledTurns({ patients, currentCall }) {
       )}
       <div className="public-message">
         <Icon name="info" size={19} />
-        <span>
-          Turno actual:{" "}
-          {currentCall?.id ?? "ninguno"}.
-        </span>
+        <span>Turno actual: {currentCall?.id ?? "ninguno"}.</span>
       </div>
     </aside>
   );

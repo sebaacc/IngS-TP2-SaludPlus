@@ -1,16 +1,74 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Icon from "../../components/Icon";
 import PageHeader from "../../components/PageHeader";
 import { formatLocalCallTime, sortActiveCalls } from "../../utils/queue";
 import CalledTurns from "./CalledTurns";
 
+function playCallTone(audioContext) {
+  if (!audioContext || audioContext.state !== "running") return;
+  const oscillator = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+  oscillator.type = "sine";
+  oscillator.frequency.setValueAtTime(880, audioContext.currentTime);
+  gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.4, audioContext.currentTime + 0.02);
+  gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 0.34);
+  oscillator.connect(gain);
+  gain.connect(audioContext.destination);
+  oscillator.start();
+  oscillator.stop(audioContext.currentTime + 0.36);
+}
+
 export default function WaitingRoomPage({ patients, onBack }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const [showFullscreenControl, setShowFullscreenControl] = useState(true);
+  const [showScreenControls, setShowScreenControls] = useState(true);
   const [showCursor, setShowCursor] = useState(true);
+  const [soundEnabled, setSoundEnabled] = useState(false);
+  const audioContextRef = useRef(null);
+  const previousCallRef = useRef(undefined);
   const activeCalls = sortActiveCalls(patients);
   const activeCall = activeCalls[0] || null;
+  const activeCallKey = activeCall
+    ? `${activeCall.id}-${activeCall.calledAt}`
+    : null;
+
+  useEffect(() => {
+    if (previousCallRef.current === undefined) {
+      previousCallRef.current = activeCallKey;
+      return;
+    }
+    if (
+      activeCallKey &&
+      activeCallKey !== previousCallRef.current &&
+      soundEnabled
+    ) {
+      const audioContext = audioContextRef.current;
+      playCallTone(audioContext);
+    }
+    previousCallRef.current = activeCallKey;
+  }, [activeCallKey, soundEnabled]);
+
+  useEffect(() => () => {
+    audioContextRef.current?.close();
+  }, []);
+
+  const toggleSound = async () => {
+    if (soundEnabled) {
+      setSoundEnabled(false);
+      return;
+    }
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+    const audioContext = audioContextRef.current || new AudioContextClass();
+    audioContextRef.current = audioContext;
+    try {
+      await audioContext.resume();
+    } catch {
+      return;
+    }
+    setSoundEnabled(true);
+  };
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -46,13 +104,13 @@ export default function WaitingRoomPage({ patients, onBack }) {
       window.clearTimeout(hideControlTimer);
       window.clearTimeout(hideCursorTimer);
       hideControlTimer = window.setTimeout(
-        () => setShowFullscreenControl(false),
+        () => setShowScreenControls(false),
         3000,
       );
       hideCursorTimer = window.setTimeout(() => setShowCursor(false), 4000);
     };
     const handlePointerActivity = () => {
-      setShowFullscreenControl(true);
+      setShowScreenControls(true);
       setShowCursor(true);
       hideAfterInactivity();
     };
@@ -80,7 +138,7 @@ export default function WaitingRoomPage({ patients, onBack }) {
 
     setIsFullscreen(true);
     setIsClosing(false);
-    setShowFullscreenControl(true);
+    setShowScreenControls(true);
     setShowCursor(true);
     if (document.documentElement.requestFullscreen) {
       try {
@@ -119,6 +177,9 @@ export default function WaitingRoomPage({ patients, onBack }) {
           <p className={`no-call ${activeCall ? "has-call" : ""}`}>
             {activeCall ? activeCall.id : "Aún no hay un turno llamado"}
           </p>
+          {activeCall?.nombre && (
+            <p className="public-patient-name">{activeCall.nombre}</p>
+          )}
           <div className="public-room">
             <Icon name="display" size={24} />
             <span>{activeCall?.destinoLlamado ? `Dirigirse al ${activeCall.destinoLlamado}` : "Esperá a que llamen tu turno"}</span>
@@ -129,31 +190,43 @@ export default function WaitingRoomPage({ patients, onBack }) {
               : "Por favor, espere a que su número aparezca en pantalla."}
           </p>
         </div>
-        <button
-          className={`fullscreen-toggle${isFullscreen && !showFullscreenControl ? " is-hidden" : ""}`}
-          type="button"
-          aria-label={
-            isFullscreen
-              ? "Salir de pantalla completa"
-              : "Ver sala en pantalla completa"
-          }
-          aria-pressed={isFullscreen}
-          title={
-            isFullscreen
-              ? "Salir de pantalla completa"
-              : "Ver sala en pantalla completa"
-          }
-          onClick={toggleFullscreen}
-        >
-          <Icon name={isFullscreen ? "compress" : "expand"} size={22} />
-        </button>
+        <div className="screen-controls">
+          <button
+            className={`screen-control fullscreen-toggle${isFullscreen && !showScreenControls ? " is-hidden" : ""}`}
+            type="button"
+            aria-label={
+              isFullscreen
+                ? "Salir de pantalla completa"
+                : "Ver sala en pantalla completa"
+            }
+            aria-pressed={isFullscreen}
+            title={
+              isFullscreen
+                ? "Salir de pantalla completa"
+                : "Ver sala en pantalla completa"
+            }
+            onClick={toggleFullscreen}
+          >
+            <Icon name={isFullscreen ? "compress" : "expand"} size={22} />
+          </button>
+          <button
+            className={`screen-control sound-toggle-icon${isFullscreen && !showScreenControls ? " is-hidden" : ""}`}
+            type="button"
+            aria-label={soundEnabled ? "Desactivar sonido" : "Activar sonido"}
+            aria-pressed={soundEnabled}
+            title={soundEnabled ? "Desactivar sonido" : "Activar sonido"}
+            onClick={toggleSound}
+          >
+            <Icon name={soundEnabled ? "volume" : "volume-off"} size={22} />
+          </button>
+        </div>
         <CalledTurns patients={patients} currentCall={activeCall} />
       </section>
       <div className="privacy-note">
         <Icon name="check" size={18} />
         <span>
-          Solo se muestran números de turno; no se publican nombres ni datos
-          clínicos.
+          Se muestran el nombre y el número de turno para identificar el llamado.
+          No se publican datos clínicos.
         </span>
       </div>
     </section>

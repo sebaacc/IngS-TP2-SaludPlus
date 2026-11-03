@@ -27,6 +27,7 @@ export default function CallHistory({ calls, onClose }) {
           <thead>
             <tr>
               <th scope="col">Turno</th>
+              <th scope="col">Paciente</th>
               <th scope="col">Hora</th>
               <th scope="col">Consultorio</th>
             </tr>
@@ -37,6 +38,7 @@ export default function CallHistory({ calls, onClose }) {
                 <td>
                   <span className="ticket-number">{call.id}</span>
                 </td>
+                <td>{call.nombre || "—"}</td>
                 <td>{formatLocalCallTime(call.calledAt)}</td>
                 <td>{call.consultorio ?? 3}</td>
               </tr>

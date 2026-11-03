@@ -54,6 +54,18 @@ export default function Icon({ name, size = 20 }) {
         <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" />
       </>
     ),
+    volume: (
+      <>
+        <path d="M4 10v4h4l5 4V6l-5 4H4Z" />
+        <path d="M17 9a5 5 0 0 1 0 6M19.5 6.5a9 9 0 0 1 0 11" />
+      </>
+    ),
+    "volume-off": (
+      <>
+        <path d="M4 10v4h4l5 4V6l-5 4H4Z" />
+        <path d="m17 9 5 6m0-6-5 6" />
+      </>
+    ),
     brand: (
       <>
         <path d="M20.8 8.7c0 4.9-8.8 10.1-8.8 10.1S3.2 13.6 3.2 8.7a4.6 4.6 0 0 1 8.8-1.8 4.6 4.6 0 0 1 8.8 1.8Z" />

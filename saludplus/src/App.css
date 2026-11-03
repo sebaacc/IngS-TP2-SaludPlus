@@ -920,6 +920,12 @@ tbody tr:hover {
   letter-spacing: -3px;
   font-variant-numeric: tabular-nums;
 }
+.public-patient-name {
+  margin: -20px 0 24px;
+  color: #d7e9f5;
+  font-size: clamp(20px, 2.6vw, 32px);
+  font-weight: 600;
+}
 .public-room {
   display: flex;
   align-items: center;
@@ -994,10 +1000,27 @@ tbody tr:hover {
   min-width: 0;
   flex: 1;
 }
+.called-turn-identity {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+}
+.called-patient-name {
+  overflow: hidden;
+  color: #71889c;
+  font-size: 18px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .called-turn-details strong {
+  flex: 0 0 auto;
   color: #173b5a;
   font-family: Manrope, sans-serif;
   font-size: 19px;
+  white-space: nowrap;
 }
 .called-room {
   padding: 5px 8px;
@@ -1048,11 +1071,15 @@ tbody tr:hover {
 .privacy-note svg {
   color: var(--brand-accent);
 }
-.fullscreen-toggle {
+.screen-controls {
   position: absolute;
   z-index: 2;
   bottom: 14px;
   left: 14px;
+  display: flex;
+  gap: 8px;
+}
+.screen-control {
   display: grid;
   place-items: center;
   width: 46px;
@@ -1066,15 +1093,15 @@ tbody tr:hover {
     background 160ms ease,
     transform 160ms ease;
 }
-.fullscreen-toggle:hover {
+.screen-control:hover {
   background: var(--brand-primary);
   transform: scale(1.04);
 }
-.fullscreen-toggle:focus-visible {
+.screen-control:focus-visible {
   outline: 3px solid #8edcf0;
   outline-offset: 3px;
 }
-.fullscreen-toggle.is-hidden {
+.screen-control.is-hidden {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -1405,6 +1432,9 @@ tbody tr:hover {
 .waiting-room-page.is-fullscreen .called-turn-details strong {
   font-size: 24px;
 }
+.waiting-room-page.is-fullscreen .called-patient-name {
+  font-size: 21px;
+}
 .waiting-room-page.is-fullscreen .called-room,
 .waiting-room-page.is-fullscreen .called-turn time {
   font-size: 18px;
@@ -1421,7 +1451,7 @@ tbody tr:hover {
   width: 28px;
   height: 28px;
 }
-.waiting-room-page.is-fullscreen .fullscreen-toggle {
+.waiting-room-page.is-fullscreen .screen-control {
   width: 56px;
   height: 56px;
 }
