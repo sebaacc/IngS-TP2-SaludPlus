@@ -1,0 +1,66 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; font-family: Inter, sans-serif; color: #0b2440; }
+    .sec-head { position: absolute; left: 240px; top: 40px; height: 44px; display: flex; align-items: center; gap: 14px; }
+    .sec-num { font-weight: 700; font-size: 18px; color: #fff; background: linear-gradient(135deg, #0a6ebd, #0d9488); border-radius: 10px; padding: 7px 11px; letter-spacing: 0.02em; }
+    .sec-title { font-weight: 700; font-size: 30px; letter-spacing: -0.01em; color: #0b2440; }
+    .sec-brand { position: absolute; right: 240px; top: 44px; display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 22px; color: #0b2440; }
+    .sec-brand img { width: 34px; height: 34px; }
+    .win { position: absolute; left: 240px; top: 104px; width: 1440px; height: 810px; border-radius: 18px; overflow: hidden; background: #f4f8fc; box-shadow: 0 30px 70px -20px rgba(11, 36, 64, 0.35), 0 0 0 1px rgba(11, 36, 64, 0.08); }
+    .cam { position: absolute; left: 0; top: 0; width: 1440px; height: 810px; transform-origin: 0 0; }
+    .shot { position: absolute; left: 0; top: 0; width: 1440px; height: auto; }
+    .ring { position: absolute; border: 3px solid #0d9488; border-radius: 12px; box-shadow: 0 0 0 6px rgba(13, 148, 136, 0.18); pointer-events: none; }
+    .cursor { position: absolute; left: 0; top: 0; width: 26px; height: 26px; z-index: 50; }
+    .cursor svg { width: 26px; height: 26px; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
+    .ripple { position: absolute; left: -14px; top: -14px; width: 28px; height: 28px; border-radius: 50%; border: 3px solid #0a6ebd; opacity: 0; }
+    .note { position: absolute; right: 28px; top: 28px; width: 430px; background: rgba(255,255,255,0.97); border-radius: 16px; padding: 20px 22px; display: flex; gap: 16px; box-shadow: 0 18px 40px -12px rgba(11,36,64,0.35); border: 1px solid #dbe6ee; z-index: 60; }
+    .note-icon { flex: none; width: 46px; height: 46px; border-radius: 12px; background: #e6f2fb; display: flex; align-items: center; justify-content: center; }
+    .note-icon svg { width: 26px; height: 26px; fill: none; stroke: #0a6ebd; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .note strong { display: block; font-size: 21px; margin-bottom: 6px; color: #0b2440; }
+    .note p { margin: 0; font-size: 18px; line-height: 1.4; color: #3c5368; }
+  </style>
+  <div id="root" data-composition-id="perfiles" data-width="1920" data-height="1080">
+    <div id="per-head">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <span class="sec-title" data-var-text="perfiles-title">Perfiles disponibles</span>
+    </div>
+    <div class="sec-brand"><img src="assets/brand/saludplus-logo.svg" alt="" /><span>SaludPlus</span></div>
+    </div>
+    <div id="per-win" class="win">
+      <div id="per-cam" class="cam">
+        <img id="per-shot-0" class="clip shot" data-start="0" data-duration="20" data-track-index="2" src="assets/screens/01-perfiles.png" alt="01-perfiles" style="z-index:1" />
+        <div id="per-ring-0" class="clip ring" data-start="3.714" data-duration="2" data-track-index="6" style="left:300px;top:471px;width:420.6px;height:112.8px;z-index:40"></div>
+        <div id="per-ring-1" class="clip ring" data-start="7.276" data-duration="1.5" data-track-index="6" style="left:720.3px;top:246px;width:420.6px;height:112.8px;z-index:40"></div>
+        <div id="per-ring-2" class="clip ring" data-start="9.826" data-duration="1.9" data-track-index="6" style="left:300px;top:246px;width:420.6px;height:112.8px;z-index:40"></div>
+        <div id="per-ring-3" class="clip ring" data-start="12.956" data-duration="2.4" data-track-index="6" style="left:300px;top:358.5px;width:420.6px;height:112.8px;z-index:40"></div>
+        <div id="per-ring-4" class="clip ring" data-start="16.241" data-duration="2.2" data-track-index="6" style="left:720.3px;top:358.5px;width:420.6px;height:112.8px;z-index:40"></div>
+      </div>
+      
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#per-win", { opacity: 0, y: 24, scale: 0.985 }, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "power3.out" }, 0.05);
+    tl.fromTo("#per-head", { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 0.15);
+    tl.to(["#per-win", "#per-head"], { opacity: 0, duration: 0.4, ease: "power2.in" }, 19.55);
+    tl.set("#per-cam", { x: 0, y: 0, scale: 1 }, 0);
+    tl.to("#per-cam", { x: -70.965, y: -412.47, scale: 1.55, duration: 0.8, ease: "power2.inOut" }, 3.514);
+    tl.to("#per-cam", { x: -722.43, y: -63.72, scale: 1.55, duration: 0.7, ease: "power2.inOut" }, 7.076);
+    tl.to("#per-cam", { x: -70.965, y: -63.72, scale: 1.55, duration: 0.7, ease: "power2.inOut" }, 9.626);
+    tl.to("#per-cam", { x: -70.965, y: -238.095, scale: 1.55, duration: 0.7, ease: "power2.inOut" }, 12.756);
+    tl.to("#per-cam", { x: -722.43, y: -238.095, scale: 1.55, duration: 0.7, ease: "power2.inOut" }, 16.041);
+    tl.to("#per-cam", { x: 0, y: 0, scale: 1, duration: 0.9, ease: "power2.inOut" }, 18.641);
+    tl.fromTo("#per-ring-0", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 3.714);
+    tl.to("#per-ring-0", { opacity: 0, duration: 0.3, ease: "power2.in" }, 5.394);
+    tl.fromTo("#per-ring-1", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 7.276);
+    tl.to("#per-ring-1", { opacity: 0, duration: 0.3, ease: "power2.in" }, 8.456);
+    tl.fromTo("#per-ring-2", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 9.826);
+    tl.to("#per-ring-2", { opacity: 0, duration: 0.3, ease: "power2.in" }, 11.406);
+    tl.fromTo("#per-ring-3", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 12.956);
+    tl.to("#per-ring-3", { opacity: 0, duration: 0.3, ease: "power2.in" }, 15.036);
+    tl.fromTo("#per-ring-4", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 16.241);
+    tl.to("#per-ring-4", { opacity: 0, duration: 0.3, ease: "power2.in" }, 18.121);
+    window.__timelines["perfiles"] = tl;
+  </script>
+</template>

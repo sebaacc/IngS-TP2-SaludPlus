@@ -1,0 +1,50 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; font-family: Inter, sans-serif; overflow: hidden; }
+    .op-bg { position: absolute; inset: 0; background: radial-gradient(1200px 700px at 78% 30%, #134a7a 0%, rgba(19,74,122,0) 70%), radial-gradient(900px 600px at 10% 100%, rgba(13,148,136,0.35) 0%, rgba(13,148,136,0) 70%), linear-gradient(150deg, #0b2440 0%, #0e2f52 100%); }
+    .op-left { position: absolute; left: 190px; top: 250px; width: 760px; color: #fff; }
+    .op-logo { width: 104px; height: 104px; }
+    .op-logo svg { width: 104px; height: 104px; }
+    .op-name { font-size: 112px; font-weight: 900; letter-spacing: -0.035em; line-height: 1; margin: 34px 0 20px; }
+    .op-tag { font-size: 34px; line-height: 1.35; color: #cfe3f5; font-weight: 400; max-width: 700px; }
+    .op-chips { display: flex; flex-direction: column; gap: 14px; margin-top: 40px; }
+    .op-chip { display: flex; align-items: center; gap: 14px; font-size: 27px; font-weight: 700; color: #fff; }
+    .op-chip i { width: 12px; height: 12px; border-radius: 50%; background: #2dd4bf; display: block; }
+    .op-stack { position: absolute; left: 1010px; top: 150px; width: 760px; height: 760px; }
+    .op-card { position: absolute; width: 640px; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 60px -18px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.12); }
+    .op-card img { display: block; width: 640px; height: auto; }
+  </style>
+  <div id="root" data-composition-id="apertura" data-width="1920" data-height="1080">
+    <div class="op-bg"></div>
+    <div class="op-left">
+      <div id="op-logo" class="op-logo"><svg viewBox="0 0 48 48"><defs><linearGradient id="LG" x1="8" y1="5" x2="40" y2="43" gradientUnits="userSpaceOnUse"><stop stop-color="#0A6EBD"/><stop offset="1" stop-color="#0D9488"/></linearGradient></defs><rect width="48" height="48" rx="14" fill="url(#LG)"/><path d="M39 17.5c0 9-15 18.5-15 18.5S9 26.5 9 17.5a7.8 7.8 0 0 1 15-3.2 7.8 7.8 0 0 1 15 3.2Z" fill="none" stroke="white" stroke-width="2.5" stroke-linejoin="round"/><path d="M14.5 21.5h5l2.5-4.2 3.7 8 2.5-3.8h5.3" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div id="op-name" class="op-name" data-var-text="brand-name">SaludPlus</div>
+      <div id="op-tag" class="op-tag">Admisión, espera y atención en un centro médico.</div>
+      <div class="op-chips">
+        <div id="op-chip-0" class="op-chip"><i></i><span>Ordena la llegada de pacientes</span></div>
+        <div id="op-chip-1" class="op-chip"><i></i><span>Reduce confusiones en la espera</span></div>
+        <div id="op-chip-2" class="op-chip"><i></i><span>Facilita el seguimiento de la atención</span></div>
+      </div>
+    </div>
+    <div class="op-stack">
+      <div id="op-card-0" class="op-card" style="left:120px;top:0px"><img src="assets/screens/13-totem-ticket.png" alt="Tótem" /></div>
+      <div id="op-card-1" class="op-card" style="left:0px;top:230px"><img src="assets/screens/42-sala-completa.png" alt="Sala de espera" /></div>
+      <div id="op-card-2" class="op-card" style="left:110px;top:460px"><img src="assets/screens/30-cola.png" alt="Cola del profesional" /></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#op-logo", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.8, ease: "back.out(1.6)" }, 0.3);
+    tl.fromTo("#op-name", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 0.6);
+    tl.fromTo("#op-tag", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 2.2);
+    tl.fromTo("#op-card-0", { opacity: 0, x: 80, rotation: 4 }, { opacity: 1, x: 0, rotation: 2, duration: 0.9, ease: "power3.out" }, 3.2);
+    tl.fromTo("#op-card-1", { opacity: 0, x: 80, rotation: -4 }, { opacity: 1, x: 0, rotation: -2, duration: 0.9, ease: "power3.out" }, 4.4);
+    tl.fromTo("#op-card-2", { opacity: 0, x: 80, rotation: 3 }, { opacity: 1, x: 0, rotation: 1.5, duration: 0.9, ease: "power3.out" }, 5.6);
+    tl.fromTo("#op-chip-0", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" }, 10.027);
+    tl.fromTo("#op-chip-1", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" }, 11.827);
+    tl.fromTo("#op-chip-2", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" }, 13.327);
+    tl.fromTo(".op-stack", { y: 0 }, { y: -30, duration: 20, ease: "none" }, 0);
+    tl.to("#root .op-left, #root .op-stack", { opacity: 0, duration: 0.5, ease: "power2.in" }, 19.45);
+    window.__timelines["apertura"] = tl;
+  </script>
+</template>

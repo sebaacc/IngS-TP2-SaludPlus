@@ -1,0 +1,262 @@
+{
+ "voice": "Paulina",
+ "rate": 172,
+ "sections": [
+  {
+   "id": "apertura",
+   "start": 0,
+   "end": 20,
+   "title": "SaludPlus",
+   "beats": [
+    {
+     "id": "a1",
+     "text": "Esto es SaludPlus, un sistema para organizar la admisión, la espera y la atención en un centro médico.",
+     "say": "Esto es Salud Plus, un sistema para organizar la admisión, la espera y la atención en un centro médico."
+    },
+    {
+     "id": "a2",
+     "text": "Ordena la llegada de los pacientes, reduce confusiones y facilita el seguimiento de cada atención."
+    }
+   ]
+  },
+  {
+   "id": "perfiles",
+   "start": 20,
+   "end": 40,
+   "title": "Perfiles disponibles",
+   "beats": [
+    {
+     "id": "p1",
+     "text": "SaludPlus ofrece cinco perfiles.",
+     "say": "Salud Plus ofrece cinco perfiles."
+    },
+    {
+     "id": "p2",
+     "text": "El Tótem de entrada, para registrarse al llegar."
+    },
+    {
+     "id": "p3",
+     "text": "Recepción, para la admisión."
+    },
+    {
+     "id": "p4",
+     "text": "Profesional, para la cola y la consulta."
+    },
+    {
+     "id": "p5",
+     "text": "Pacientes, la pantalla de la sala de espera."
+    },
+    {
+     "id": "p6",
+     "text": "Y Administrador, con la actividad del centro."
+    }
+   ]
+  },
+  {
+   "id": "totem",
+   "start": 40,
+   "end": 75,
+   "title": "Tótem de entrada",
+   "beats": [
+    {
+     "id": "t1",
+     "text": "Empezamos por el tótem del hall de entrada."
+    },
+    {
+     "id": "t2",
+     "text": "El paciente indica si tiene un turno programado o si necesita atención sin cita."
+    },
+    {
+     "id": "t3",
+     "text": "Después ingresa su DNI. Acá usamos un documento ficticio de la agenda de demostración.",
+     "say": "Después ingresa su de ene i. Acá usamos un documento ficticio de la agenda de demostración."
+    },
+    {
+     "id": "t4",
+     "text": "Al confirmar la llegada, el sistema emite el número de turno: A-164.",
+     "say": "Al confirmar la llegada, el sistema emite el número de turno: A, ciento sesenta y cuatro."
+    },
+    {
+     "id": "t5",
+     "text": "El ticket se puede imprimir, y el paciente queda incorporado a la fila de recepción."
+    }
+   ]
+  },
+  {
+   "id": "recepcion",
+   "start": 75,
+   "end": 115,
+   "title": "Recepción",
+   "beats": [
+    {
+     "id": "r1",
+     "text": "Recepción ve a quienes se registraron en el tótem, por orden de llegada."
+    },
+    {
+     "id": "r2",
+     "text": "Con «Llamar al siguiente», aparecen los datos del paciente, la cobertura y el turno.",
+     "say": "Con, llamar al siguiente, aparecen los datos del paciente, la cobertura y el turno."
+    },
+    {
+     "id": "r3",
+     "text": "Al confirmar el pago, el paciente pasa a la sala de espera con el mismo número."
+    },
+    {
+     "id": "r4",
+     "text": "«Turnos del día» reúne la agenda completa, con filtros y acciones como marcar presente.",
+     "say": "Turnos del día, reúne la agenda completa, con filtros y acciones como marcar presente."
+    },
+    {
+     "id": "r5",
+     "text": "Y el ingreso manual suma a un paciente a la cola médica con su DNI y un número nuevo.",
+     "say": "Y el ingreso manual suma a un paciente a la cola médica con su de ene i y un número nuevo."
+    }
+   ]
+  },
+  {
+   "id": "cola",
+   "start": 115,
+   "end": 165,
+   "title": "Cola del profesional",
+   "beats": [
+    {
+     "id": "c1",
+     "text": "Ahora, el perfil Profesional: consultorio 3, Cardiología, y los pacientes en espera.",
+     "say": "Ahora, el perfil Profesional: consultorio tres, cardiología, y los pacientes en espera."
+    },
+    {
+     "id": "c2",
+     "text": "La lista se ordena primero por prioridad y después por hora de llegada."
+    },
+    {
+     "id": "c3",
+     "text": "En la cola se ve el número de turno, el horario y el estado, sin datos clínicos."
+    },
+    {
+     "id": "c4",
+     "text": "Con «Llamar al siguiente», el sistema toma al primero de la lista.",
+     "say": "Con, llamar al siguiente, el sistema toma al primero de la lista."
+    },
+    {
+     "id": "c5",
+     "text": "El llamado abre directamente la consulta del turno A-115.",
+     "say": "El llamado abre directamente la consulta del turno A, ciento quince."
+    },
+    {
+     "id": "c6",
+     "text": "De vuelta en la cola, «Último turno llamado» indica número, consultorio y hora.",
+     "say": "De vuelta en la cola, la tarjeta de último turno llamado indica número, consultorio y hora."
+    },
+    {
+     "id": "c7",
+     "text": "Y el historial de llamados muestra cada turno con el paciente, la hora y el consultorio."
+    }
+   ]
+  },
+  {
+   "id": "sala",
+   "start": 165,
+   "end": 200,
+   "title": "Sala de espera pública",
+   "beats": [
+    {
+     "id": "s1",
+     "text": "En la pantalla pública aparece el turno llamado, el nombre del paciente y a dónde dirigirse."
+    },
+    {
+     "id": "s2",
+     "text": "A la derecha, los últimos llamados. No se publican datos clínicos."
+    },
+    {
+     "id": "s3",
+     "text": "Estos controles activan la pantalla completa y el sonido del aviso, desde el ícono del parlante."
+    },
+    {
+     "id": "s4",
+     "text": "El sonido puede depender de la configuración del navegador."
+    }
+   ]
+  },
+  {
+   "id": "atencion",
+   "start": 200,
+   "end": 250,
+   "title": "Atención médica",
+   "beats": [
+    {
+     "id": "m1",
+     "text": "En la consulta médica, el profesional revisa los datos del paciente, y puede corregirlos y guardarlos."
+    },
+    {
+     "id": "m2",
+     "text": "Más abajo están los datos del turno, de solo lectura, y el historial de turnos anteriores."
+    },
+    {
+     "id": "m3",
+     "text": "También puede cargar una prescripción y, una vez guardada, imprimirla o prepararla para enviar por mail.",
+     "say": "También puede cargar una prescripción y, una vez guardada, imprimirla o prepararla para enviar por meil."
+    },
+    {
+     "id": "m4",
+     "text": "Al finalizar, el estado cambia a «Consulta finalizada».",
+     "say": "Al finalizar, el estado cambia a, consulta finalizada."
+    },
+    {
+     "id": "m5",
+     "text": "Tras un minuto sin actividad, la vista vuelve sola a la cola de pacientes."
+    },
+    {
+     "id": "m6",
+     "text": "Y si hace falta, «Reanudar consulta» la vuelve a abrir.",
+     "say": "Y si hace falta, reanudar consulta, la vuelve a abrir."
+    }
+   ]
+  },
+  {
+   "id": "finalizados",
+   "start": 250,
+   "end": 275,
+   "title": "Finalizados y ausentes",
+   "beats": [
+    {
+     "id": "f1",
+     "text": "En «Finalizados/Ausentes», el profesional consulta los pacientes de su especialidad que ya fueron atendidos o que no se presentaron.",
+     "say": "En finalizados y ausentes, el profesional consulta los pacientes de su especialidad que ya fueron atendidos, o que no se presentaron."
+    },
+    {
+     "id": "f2",
+     "text": "Para cada uno se ve el turno, el motivo, el estado y la hora de finalización."
+    }
+   ]
+  },
+  {
+   "id": "admin",
+   "start": 275,
+   "end": 290,
+   "title": "Administración",
+   "beats": [
+    {
+     "id": "d1",
+     "text": "El administrador ve el resumen del centro: pacientes registrados, personas en espera y espera promedio,"
+    },
+    {
+     "id": "d2",
+     "text": "además de la asistencia del día y la calidad de la red."
+    }
+   ]
+  },
+  {
+   "id": "cierre",
+   "start": 290,
+   "end": 300,
+   "title": "SaludPlus",
+   "beats": [
+    {
+     "id": "z1",
+     "text": "SaludPlus conecta admisión, llamados y atención en un mismo flujo.",
+     "say": "Salud Plus conecta admisión, llamados y atención en un mismo flujo."
+    }
+   ]
+  }
+ ]
+}

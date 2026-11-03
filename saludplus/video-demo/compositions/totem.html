@@ -1,0 +1,80 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; font-family: Inter, sans-serif; color: #0b2440; }
+    .sec-head { position: absolute; left: 240px; top: 40px; height: 44px; display: flex; align-items: center; gap: 14px; }
+    .sec-num { font-weight: 700; font-size: 18px; color: #fff; background: linear-gradient(135deg, #0a6ebd, #0d9488); border-radius: 10px; padding: 7px 11px; letter-spacing: 0.02em; }
+    .sec-title { font-weight: 700; font-size: 30px; letter-spacing: -0.01em; color: #0b2440; }
+    .sec-brand { position: absolute; right: 240px; top: 44px; display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 22px; color: #0b2440; }
+    .sec-brand img { width: 34px; height: 34px; }
+    .win { position: absolute; left: 240px; top: 104px; width: 1440px; height: 810px; border-radius: 18px; overflow: hidden; background: #f4f8fc; box-shadow: 0 30px 70px -20px rgba(11, 36, 64, 0.35), 0 0 0 1px rgba(11, 36, 64, 0.08); }
+    .cam { position: absolute; left: 0; top: 0; width: 1440px; height: 810px; transform-origin: 0 0; }
+    .shot { position: absolute; left: 0; top: 0; width: 1440px; height: auto; }
+    .ring { position: absolute; border: 3px solid #0d9488; border-radius: 12px; box-shadow: 0 0 0 6px rgba(13, 148, 136, 0.18); pointer-events: none; }
+    .cursor { position: absolute; left: 0; top: 0; width: 26px; height: 26px; z-index: 50; }
+    .cursor svg { width: 26px; height: 26px; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
+    .ripple { position: absolute; left: -14px; top: -14px; width: 28px; height: 28px; border-radius: 50%; border: 3px solid #0a6ebd; opacity: 0; }
+    .note { position: absolute; right: 28px; top: 28px; width: 430px; background: rgba(255,255,255,0.97); border-radius: 16px; padding: 20px 22px; display: flex; gap: 16px; box-shadow: 0 18px 40px -12px rgba(11,36,64,0.35); border: 1px solid #dbe6ee; z-index: 60; }
+    .note-icon { flex: none; width: 46px; height: 46px; border-radius: 12px; background: #e6f2fb; display: flex; align-items: center; justify-content: center; }
+    .note-icon svg { width: 26px; height: 26px; fill: none; stroke: #0a6ebd; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .note strong { display: block; font-size: 21px; margin-bottom: 6px; color: #0b2440; }
+    .note p { margin: 0; font-size: 18px; line-height: 1.4; color: #3c5368; }
+  </style>
+  <div id="root" data-composition-id="totem" data-width="1920" data-height="1080">
+    <div id="tot-head">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <span class="sec-title" data-var-text="totem-title">Tótem de entrada</span>
+    </div>
+    <div class="sec-brand"><img src="assets/brand/saludplus-logo.svg" alt="" /><span>SaludPlus</span></div>
+    </div>
+    <div id="tot-win" class="win">
+      <div id="tot-cam" class="cam">
+        <img id="tot-shot-0" class="clip shot" data-start="0" data-duration="9.182" data-track-index="2" src="assets/screens/10-totem-inicio.png" alt="10-totem-inicio" style="z-index:1" />
+        <img id="tot-shot-1" class="clip shot" data-start="8.832" data-duration="5.446" data-track-index="3" src="assets/screens/11-totem-dni-vacio.png" alt="11-totem-dni-vacio" style="z-index:2" />
+        <img id="tot-shot-2" class="clip shot" data-start="13.928" data-duration="5.431" data-track-index="2" src="assets/screens/12-totem-dni.png" alt="12-totem-dni" style="z-index:3" />
+        <img id="tot-shot-3" class="clip shot" data-start="19.009" data-duration="15.991" data-track-index="3" src="assets/screens/13-totem-ticket.png" alt="13-totem-ticket" style="z-index:4" />
+        <div id="tot-ring-0" class="clip ring" data-start="5.582" data-duration="2.6" data-track-index="6" style="left:446.7px;top:279.3px;width:268.5px;height:268.5px;z-index:40"></div>
+        <div id="tot-ring-1" class="clip ring" data-start="5.582" data-duration="2.6" data-track-index="6" style="left:724.8px;top:279.3px;width:268.5px;height:268.5px;z-index:40"></div>
+        <div id="tot-ring-2" class="clip ring" data-start="19.309" data-duration="3.2" data-track-index="6" style="left:227.1px;top:283.8px;width:985.8px;height:186.6px;z-index:40"></div>
+        <div id="tot-cursor" class="clip cursor" data-start="5.782" data-duration="23.739" data-track-index="7"><div id="tot-cursor-in"><svg viewBox="0 0 24 24"><path d="M4 2l15 11-6.5 1.2L16 21l-3 1.4-3.4-6.9L4 20Z" fill="#fff" stroke="#0b2440" stroke-width="1.6" stroke-linejoin="round"/></svg><div id="tot-ripple" class="ripple"></div></div></div>
+      </div>
+      
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#tot-win", { opacity: 0, y: 24, scale: 0.985 }, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "power3.out" }, 0.05);
+    tl.fromTo("#tot-head", { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 0.15);
+    tl.to(["#tot-win", "#tot-head"], { opacity: 0, duration: 0.4, ease: "power2.in" }, 34.55);
+    tl.fromTo("#tot-shot-1", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.inOut" }, 8.832);
+    tl.fromTo("#tot-shot-2", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.inOut" }, 13.928);
+    tl.fromTo("#tot-shot-3", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.inOut" }, 19.009);
+    tl.set("#tot-cam", { x: 0, y: 0, scale: 1 }, 0);
+    tl.to("#tot-cam", { x: -216, y: -13.86, scale: 1.3, duration: 1, ease: "power2.inOut" }, 4.782);
+    tl.to("#tot-cam", { x: -216, y: 0, scale: 1.3, duration: 0.6, ease: "power2.inOut" }, 8.882);
+    tl.to("#tot-cam", { x: -504, y: -268.2, scale: 1.7, duration: 0.9, ease: "power2.inOut" }, 12.128);
+    tl.to("#tot-cam", { x: -396, y: -179.505, scale: 1.55, duration: 0.9, ease: "power2.inOut" }, 19.009);
+    tl.to("#tot-cam", { x: -360, y: -379.35, scale: 1.5, duration: 0.8, ease: "power2.inOut" }, 27.221);
+    tl.to("#tot-cam", { x: 0, y: 0, scale: 1, duration: 1, ease: "power2.inOut" }, 30.321);
+    tl.fromTo("#tot-ring-0", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 5.582);
+    tl.to("#tot-ring-0", { opacity: 0, duration: 0.3, ease: "power2.in" }, 7.862);
+    tl.fromTo("#tot-ring-1", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 5.582);
+    tl.to("#tot-ring-1", { opacity: 0, duration: 0.3, ease: "power2.in" }, 7.862);
+    tl.fromTo("#tot-ring-2", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 19.309);
+    tl.to("#tot-ring-2", { opacity: 0, duration: 0.3, ease: "power2.in" }, 22.189);
+    tl.set("#tot-cursor-in", { x: 700.95, y: 503.55, opacity: 0 }, 0);
+    tl.to("#tot-cursor-in", { opacity: 1, duration: 0.3 }, 5.782);
+    tl.to("#tot-cursor-in", { x: 572.7, y: 426.375, duration: 0.8, ease: "power2.inOut" }, 6.532);
+    tl.to("#tot-cursor-in", { scale: 0.82, duration: 0.08, yoyo: true, repeat: 1, ease: "power1.inOut" }, 7.382);
+    tl.fromTo("#tot-ripple", { opacity: 0.9, scale: 0.4 }, { opacity: 0, scale: 2.2, duration: 0.5, ease: "power2.out" }, 7.382);
+    tl.to("#tot-cursor-in", { x: 552, y: 399.24, duration: 0.8, ease: "power2.inOut" }, 11.778);
+    tl.to("#tot-cursor-in", { scale: 0.82, duration: 0.08, yoyo: true, repeat: 1, ease: "power1.inOut" }, 12.628);
+    tl.fromTo("#tot-ripple", { opacity: 0.9, scale: 0.4 }, { opacity: 0, scale: 2.2, duration: 0.5, ease: "power2.out" }, 12.628);
+    tl.to("#tot-cursor-in", { x: 552, y: 478.35, duration: 0.8, ease: "power2.inOut" }, 17.159);
+    tl.to("#tot-cursor-in", { scale: 0.82, duration: 0.08, yoyo: true, repeat: 1, ease: "power1.inOut" }, 18.009);
+    tl.fromTo("#tot-ripple", { opacity: 0.9, scale: 0.4 }, { opacity: 0, scale: 2.2, duration: 0.5, ease: "power2.out" }, 18.009);
+    tl.to("#tot-cursor-in", { x: 353.1, y: 526.05, duration: 0.8, ease: "power2.inOut" }, 26.471);
+    tl.to("#tot-cursor-in", { opacity: 0, duration: 0.3 }, 28.921);
+    window.__timelines["totem"] = tl;
+  </script>
+</template>

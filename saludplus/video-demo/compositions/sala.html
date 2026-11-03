@@ -1,0 +1,74 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; font-family: Inter, sans-serif; color: #0b2440; }
+    .sec-head { position: absolute; left: 240px; top: 40px; height: 44px; display: flex; align-items: center; gap: 14px; }
+    .sec-num { font-weight: 700; font-size: 18px; color: #fff; background: linear-gradient(135deg, #0a6ebd, #0d9488); border-radius: 10px; padding: 7px 11px; letter-spacing: 0.02em; }
+    .sec-title { font-weight: 700; font-size: 30px; letter-spacing: -0.01em; color: #0b2440; }
+    .sec-brand { position: absolute; right: 240px; top: 44px; display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 22px; color: #0b2440; }
+    .sec-brand img { width: 34px; height: 34px; }
+    .win { position: absolute; left: 240px; top: 104px; width: 1440px; height: 810px; border-radius: 18px; overflow: hidden; background: #f4f8fc; box-shadow: 0 30px 70px -20px rgba(11, 36, 64, 0.35), 0 0 0 1px rgba(11, 36, 64, 0.08); }
+    .cam { position: absolute; left: 0; top: 0; width: 1440px; height: 810px; transform-origin: 0 0; }
+    .shot { position: absolute; left: 0; top: 0; width: 1440px; height: auto; }
+    .ring { position: absolute; border: 3px solid #0d9488; border-radius: 12px; box-shadow: 0 0 0 6px rgba(13, 148, 136, 0.18); pointer-events: none; }
+    .cursor { position: absolute; left: 0; top: 0; width: 26px; height: 26px; z-index: 50; }
+    .cursor svg { width: 26px; height: 26px; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
+    .ripple { position: absolute; left: -14px; top: -14px; width: 28px; height: 28px; border-radius: 50%; border: 3px solid #0a6ebd; opacity: 0; }
+    .note { position: absolute; right: 28px; top: 28px; width: 430px; background: rgba(255,255,255,0.97); border-radius: 16px; padding: 20px 22px; display: flex; gap: 16px; box-shadow: 0 18px 40px -12px rgba(11,36,64,0.35); border: 1px solid #dbe6ee; z-index: 60; }
+    .note-icon { flex: none; width: 46px; height: 46px; border-radius: 12px; background: #e6f2fb; display: flex; align-items: center; justify-content: center; }
+    .note-icon svg { width: 26px; height: 26px; fill: none; stroke: #0a6ebd; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .note strong { display: block; font-size: 21px; margin-bottom: 6px; color: #0b2440; }
+    .note p { margin: 0; font-size: 18px; line-height: 1.4; color: #3c5368; }
+  </style>
+  <div id="root" data-composition-id="sala" data-width="1920" data-height="1080">
+    <div id="sal-head">
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <span class="sec-title" data-var-text="sala-title">Sala de espera pública</span>
+    </div>
+    <div class="sec-brand"><img src="assets/brand/saludplus-logo.svg" alt="" /><span>SaludPlus</span></div>
+    </div>
+    <div id="sal-win" class="win">
+      <div id="sal-cam" class="cam">
+        <img id="sal-shot-0" class="clip shot" data-start="0" data-duration="17.049" data-track-index="2" src="assets/screens/40-sala.png" alt="40-sala" style="z-index:1" />
+        <img id="sal-shot-1" class="clip shot" data-start="16.699" data-duration="2.4" data-track-index="3" src="assets/screens/41-sala-sonido.png" alt="41-sala-sonido" style="z-index:2" />
+        <img id="sal-shot-2" class="clip shot" data-start="18.749" data-duration="16.251" data-track-index="2" src="assets/screens/42-sala-completa.png" alt="42-sala-completa" style="z-index:3" />
+        <div id="sal-ring-0" class="clip ring" data-start="2.3" data-duration="2.6" data-track-index="6" style="left:280.2px;top:419.7px;width:266.7px;height:58.8px;z-index:40"></div>
+        <div id="sal-ring-1" class="clip ring" data-start="15.049" data-duration="2.2" data-track-index="6" style="left:46.2px;top:500.7px;width:102px;height:53.4px;z-index:40"></div>
+        <div id="sal-ring-2" class="clip ring" data-start="23.546" data-duration="2.6" data-track-index="6" style="left:24.6px;top:723px;width:120px;height:62.4px;z-index:40"></div>
+        <div id="sal-cursor" class="clip cursor" data-start="13.849" data-duration="4.2" data-track-index="7"><div id="sal-cursor-in"><svg viewBox="0 0 24 24"><path d="M4 2l15 11-6.5 1.2L16 21l-3 1.4-3.4-6.9L4 20Z" fill="#fff" stroke="#0b2440" stroke-width="1.6" stroke-linejoin="round"/></svg><div id="sal-ripple" class="ripple"></div></div></div>
+      </div>
+      <div id="sal-note-0" class="clip note" data-start="15.249" data-duration="11.269" data-track-index="8"><div class="note-icon"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4Z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></div><div><strong>Sonido del aviso</strong><p>Se activa desde el ícono del parlante. Su reproducción puede depender de la configuración del navegador.</p></div></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#sal-win", { opacity: 0, y: 24, scale: 0.985 }, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "power3.out" }, 0.05);
+    tl.fromTo("#sal-head", { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 0.15);
+    tl.to(["#sal-win", "#sal-head"], { opacity: 0, duration: 0.4, ease: "power2.in" }, 34.55);
+    tl.fromTo("#sal-shot-1", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.inOut" }, 16.699);
+    tl.fromTo("#sal-shot-2", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.inOut" }, 18.749);
+    tl.set("#sal-cam", { x: 0, y: 0, scale: 1 }, 0);
+    tl.to("#sal-cam", { x: 0, y: -76.14, scale: 1.35, duration: 1.1, ease: "power2.inOut" }, 1.2);
+    tl.to("#sal-cam", { x: -576, y: -93.96, scale: 1.4, duration: 1, ease: "power2.inOut" }, 7.896);
+    tl.to("#sal-cam", { x: 0, y: -755.28, scale: 2.2, duration: 1, ease: "power2.inOut" }, 14.249);
+    tl.to("#sal-cam", { x: 0, y: -755.28, scale: 2.2, duration: 0.01, ease: "power2.inOut" }, 16.749);
+    tl.to("#sal-cam", { x: 0, y: 0, scale: 1, duration: 0.01, ease: "power2.inOut" }, 18.749);
+    tl.to("#sal-cam", { x: 0, y: -729, scale: 1.9, duration: 1.2, ease: "power2.inOut" }, 22.546);
+    tl.fromTo("#sal-ring-0", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 2.3);
+    tl.to("#sal-ring-0", { opacity: 0, duration: 0.3, ease: "power2.in" }, 4.58);
+    tl.fromTo("#sal-ring-1", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 15.049);
+    tl.to("#sal-ring-1", { opacity: 0, duration: 0.3, ease: "power2.in" }, 16.929);
+    tl.fromTo("#sal-ring-2", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 23.546);
+    tl.to("#sal-ring-2", { opacity: 0, duration: 0.3, ease: "power2.in" }, 25.826);
+    tl.set("#sal-cursor-in", { x: 192.9, y: 617.4, opacity: 0 }, 0);
+    tl.to("#sal-cursor-in", { opacity: 1, duration: 0.3 }, 13.849);
+    tl.to("#sal-cursor-in", { x: 72.9, y: 529.47, duration: 0.8, ease: "power2.inOut" }, 14.599);
+    tl.to("#sal-cursor-in", { x: 121.5, y: 529.47, duration: 0.8, ease: "power2.inOut" }, 14.999);
+    tl.to("#sal-cursor-in", { scale: 0.82, duration: 0.08, yoyo: true, repeat: 1, ease: "power1.inOut" }, 15.849);
+    tl.fromTo("#sal-ripple", { opacity: 0.9, scale: 0.4 }, { opacity: 0, scale: 2.2, duration: 0.5, ease: "power2.out" }, 15.849);
+    tl.to("#sal-cursor-in", { opacity: 0, duration: 0.3 }, 17.449);
+    tl.fromTo("#sal-note-0", { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 15.249);
+    tl.to("#sal-note-0", { opacity: 0, duration: 0.3, ease: "power2.in" }, 26.198);
+    window.__timelines["sala"] = tl;
+  </script>
+</template>

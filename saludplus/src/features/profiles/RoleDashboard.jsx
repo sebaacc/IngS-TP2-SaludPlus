@@ -23,6 +23,7 @@ function PieMetric({
 }) {
   const total = primaryValue + secondaryValue;
   const primaryPercent = total ? (primaryValue / total) * 100 : 0;
+  const secondaryPercent = total ? (secondaryValue / total) * 100 : 0;
   const background = total
     ? `conic-gradient(${primaryColor} 0 ${primaryPercent}%, ${secondaryColor} ${primaryPercent}% 100%)`
     : "#e8eef3";
@@ -34,13 +35,23 @@ function PieMetric({
         <div
           className="admin-pie-chart"
           role="img"
-          aria-label={`${title}: ${primaryLabel} ${primaryValue}, ${secondaryLabel} ${secondaryValue}`}
+          aria-label={`${title}: ${primaryLabel} ${primaryValue}, ${Math.round(primaryPercent)} por ciento; ${secondaryLabel} ${secondaryValue}, ${Math.round(secondaryPercent)} por ciento`}
           style={{ background }}
         >
         </div>
         <div className="admin-pie-legend">
-          <div><i style={{ background: primaryColor }} /><span>{primaryLabel}</span><strong>{primaryValue}</strong></div>
-          <div><i style={{ background: secondaryColor }} /><span>{secondaryLabel}</span><strong>{secondaryValue}</strong></div>
+          <div>
+            <i style={{ background: primaryColor }} />
+            <span>{primaryLabel}</span>
+            <strong>{primaryValue}</strong>
+            <span className="admin-pie-percent">{Math.round(primaryPercent)}%</span>
+          </div>
+          <div>
+            <i style={{ background: secondaryColor }} />
+            <span>{secondaryLabel}</span>
+            <strong>{secondaryValue}</strong>
+            <span className="admin-pie-percent">{Math.round(secondaryPercent)}%</span>
+          </div>
           <small>{total} turnos contabilizados</small>
         </div>
       </div>

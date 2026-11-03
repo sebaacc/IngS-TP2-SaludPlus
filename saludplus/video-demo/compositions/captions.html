@@ -1,0 +1,156 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; font-family: Inter, sans-serif; pointer-events: none; }
+    .cap { position: absolute; left: 0; right: 0; top: 936px; text-align: center; opacity: 0; visibility: hidden; overflow: visible; }
+    .cap span { display: inline-block; font-size: 34px; font-weight: 700; line-height: 1.25; color: #0b2440; background: rgba(255, 255, 255, 0.88); padding: 6px 18px; border-radius: 10px; max-width: 1500px; }
+    .cap.on-dark span { color: #fff; background: rgba(5, 20, 38, 0.55); }
+  </style>
+  <div id="root" data-composition-id="captions" data-width="1920" data-height="1080">
+    <div id="cap-0" class="cap on-dark"><span>Esto es SaludPlus, un sistema para organizar la admisión,</span></div>
+    <div id="cap-1" class="cap on-dark"><span>la espera y la atención en un centro médico.</span></div>
+    <div id="cap-2" class="cap on-dark"><span>Ordena la llegada de los pacientes,</span></div>
+    <div id="cap-3" class="cap on-dark"><span>reduce confusiones y facilita el seguimiento de cada atención.</span></div>
+    <div id="cap-4" class="cap"><span>SaludPlus ofrece cinco perfiles.</span></div>
+    <div id="cap-5" class="cap"><span>El Tótem de entrada, para registrarse al llegar.</span></div>
+    <div id="cap-6" class="cap"><span>Recepción, para la admisión.</span></div>
+    <div id="cap-7" class="cap"><span>Profesional, para la cola y la consulta.</span></div>
+    <div id="cap-8" class="cap"><span>Pacientes, la pantalla de la sala de espera.</span></div>
+    <div id="cap-9" class="cap"><span>Y Administrador, con la actividad del centro.</span></div>
+    <div id="cap-10" class="cap"><span>Empezamos por el tótem del hall de entrada.</span></div>
+    <div id="cap-11" class="cap"><span>El paciente indica si tiene un turno</span></div>
+    <div id="cap-12" class="cap"><span>programado o si necesita atención sin cita.</span></div>
+    <div id="cap-13" class="cap"><span>Después ingresa su DNI.</span></div>
+    <div id="cap-14" class="cap"><span>Acá usamos un documento ficticio de la agenda de demostración.</span></div>
+    <div id="cap-15" class="cap"><span>Al confirmar la llegada, el sistema emite el número de turno:</span></div>
+    <div id="cap-16" class="cap"><span>A-164.</span></div>
+    <div id="cap-17" class="cap"><span>El ticket se puede imprimir,</span></div>
+    <div id="cap-18" class="cap"><span>y el paciente queda incorporado a la fila de recepción.</span></div>
+    <div id="cap-19" class="cap"><span>Recepción ve a quienes se registraron en el tótem,</span></div>
+    <div id="cap-20" class="cap"><span>por orden de llegada.</span></div>
+    <div id="cap-21" class="cap"><span>Con «Llamar al siguiente», aparecen los datos del paciente,</span></div>
+    <div id="cap-22" class="cap"><span>la cobertura y el turno.</span></div>
+    <div id="cap-23" class="cap"><span>Al confirmar el pago,</span></div>
+    <div id="cap-24" class="cap"><span>el paciente pasa a la sala de espera con el mismo número.</span></div>
+    <div id="cap-25" class="cap"><span>«Turnos del día» reúne la agenda completa,</span></div>
+    <div id="cap-26" class="cap"><span>con filtros y acciones como marcar presente.</span></div>
+    <div id="cap-27" class="cap"><span>Y el ingreso manual suma a un paciente a</span></div>
+    <div id="cap-28" class="cap"><span>la cola médica con su DNI y un número nuevo.</span></div>
+    <div id="cap-29" class="cap"><span>Ahora, el perfil Profesional: consultorio 3, Cardiología,</span></div>
+    <div id="cap-30" class="cap"><span>y los pacientes en espera.</span></div>
+    <div id="cap-31" class="cap"><span>La lista se ordena primero por</span></div>
+    <div id="cap-32" class="cap"><span>prioridad y después por hora de llegada.</span></div>
+    <div id="cap-33" class="cap"><span>En la cola se ve el número de turno, el horario y el estado,</span></div>
+    <div id="cap-34" class="cap"><span>sin datos clínicos.</span></div>
+    <div id="cap-35" class="cap"><span>Con «Llamar al siguiente»,</span></div>
+    <div id="cap-36" class="cap"><span>el sistema toma al primero de la lista.</span></div>
+    <div id="cap-37" class="cap"><span>El llamado abre directamente la consulta del turno A-115.</span></div>
+    <div id="cap-38" class="cap"><span>De vuelta en la cola, «Último turno llamado» indica número,</span></div>
+    <div id="cap-39" class="cap"><span>consultorio y hora.</span></div>
+    <div id="cap-40" class="cap"><span>Y el historial de llamados muestra cada turno con el paciente,</span></div>
+    <div id="cap-41" class="cap"><span>la hora y el consultorio.</span></div>
+    <div id="cap-42" class="cap"><span>En la pantalla pública aparece el turno llamado,</span></div>
+    <div id="cap-43" class="cap"><span>el nombre del paciente y a dónde dirigirse.</span></div>
+    <div id="cap-44" class="cap"><span>A la derecha, los últimos llamados.</span></div>
+    <div id="cap-45" class="cap"><span>No se publican datos clínicos.</span></div>
+    <div id="cap-46" class="cap"><span>Estos controles activan la</span></div>
+    <div id="cap-47" class="cap"><span>pantalla completa y el sonido del aviso,</span></div>
+    <div id="cap-48" class="cap"><span>desde el ícono del parlante.</span></div>
+    <div id="cap-49" class="cap"><span>El sonido puede depender de la configuración del navegador.</span></div>
+    <div id="cap-50" class="cap"><span>En la consulta médica,</span></div>
+    <div id="cap-51" class="cap"><span>el profesional revisa los datos del paciente,</span></div>
+    <div id="cap-52" class="cap"><span>y puede corregirlos y guardarlos.</span></div>
+    <div id="cap-53" class="cap"><span>Más abajo están los datos del turno, de solo lectura,</span></div>
+    <div id="cap-54" class="cap"><span>y el historial de turnos anteriores.</span></div>
+    <div id="cap-55" class="cap"><span>También puede cargar una prescripción y, una vez guardada,</span></div>
+    <div id="cap-56" class="cap"><span>imprimirla o prepararla para enviar por mail.</span></div>
+    <div id="cap-57" class="cap"><span>Al finalizar, el estado cambia a «Consulta finalizada».</span></div>
+    <div id="cap-58" class="cap"><span>Tras un minuto sin actividad,</span></div>
+    <div id="cap-59" class="cap"><span>la vista vuelve sola a la cola de pacientes.</span></div>
+    <div id="cap-60" class="cap"><span>Y si hace falta, «Reanudar consulta» la vuelve a abrir.</span></div>
+    <div id="cap-61" class="cap"><span>En «Finalizados/Ausentes»,</span></div>
+    <div id="cap-62" class="cap"><span>el profesional consulta los pacientes de su</span></div>
+    <div id="cap-63" class="cap"><span>especialidad que ya fueron atendidos o que no se presentaron.</span></div>
+    <div id="cap-64" class="cap"><span>Para cada uno se ve el turno, el motivo,</span></div>
+    <div id="cap-65" class="cap"><span>el estado y la hora de finalización.</span></div>
+    <div id="cap-66" class="cap"><span>El administrador ve el resumen del centro:</span></div>
+    <div id="cap-67" class="cap"><span>pacientes registrados, personas en espera y espera promedio,</span></div>
+    <div id="cap-68" class="cap"><span>además de la asistencia del día y la calidad de la red.</span></div>
+    <div id="cap-69" class="cap on-dark"><span>SaludPlus conecta admisión,</span></div>
+    <div id="cap-70" class="cap on-dark"><span>llamados y atención en un mismo flujo.</span></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.set("#cap-0", { opacity: 1, visibility: "visible" }, 1.52); tl.set("#cap-0", { opacity: 0, visibility: "hidden" }, 5.396);
+    tl.set("#cap-1", { opacity: 1, visibility: "visible" }, 5.396); tl.set("#cap-1", { opacity: 0, visibility: "hidden" }, 8.577);
+    tl.set("#cap-2", { opacity: 1, visibility: "visible" }, 9.847); tl.set("#cap-2", { opacity: 0, visibility: "hidden" }, 12.196);
+    tl.set("#cap-3", { opacity: 1, visibility: "visible" }, 12.196); tl.set("#cap-3", { opacity: 0, visibility: "hidden" }, 16.465);
+    tl.set("#cap-4", { opacity: 1, visibility: "visible" }, 20.82); tl.set("#cap-4", { opacity: 0, visibility: "hidden" }, 23.53);
+    tl.set("#cap-5", { opacity: 1, visibility: "visible" }, 23.634); tl.set("#cap-5", { opacity: 0, visibility: "hidden" }, 27.092);
+    tl.set("#cap-6", { opacity: 1, visibility: "visible" }, 27.196); tl.set("#cap-6", { opacity: 0, visibility: "hidden" }, 29.641);
+    tl.set("#cap-7", { opacity: 1, visibility: "visible" }, 29.746); tl.set("#cap-7", { opacity: 0, visibility: "hidden" }, 32.772);
+    tl.set("#cap-8", { opacity: 1, visibility: "visible" }, 32.876); tl.set("#cap-8", { opacity: 0, visibility: "hidden" }, 36.057);
+    tl.set("#cap-9", { opacity: 1, visibility: "visible" }, 36.161); tl.set("#cap-9", { opacity: 0, visibility: "hidden" }, 39.45);
+    tl.set("#cap-10", { opacity: 1, visibility: "visible" }, 40.82); tl.set("#cap-10", { opacity: 0, visibility: "hidden" }, 43.632);
+    tl.set("#cap-11", { opacity: 1, visibility: "visible" }, 44.902); tl.set("#cap-11", { opacity: 0, visibility: "hidden" }, 47.327);
+    tl.set("#cap-12", { opacity: 1, visibility: "visible" }, 47.327); tl.set("#cap-12", { opacity: 0, visibility: "hidden" }, 50.378);
+    tl.set("#cap-13", { opacity: 1, visibility: "visible" }, 51.648); tl.set("#cap-13", { opacity: 0, visibility: "hidden" }, 53.319);
+    tl.set("#cap-14", { opacity: 1, visibility: "visible" }, 53.319); tl.set("#cap-14", { opacity: 0, visibility: "hidden" }, 57.859);
+    tl.set("#cap-15", { opacity: 1, visibility: "visible" }, 59.129); tl.set("#cap-15", { opacity: 0, visibility: "hidden" }, 64.774);
+    tl.set("#cap-16", { opacity: 1, visibility: "visible" }, 64.774); tl.set("#cap-16", { opacity: 0, visibility: "hidden" }, 65.571);
+    tl.set("#cap-17", { opacity: 1, visibility: "visible" }, 66.841); tl.set("#cap-17", { opacity: 0, visibility: "hidden" }, 68.669);
+    tl.set("#cap-18", { opacity: 1, visibility: "visible" }, 68.669); tl.set("#cap-18", { opacity: 0, visibility: "hidden" }, 72.352);
+    tl.set("#cap-19", { opacity: 1, visibility: "visible" }, 75.82); tl.set("#cap-19", { opacity: 0, visibility: "hidden" }, 78.957);
+    tl.set("#cap-20", { opacity: 1, visibility: "visible" }, 78.957); tl.set("#cap-20", { opacity: 0, visibility: "hidden" }, 80.491);
+    tl.set("#cap-21", { opacity: 1, visibility: "visible" }, 81.761); tl.set("#cap-21", { opacity: 0, visibility: "hidden" }, 85.744);
+    tl.set("#cap-22", { opacity: 1, visibility: "visible" }, 85.744); tl.set("#cap-22", { opacity: 0, visibility: "hidden" }, 87.581);
+    tl.set("#cap-23", { opacity: 1, visibility: "visible" }, 88.851); tl.set("#cap-23", { opacity: 0, visibility: "hidden" }, 90.258);
+    tl.set("#cap-24", { opacity: 1, visibility: "visible" }, 90.258); tl.set("#cap-24", { opacity: 0, visibility: "hidden" }, 94.111);
+    tl.set("#cap-25", { opacity: 1, visibility: "visible" }, 95.381); tl.set("#cap-25", { opacity: 0, visibility: "hidden" }, 98.27);
+    tl.set("#cap-26", { opacity: 1, visibility: "visible" }, 98.27); tl.set("#cap-26", { opacity: 0, visibility: "hidden" }, 101.462);
+    tl.set("#cap-27", { opacity: 1, visibility: "visible" }, 102.732); tl.set("#cap-27", { opacity: 0, visibility: "hidden" }, 105.295);
+    tl.set("#cap-28", { opacity: 1, visibility: "visible" }, 105.295); tl.set("#cap-28", { opacity: 0, visibility: "hidden" }, 108.277);
+    tl.set("#cap-29", { opacity: 1, visibility: "visible" }, 115.82); tl.set("#cap-29", { opacity: 0, visibility: "hidden" }, 120.3);
+    tl.set("#cap-30", { opacity: 1, visibility: "visible" }, 120.3); tl.set("#cap-30", { opacity: 0, visibility: "hidden" }, 122.557);
+    tl.set("#cap-31", { opacity: 1, visibility: "visible" }, 123.827); tl.set("#cap-31", { opacity: 0, visibility: "hidden" }, 125.611);
+    tl.set("#cap-32", { opacity: 1, visibility: "visible" }, 125.611); tl.set("#cap-32", { opacity: 0, visibility: "hidden" }, 128.133);
+    tl.set("#cap-33", { opacity: 1, visibility: "visible" }, 129.403); tl.set("#cap-33", { opacity: 0, visibility: "hidden" }, 133.328);
+    tl.set("#cap-34", { opacity: 1, visibility: "visible" }, 133.328); tl.set("#cap-34", { opacity: 0, visibility: "hidden" }, 134.795);
+    tl.set("#cap-35", { opacity: 1, visibility: "visible" }, 136.065); tl.set("#cap-35", { opacity: 0, visibility: "hidden" }, 137.832);
+    tl.set("#cap-36", { opacity: 1, visibility: "visible" }, 137.832); tl.set("#cap-36", { opacity: 0, visibility: "hidden" }, 140.613);
+    tl.set("#cap-37", { opacity: 1, visibility: "visible" }, 141.883); tl.set("#cap-37", { opacity: 0, visibility: "hidden" }, 146.592);
+    tl.set("#cap-38", { opacity: 1, visibility: "visible" }, 147.862); tl.set("#cap-38", { opacity: 0, visibility: "hidden" }, 152.455);
+    tl.set("#cap-39", { opacity: 1, visibility: "visible" }, 152.455); tl.set("#cap-39", { opacity: 0, visibility: "hidden" }, 154.158);
+    tl.set("#cap-40", { opacity: 1, visibility: "visible" }, 155.428); tl.set("#cap-40", { opacity: 0, visibility: "hidden" }, 159.276);
+    tl.set("#cap-41", { opacity: 1, visibility: "visible" }, 159.276); tl.set("#cap-41", { opacity: 0, visibility: "hidden" }, 161.046);
+    tl.set("#cap-42", { opacity: 1, visibility: "visible" }, 165.82); tl.set("#cap-42", { opacity: 0, visibility: "hidden" }, 168.852);
+    tl.set("#cap-43", { opacity: 1, visibility: "visible" }, 168.852); tl.set("#cap-43", { opacity: 0, visibility: "hidden" }, 171.746);
+    tl.set("#cap-44", { opacity: 1, visibility: "visible" }, 173.016); tl.set("#cap-44", { opacity: 0, visibility: "hidden" }, 175.655);
+    tl.set("#cap-45", { opacity: 1, visibility: "visible" }, 175.655); tl.set("#cap-45", { opacity: 0, visibility: "hidden" }, 178.099);
+    tl.set("#cap-46", { opacity: 1, visibility: "visible" }, 179.369); tl.set("#cap-46", { opacity: 0, visibility: "hidden" }, 181.08);
+    tl.set("#cap-47", { opacity: 1, visibility: "visible" }, 181.08); tl.set("#cap-47", { opacity: 0, visibility: "hidden" }, 183.589);
+    tl.set("#cap-48", { opacity: 1, visibility: "visible" }, 183.589); tl.set("#cap-48", { opacity: 0, visibility: "hidden" }, 185.596);
+    tl.set("#cap-49", { opacity: 1, visibility: "visible" }, 186.866); tl.set("#cap-49", { opacity: 0, visibility: "hidden" }, 190.568);
+    tl.set("#cap-50", { opacity: 1, visibility: "visible" }, 200.82); tl.set("#cap-50", { opacity: 0, visibility: "hidden" }, 202.358);
+    tl.set("#cap-51", { opacity: 1, visibility: "visible" }, 202.358); tl.set("#cap-51", { opacity: 0, visibility: "hidden" }, 205.341);
+    tl.set("#cap-52", { opacity: 1, visibility: "visible" }, 205.341); tl.set("#cap-52", { opacity: 0, visibility: "hidden" }, 207.779);
+    tl.set("#cap-53", { opacity: 1, visibility: "visible" }, 209.049); tl.set("#cap-53", { opacity: 0, visibility: "hidden" }, 212.587);
+    tl.set("#cap-54", { opacity: 1, visibility: "visible" }, 212.587); tl.set("#cap-54", { opacity: 0, visibility: "hidden" }, 215.186);
+    tl.set("#cap-55", { opacity: 1, visibility: "visible" }, 216.456); tl.set("#cap-55", { opacity: 0, visibility: "hidden" }, 220.203);
+    tl.set("#cap-56", { opacity: 1, visibility: "visible" }, 220.203); tl.set("#cap-56", { opacity: 0, visibility: "hidden" }, 223.298);
+    tl.set("#cap-57", { opacity: 1, visibility: "visible" }, 224.568); tl.set("#cap-57", { opacity: 0, visibility: "hidden" }, 228.916);
+    tl.set("#cap-58", { opacity: 1, visibility: "visible" }, 230.186); tl.set("#cap-58", { opacity: 0, visibility: "hidden" }, 232.152);
+    tl.set("#cap-59", { opacity: 1, visibility: "visible" }, 232.152); tl.set("#cap-59", { opacity: 0, visibility: "hidden" }, 235.263);
+    tl.set("#cap-60", { opacity: 1, visibility: "visible" }, 236.533); tl.set("#cap-60", { opacity: 0, visibility: "hidden" }, 240.703);
+    tl.set("#cap-61", { opacity: 1, visibility: "visible" }, 250.82); tl.set("#cap-61", { opacity: 0, visibility: "hidden" }, 252.642);
+    tl.set("#cap-62", { opacity: 1, visibility: "visible" }, 252.642); tl.set("#cap-62", { opacity: 0, visibility: "hidden" }, 255.522);
+    tl.set("#cap-63", { opacity: 1, visibility: "visible" }, 255.522); tl.set("#cap-63", { opacity: 0, visibility: "hidden" }, 259.859);
+    tl.set("#cap-64", { opacity: 1, visibility: "visible" }, 261.129); tl.set("#cap-64", { opacity: 0, visibility: "hidden" }, 263.865);
+    tl.set("#cap-65", { opacity: 1, visibility: "visible" }, 263.865); tl.set("#cap-65", { opacity: 0, visibility: "hidden" }, 266.505);
+    tl.set("#cap-66", { opacity: 1, visibility: "visible" }, 275.82); tl.set("#cap-66", { opacity: 0, visibility: "hidden" }, 278.777);
+    tl.set("#cap-67", { opacity: 1, visibility: "visible" }, 278.777); tl.set("#cap-67", { opacity: 0, visibility: "hidden" }, 283.138);
+    tl.set("#cap-68", { opacity: 1, visibility: "visible" }, 284.408); tl.set("#cap-68", { opacity: 0, visibility: "hidden" }, 287.716);
+    tl.set("#cap-69", { opacity: 1, visibility: "visible" }, 290.82); tl.set("#cap-69", { opacity: 0, visibility: "hidden" }, 292.795);
+    tl.set("#cap-70", { opacity: 1, visibility: "visible" }, 292.795); tl.set("#cap-70", { opacity: 0, visibility: "hidden" }, 295.712);
+    window.__timelines["captions"] = tl;
+  </script>
+</template>

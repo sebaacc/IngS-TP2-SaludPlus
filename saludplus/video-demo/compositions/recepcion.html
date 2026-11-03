@@ -1,0 +1,98 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; font-family: Inter, sans-serif; color: #0b2440; }
+    .sec-head { position: absolute; left: 240px; top: 40px; height: 44px; display: flex; align-items: center; gap: 14px; }
+    .sec-num { font-weight: 700; font-size: 18px; color: #fff; background: linear-gradient(135deg, #0a6ebd, #0d9488); border-radius: 10px; padding: 7px 11px; letter-spacing: 0.02em; }
+    .sec-title { font-weight: 700; font-size: 30px; letter-spacing: -0.01em; color: #0b2440; }
+    .sec-brand { position: absolute; right: 240px; top: 44px; display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 22px; color: #0b2440; }
+    .sec-brand img { width: 34px; height: 34px; }
+    .win { position: absolute; left: 240px; top: 104px; width: 1440px; height: 810px; border-radius: 18px; overflow: hidden; background: #f4f8fc; box-shadow: 0 30px 70px -20px rgba(11, 36, 64, 0.35), 0 0 0 1px rgba(11, 36, 64, 0.08); }
+    .cam { position: absolute; left: 0; top: 0; width: 1440px; height: 810px; transform-origin: 0 0; }
+    .shot { position: absolute; left: 0; top: 0; width: 1440px; height: auto; }
+    .ring { position: absolute; border: 3px solid #0d9488; border-radius: 12px; box-shadow: 0 0 0 6px rgba(13, 148, 136, 0.18); pointer-events: none; }
+    .cursor { position: absolute; left: 0; top: 0; width: 26px; height: 26px; z-index: 50; }
+    .cursor svg { width: 26px; height: 26px; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
+    .ripple { position: absolute; left: -14px; top: -14px; width: 28px; height: 28px; border-radius: 50%; border: 3px solid #0a6ebd; opacity: 0; }
+    .note { position: absolute; right: 28px; top: 28px; width: 430px; background: rgba(255,255,255,0.97); border-radius: 16px; padding: 20px 22px; display: flex; gap: 16px; box-shadow: 0 18px 40px -12px rgba(11,36,64,0.35); border: 1px solid #dbe6ee; z-index: 60; }
+    .note-icon { flex: none; width: 46px; height: 46px; border-radius: 12px; background: #e6f2fb; display: flex; align-items: center; justify-content: center; }
+    .note-icon svg { width: 26px; height: 26px; fill: none; stroke: #0a6ebd; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .note strong { display: block; font-size: 21px; margin-bottom: 6px; color: #0b2440; }
+    .note p { margin: 0; font-size: 18px; line-height: 1.4; color: #3c5368; }
+  </style>
+  <div id="root" data-composition-id="recepcion" data-width="1920" data-height="1080">
+    <div id="rec-head">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <span class="sec-title" data-var-text="recepcion-title">Recepción</span>
+    </div>
+    <div class="sec-brand"><img src="assets/brand/saludplus-logo.svg" alt="" /><span>SaludPlus</span></div>
+    </div>
+    <div id="rec-win" class="win">
+      <div id="rec-cam" class="cam">
+        <img id="rec-shot-0" class="clip shot" data-start="0" data-duration="7.141" data-track-index="2" src="assets/screens/20-recepcion.png" alt="20-recepcion" style="z-index:1" />
+        <img id="rec-shot-1" class="clip shot" data-start="6.791" data-duration="8.94" data-track-index="3" src="assets/screens/21-recepcion-llamado.png" alt="21-recepcion-llamado" style="z-index:2" />
+        <img id="rec-shot-2" class="clip shot" data-start="15.381" data-duration="2.55" data-track-index="2" src="assets/screens/22-recepcion-pago.png" alt="22-recepcion-pago" style="z-index:3" />
+        <img id="rec-shot-3" class="clip shot" data-start="17.581" data-duration="2.83" data-track-index="3" src="assets/screens/23-recepcion-pagado.png" alt="23-recepcion-pagado" style="z-index:4" />
+        <img id="rec-shot-4" class="clip shot" data-start="20.061" data-duration="3.55" data-track-index="2" src="assets/screens/24-turnos-dia.png" alt="24-turnos-dia" style="z-index:5" />
+        <img id="rec-shot-5" class="clip shot" data-start="23.261" data-duration="4.501" data-track-index="3" src="assets/screens/24b-turnos-acciones.png" alt="24b-turnos-acciones" style="z-index:6" />
+        <img id="rec-shot-6" class="clip shot" data-start="27.412" data-duration="3.15" data-track-index="2" src="assets/screens/26-ingreso-manual.png" alt="26-ingreso-manual" style="z-index:7" />
+        <img id="rec-shot-7" class="clip shot" data-start="30.212" data-duration="9.788" data-track-index="3" src="assets/screens/27-ingreso-manual-ok.png" alt="27-ingreso-manual-ok" style="z-index:8" />
+        <div id="rec-ring-0" class="clip ring" data-start="2.1" data-duration="2.8" data-track-index="6" style="left:394.5px;top:371.1px;width:877.8px;height:38.1px;z-index:40"></div>
+        <div id="rec-ring-1" class="clip ring" data-start="17.931" data-duration="2.6" data-track-index="6" style="left:1088.4px;top:723px;width:336px;height:71.4px;z-index:40"></div>
+        <div id="rec-ring-2" class="clip ring" data-start="30.912" data-duration="3" data-track-index="6" style="left:864.3px;top:259.5px;width:408px;height:26.4px;z-index:40"></div>
+        <div id="rec-cursor" class="clip cursor" data-start="4.141" data-duration="28.121" data-track-index="7"><div id="rec-cursor-in"><svg viewBox="0 0 24 24"><path d="M4 2l15 11-6.5 1.2L16 21l-3 1.4-3.4-6.9L4 20Z" fill="#fff" stroke="#0b2440" stroke-width="1.6" stroke-linejoin="round"/></svg><div id="rec-ripple" class="ripple"></div></div></div>
+      </div>
+      
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#rec-win", { opacity: 0, y: 24, scale: 0.985 }, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "power3.out" }, 0.05);
+    tl.fromTo("#rec-head", { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 0.15);
+    tl.to(["#rec-win", "#rec-head"], { opacity: 0, duration: 0.4, ease: "power2.in" }, 39.55);
+    tl.fromTo("#rec-shot-1", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.inOut" }, 6.791);
+    tl.fromTo("#rec-shot-2", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.inOut" }, 15.381);
+    tl.fromTo("#rec-shot-3", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.inOut" }, 17.581);
+    tl.fromTo("#rec-shot-4", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.inOut" }, 20.061);
+    tl.fromTo("#rec-shot-5", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.inOut" }, 23.261);
+    tl.fromTo("#rec-shot-6", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.inOut" }, 27.412);
+    tl.fromTo("#rec-shot-7", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.inOut" }, 30.212);
+    tl.set("#rec-cam", { x: 0, y: 0, scale: 1 }, 0);
+    tl.to("#rec-cam", { x: -280.08, y: 0, scale: 1.2, duration: 1, ease: "power2.inOut" }, 1.1);
+    tl.to("#rec-cam", { x: -488.43, y: -66.105, scale: 1.45, duration: 0.8, ease: "power2.inOut" }, 6.841);
+    tl.to("#rec-cam", { x: -446.76, y: -304.38, scale: 1.4, duration: 1.2, ease: "power2.inOut" }, 9.241);
+    tl.to("#rec-cam", { x: -488.43, y: -595.485, scale: 1.45, duration: 1, ease: "power2.inOut" }, 13.731);
+    tl.to("#rec-cam", { x: -360, y: -201.825, scale: 1.5, duration: 0.6, ease: "power2.inOut" }, 15.431);
+    tl.to("#rec-cam", { x: 0, y: 0, scale: 1, duration: 0.8, ease: "power2.inOut" }, 17.631);
+    tl.to("#rec-cam", { x: 0, y: 0, scale: 1, duration: 0.01, ease: "power2.inOut" }, 20.061);
+    tl.to("#rec-cam", { x: -504, y: -12.353, scale: 1.35, duration: 1, ease: "power2.inOut" }, 20.761);
+    tl.to("#rec-cam", { x: -864, y: -166.68, scale: 1.6, duration: 0.9, ease: "power2.inOut" }, 23.261);
+    tl.to("#rec-cam", { x: 0, y: 0, scale: 1, duration: 0.01, ease: "power2.inOut" }, 27.412);
+    tl.to("#rec-cam", { x: -488.43, y: 0, scale: 1.45, duration: 0.9, ease: "power2.inOut" }, 28.212);
+    tl.fromTo("#rec-ring-0", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 2.1);
+    tl.to("#rec-ring-0", { opacity: 0, duration: 0.3, ease: "power2.in" }, 4.58);
+    tl.fromTo("#rec-ring-1", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 17.931);
+    tl.to("#rec-ring-1", { opacity: 0, duration: 0.3, ease: "power2.in" }, 20.211);
+    tl.fromTo("#rec-ring-2", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 30.912);
+    tl.to("#rec-ring-2", { opacity: 0, duration: 0.3, ease: "power2.in" }, 33.592);
+    tl.set("#rec-cursor-in", { x: 1278.3, y: 315, opacity: 0 }, 0);
+    tl.to("#rec-cursor-in", { opacity: 1, duration: 0.3 }, 4.141);
+    tl.to("#rec-cursor-in", { x: 1158.3, y: 227.16, duration: 0.8, ease: "power2.inOut" }, 4.891);
+    tl.to("#rec-cursor-in", { scale: 0.82, duration: 0.08, yoyo: true, repeat: 1, ease: "power1.inOut" }, 5.741);
+    tl.fromTo("#rec-ripple", { opacity: 0.9, scale: 0.4 }, { opacity: 0, scale: 2.2, duration: 0.5, ease: "power2.out" }, 5.741);
+    tl.to("#rec-cursor-in", { x: 1164.6, y: 769.68, duration: 0.8, ease: "power2.inOut" }, 13.381);
+    tl.to("#rec-cursor-in", { scale: 0.82, duration: 0.08, yoyo: true, repeat: 1, ease: "power1.inOut" }, 14.231);
+    tl.fromTo("#rec-ripple", { opacity: 0.9, scale: 0.4 }, { opacity: 0, scale: 2.2, duration: 0.5, ease: "power2.out" }, 14.231);
+    tl.to("#rec-cursor-in", { x: 806.4, y: 497.79, duration: 0.8, ease: "power2.inOut" }, 15.681);
+    tl.to("#rec-cursor-in", { scale: 0.82, duration: 0.08, yoyo: true, repeat: 1, ease: "power1.inOut" }, 16.531);
+    tl.fromTo("#rec-ripple", { opacity: 0.9, scale: 0.4 }, { opacity: 0, scale: 2.2, duration: 0.5, ease: "power2.out" }, 16.531);
+    tl.to("#rec-cursor-in", { x: 990.3, y: 240.885, duration: 0.8, ease: "power2.inOut" }, 27.962);
+    tl.to("#rec-cursor-in", { scale: 0.82, duration: 0.08, yoyo: true, repeat: 1, ease: "power1.inOut" }, 28.812);
+    tl.fromTo("#rec-ripple", { opacity: 0.9, scale: 0.4 }, { opacity: 0, scale: 2.2, duration: 0.5, ease: "power2.out" }, 28.812);
+    tl.to("#rec-cursor-in", { x: 1205.1, y: 240.885, duration: 0.8, ease: "power2.inOut" }, 29.212);
+    tl.to("#rec-cursor-in", { scale: 0.82, duration: 0.08, yoyo: true, repeat: 1, ease: "power1.inOut" }, 30.062);
+    tl.fromTo("#rec-ripple", { opacity: 0.9, scale: 0.4 }, { opacity: 0, scale: 2.2, duration: 0.5, ease: "power2.out" }, 30.062);
+    tl.to("#rec-cursor-in", { opacity: 0, duration: 0.3 }, 31.662);
+    window.__timelines["recepcion"] = tl;
+  </script>
+</template>

@@ -1,0 +1,380 @@
+{
+  "sections": [
+    {
+      "id": "apertura",
+      "title": "SaludPlus",
+      "start": 0,
+      "end": 20,
+      "beats": [
+        {
+          "id": "a1",
+          "text": "Esto es SaludPlus, un sistema para organizar la admisión, la espera y la atención en un centro médico.",
+          "say": "Esto es Salud Plus, un sistema para organizar la admisión, la espera y la atención en un centro médico.",
+          "duration": 6.727,
+          "file": "assets/voice/a1.wav",
+          "start": 1.6
+        },
+        {
+          "id": "a2",
+          "text": "Ordena la llegada de los pacientes, reduce confusiones y facilita el seguimiento de cada atención.",
+          "duration": 6.288,
+          "file": "assets/voice/a2.wav",
+          "start": 9.927
+        }
+      ]
+    },
+    {
+      "id": "perfiles",
+      "title": "Perfiles disponibles",
+      "start": 20,
+      "end": 40,
+      "beats": [
+        {
+          "id": "p1",
+          "text": "SaludPlus ofrece cinco perfiles.",
+          "say": "Salud Plus ofrece cinco perfiles.",
+          "duration": 2.38,
+          "file": "assets/voice/p1.wav",
+          "start": 20.9
+        },
+        {
+          "id": "p2",
+          "text": "El Tótem de entrada, para registrarse al llegar.",
+          "duration": 3.128,
+          "file": "assets/voice/p2.wav",
+          "start": 23.714
+        },
+        {
+          "id": "p3",
+          "text": "Recepción, para la admisión.",
+          "duration": 2.115,
+          "file": "assets/voice/p3.wav",
+          "start": 27.276
+        },
+        {
+          "id": "p4",
+          "text": "Profesional, para la cola y la consulta.",
+          "duration": 2.696,
+          "file": "assets/voice/p4.wav",
+          "start": 29.826
+        },
+        {
+          "id": "p5",
+          "text": "Pacientes, la pantalla de la sala de espera.",
+          "duration": 2.851,
+          "file": "assets/voice/p5.wav",
+          "start": 32.956
+        },
+        {
+          "id": "p6",
+          "text": "Y Administrador, con la actividad del centro.",
+          "duration": 2.959,
+          "file": "assets/voice/p6.wav",
+          "start": 36.241
+        }
+      ]
+    },
+    {
+      "id": "totem",
+      "title": "Tótem de entrada",
+      "start": 40,
+      "end": 75,
+      "beats": [
+        {
+          "id": "t1",
+          "text": "Empezamos por el tótem del hall de entrada.",
+          "duration": 2.482,
+          "file": "assets/voice/t1.wav",
+          "start": 40.9
+        },
+        {
+          "id": "t2",
+          "text": "El paciente indica si tiene un turno programado o si necesita atención sin cita.",
+          "duration": 5.146,
+          "file": "assets/voice/t2.wav",
+          "start": 44.982
+        },
+        {
+          "id": "t3",
+          "text": "Después ingresa su DNI. Acá usamos un documento ficticio de la agenda de demostración.",
+          "say": "Después ingresa su de ene i. Acá usamos un documento ficticio de la agenda de demostración.",
+          "duration": 5.881,
+          "file": "assets/voice/t3.wav",
+          "start": 51.728
+        },
+        {
+          "id": "t4",
+          "text": "Al confirmar la llegada, el sistema emite el número de turno: A-164.",
+          "say": "Al confirmar la llegada, el sistema emite el número de turno: A, ciento sesenta y cuatro.",
+          "duration": 6.112,
+          "file": "assets/voice/t4.wav",
+          "start": 59.209
+        },
+        {
+          "id": "t5",
+          "text": "El ticket se puede imprimir, y el paciente queda incorporado a la fila de recepción.",
+          "duration": 5.181,
+          "file": "assets/voice/t5.wav",
+          "start": 66.921
+        }
+      ]
+    },
+    {
+      "id": "recepcion",
+      "title": "Recepción",
+      "start": 75,
+      "end": 115,
+      "beats": [
+        {
+          "id": "r1",
+          "text": "Recepción ve a quienes se registraron en el tótem, por orden de llegada.",
+          "duration": 4.341,
+          "file": "assets/voice/r1.wav",
+          "start": 75.9
+        },
+        {
+          "id": "r2",
+          "text": "Con «Llamar al siguiente», aparecen los datos del paciente, la cobertura y el turno.",
+          "say": "Con, llamar al siguiente, aparecen los datos del paciente, la cobertura y el turno.",
+          "duration": 5.49,
+          "file": "assets/voice/r2.wav",
+          "start": 81.841
+        },
+        {
+          "id": "r3",
+          "text": "Al confirmar el pago, el paciente pasa a la sala de espera con el mismo número.",
+          "duration": 4.93,
+          "file": "assets/voice/r3.wav",
+          "start": 88.931
+        },
+        {
+          "id": "r4",
+          "text": "«Turnos del día» reúne la agenda completa, con filtros y acciones como marcar presente.",
+          "say": "Turnos del día, reúne la agenda completa, con filtros y acciones como marcar presente.",
+          "duration": 5.751,
+          "file": "assets/voice/r4.wav",
+          "start": 95.461
+        },
+        {
+          "id": "r5",
+          "text": "Y el ingreso manual suma a un paciente a la cola médica con su DNI y un número nuevo.",
+          "say": "Y el ingreso manual suma a un paciente a la cola médica con su de ene i y un número nuevo.",
+          "duration": 5.215,
+          "file": "assets/voice/r5.wav",
+          "start": 102.812
+        }
+      ]
+    },
+    {
+      "id": "cola",
+      "title": "Cola del profesional",
+      "start": 115,
+      "end": 165,
+      "beats": [
+        {
+          "id": "c1",
+          "text": "Ahora, el perfil Profesional: consultorio 3, Cardiología, y los pacientes en espera.",
+          "say": "Ahora, el perfil Profesional: consultorio tres, cardiología, y los pacientes en espera.",
+          "duration": 6.407,
+          "file": "assets/voice/c1.wav",
+          "start": 115.9
+        },
+        {
+          "id": "c2",
+          "text": "La lista se ordena primero por prioridad y después por hora de llegada.",
+          "duration": 3.976,
+          "file": "assets/voice/c2.wav",
+          "start": 123.907
+        },
+        {
+          "id": "c3",
+          "text": "En la cola se ve el número de turno, el horario y el estado, sin datos clínicos.",
+          "duration": 5.062,
+          "file": "assets/voice/c3.wav",
+          "start": 129.483
+        },
+        {
+          "id": "c4",
+          "text": "Con «Llamar al siguiente», el sistema toma al primero de la lista.",
+          "say": "Con, llamar al siguiente, el sistema toma al primero de la lista.",
+          "duration": 4.218,
+          "file": "assets/voice/c4.wav",
+          "start": 136.145
+        },
+        {
+          "id": "c5",
+          "text": "El llamado abre directamente la consulta del turno A-115.",
+          "say": "El llamado abre directamente la consulta del turno A, ciento quince.",
+          "duration": 4.379,
+          "file": "assets/voice/c5.wav",
+          "start": 141.963
+        },
+        {
+          "id": "c6",
+          "text": "De vuelta en la cola, «Último turno llamado» indica número, consultorio y hora.",
+          "say": "De vuelta en la cola, la tarjeta de último turno llamado indica número, consultorio y hora.",
+          "duration": 5.966,
+          "file": "assets/voice/c6.wav",
+          "start": 147.942
+        },
+        {
+          "id": "c7",
+          "text": "Y el historial de llamados muestra cada turno con el paciente, la hora y el consultorio.",
+          "duration": 5.288,
+          "file": "assets/voice/c7.wav",
+          "start": 155.508
+        }
+      ]
+    },
+    {
+      "id": "sala",
+      "title": "Sala de espera pública",
+      "start": 165,
+      "end": 200,
+      "beats": [
+        {
+          "id": "s1",
+          "text": "En la pantalla pública aparece el turno llamado, el nombre del paciente y a dónde dirigirse.",
+          "duration": 5.596,
+          "file": "assets/voice/s1.wav",
+          "start": 165.9
+        },
+        {
+          "id": "s2",
+          "text": "A la derecha, los últimos llamados. No se publican datos clínicos.",
+          "duration": 4.753,
+          "file": "assets/voice/s2.wav",
+          "start": 173.096
+        },
+        {
+          "id": "s3",
+          "text": "Estos controles activan la pantalla completa y el sonido del aviso, desde el ícono del parlante.",
+          "duration": 5.897,
+          "file": "assets/voice/s3.wav",
+          "start": 179.449
+        },
+        {
+          "id": "s4",
+          "text": "El sonido puede depender de la configuración del navegador.",
+          "duration": 3.372,
+          "file": "assets/voice/s4.wav",
+          "start": 186.946
+        }
+      ]
+    },
+    {
+      "id": "atencion",
+      "title": "Atención médica",
+      "start": 200,
+      "end": 250,
+      "beats": [
+        {
+          "id": "m1",
+          "text": "En la consulta médica, el profesional revisa los datos del paciente, y puede corregirlos y guardarlos.",
+          "duration": 6.629,
+          "file": "assets/voice/m1.wav",
+          "start": 200.9
+        },
+        {
+          "id": "m2",
+          "text": "Más abajo están los datos del turno, de solo lectura, y el historial de turnos anteriores.",
+          "duration": 5.807,
+          "file": "assets/voice/m2.wav",
+          "start": 209.129
+        },
+        {
+          "id": "m3",
+          "text": "También puede cargar una prescripción y, una vez guardada, imprimirla o prepararla para enviar por mail.",
+          "say": "También puede cargar una prescripción y, una vez guardada, imprimirla o prepararla para enviar por meil.",
+          "duration": 6.512,
+          "file": "assets/voice/m3.wav",
+          "start": 216.536
+        },
+        {
+          "id": "m4",
+          "text": "Al finalizar, el estado cambia a «Consulta finalizada».",
+          "say": "Al finalizar, el estado cambia a, consulta finalizada.",
+          "duration": 4.018,
+          "file": "assets/voice/m4.wav",
+          "start": 224.648
+        },
+        {
+          "id": "m5",
+          "text": "Tras un minuto sin actividad, la vista vuelve sola a la cola de pacientes.",
+          "duration": 4.747,
+          "file": "assets/voice/m5.wav",
+          "start": 230.266
+        },
+        {
+          "id": "m6",
+          "text": "Y si hace falta, «Reanudar consulta» la vuelve a abrir.",
+          "say": "Y si hace falta, reanudar consulta, la vuelve a abrir.",
+          "duration": 3.84,
+          "file": "assets/voice/m6.wav",
+          "start": 236.613
+        }
+      ]
+    },
+    {
+      "id": "finalizados",
+      "title": "Finalizados y ausentes",
+      "start": 250,
+      "end": 275,
+      "beats": [
+        {
+          "id": "f1",
+          "text": "En «Finalizados/Ausentes», el profesional consulta los pacientes de su especialidad que ya fueron atendidos o que no se presentaron.",
+          "say": "En finalizados y ausentes, el profesional consulta los pacientes de su especialidad que ya fueron atendidos, o que no se presentaron.",
+          "duration": 8.709,
+          "file": "assets/voice/f1.wav",
+          "start": 250.9
+        },
+        {
+          "id": "f2",
+          "text": "Para cada uno se ve el turno, el motivo, el estado y la hora de finalización.",
+          "duration": 5.046,
+          "file": "assets/voice/f2.wav",
+          "start": 261.209
+        }
+      ]
+    },
+    {
+      "id": "admin",
+      "title": "Administración",
+      "start": 275,
+      "end": 290,
+      "beats": [
+        {
+          "id": "d1",
+          "text": "El administrador ve el resumen del centro: pacientes registrados, personas en espera y espera promedio,",
+          "duration": 6.988,
+          "file": "assets/voice/d1.wav",
+          "start": 275.9
+        },
+        {
+          "id": "d2",
+          "text": "además de la asistencia del día y la calidad de la red.",
+          "duration": 2.978,
+          "file": "assets/voice/d2.wav",
+          "start": 284.488
+        }
+      ]
+    },
+    {
+      "id": "cierre",
+      "title": "SaludPlus",
+      "start": 290,
+      "end": 300,
+      "beats": [
+        {
+          "id": "z1",
+          "text": "SaludPlus conecta admisión, llamados y atención en un mismo flujo.",
+          "say": "Salud Plus conecta admisión, llamados y atención en un mismo flujo.",
+          "duration": 4.562,
+          "file": "assets/voice/z1.wav",
+          "start": 290.9
+        }
+      ]
+    }
+  ]
+}

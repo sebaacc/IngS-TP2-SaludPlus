@@ -1,0 +1,77 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; font-family: Inter, sans-serif; color: #0b2440; }
+    .sec-head { position: absolute; left: 240px; top: 40px; height: 44px; display: flex; align-items: center; gap: 14px; }
+    .sec-num { font-weight: 700; font-size: 18px; color: #fff; background: linear-gradient(135deg, #0a6ebd, #0d9488); border-radius: 10px; padding: 7px 11px; letter-spacing: 0.02em; }
+    .sec-title { font-weight: 700; font-size: 30px; letter-spacing: -0.01em; color: #0b2440; }
+    .sec-brand { position: absolute; right: 240px; top: 44px; display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 22px; color: #0b2440; }
+    .sec-brand img { width: 34px; height: 34px; }
+    .win { position: absolute; left: 240px; top: 104px; width: 1440px; height: 810px; border-radius: 18px; overflow: hidden; background: #f4f8fc; box-shadow: 0 30px 70px -20px rgba(11, 36, 64, 0.35), 0 0 0 1px rgba(11, 36, 64, 0.08); }
+    .cam { position: absolute; left: 0; top: 0; width: 1440px; height: 810px; transform-origin: 0 0; }
+    .shot { position: absolute; left: 0; top: 0; width: 1440px; height: auto; }
+    .ring { position: absolute; border: 3px solid #0d9488; border-radius: 12px; box-shadow: 0 0 0 6px rgba(13, 148, 136, 0.18); pointer-events: none; }
+    .cursor { position: absolute; left: 0; top: 0; width: 26px; height: 26px; z-index: 50; }
+    .cursor svg { width: 26px; height: 26px; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
+    .ripple { position: absolute; left: -14px; top: -14px; width: 28px; height: 28px; border-radius: 50%; border: 3px solid #0a6ebd; opacity: 0; }
+    .note { position: absolute; right: 28px; top: 28px; width: 430px; background: rgba(255,255,255,0.97); border-radius: 16px; padding: 20px 22px; display: flex; gap: 16px; box-shadow: 0 18px 40px -12px rgba(11,36,64,0.35); border: 1px solid #dbe6ee; z-index: 60; }
+    .note-icon { flex: none; width: 46px; height: 46px; border-radius: 12px; background: #e6f2fb; display: flex; align-items: center; justify-content: center; }
+    .note-icon svg { width: 26px; height: 26px; fill: none; stroke: #0a6ebd; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .note strong { display: block; font-size: 21px; margin-bottom: 6px; color: #0b2440; }
+    .note p { margin: 0; font-size: 18px; line-height: 1.4; color: #3c5368; }
+  </style>
+  <div id="root" data-composition-id="atencion" data-width="1920" data-height="1080">
+    <div id="ate-head">
+    <div class="sec-head">
+      <span class="sec-num">06</span>
+      <span class="sec-title" data-var-text="atencion-title">Atención médica</span>
+    </div>
+    <div class="sec-brand"><img src="assets/brand/saludplus-logo.svg" alt="" /><span>SaludPlus</span></div>
+    </div>
+    <div id="ate-win" class="win">
+      <div id="ate-cam" class="cam">
+        <img id="ate-shot-0" class="clip shot" data-start="0" data-duration="24.698" data-track-index="2" src="assets/screens/31b-consulta-full.png" alt="31b-consulta-full" style="z-index:1" />
+        <img id="ate-shot-1" class="clip shot" data-start="24.348" data-duration="12.315" data-track-index="3" src="assets/screens/50-consulta-finalizada.png" alt="50-consulta-finalizada" style="z-index:2" />
+        <img id="ate-shot-2" class="clip shot" data-start="36.313" data-duration="13.687" data-track-index="2" src="assets/screens/51-consulta-reanudar.png" alt="51-consulta-reanudar" style="z-index:3" />
+        <div id="ate-ring-0" class="clip ring" data-start="25.648" data-duration="2.6" data-track-index="6" style="left:1083px;top:247.8px;width:166.8px;height:42.6px;z-index:40"></div>
+        <div id="ate-ring-1" class="clip ring" data-start="30.666" data-duration="3" data-track-index="6" style="left:372px;top:174.9px;width:922.8px;height:28.2px;z-index:40"></div>
+        <div id="ate-ring-2" class="clip ring" data-start="36.913" data-duration="2.6" data-track-index="6" style="left:1123.5px;top:678.9px;width:171.3px;height:49.8px;z-index:40"></div>
+        <div id="ate-cursor" class="clip cursor" data-start="21.748" data-duration="17.865" data-track-index="7"><div id="ate-cursor-in"><svg viewBox="0 0 24 24"><path d="M4 2l15 11-6.5 1.2L16 21l-3 1.4-3.4-6.9L4 20Z" fill="#fff" stroke="#0b2440" stroke-width="1.6" stroke-linejoin="round"/></svg><div id="ate-ripple" class="ripple"></div></div></div>
+      </div>
+      <div id="ate-note-0" class="clip note" data-start="17.736" data-duration="5.112" data-track-index="8"><div class="note-icon"><svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7Z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></svg></div><div><strong>Prescripción</strong><p>Disponible en la consulta: Imprimir / PDF y Enviar por mail. En este video no se carga una receta.</p></div></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#ate-win", { opacity: 0, y: 24, scale: 0.985 }, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "power3.out" }, 0.05);
+    tl.fromTo("#ate-head", { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 0.15);
+    tl.to(["#ate-win", "#ate-head"], { opacity: 0, duration: 0.4, ease: "power2.in" }, 49.55);
+    tl.fromTo("#ate-shot-1", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.inOut" }, 24.348);
+    tl.fromTo("#ate-shot-2", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.inOut" }, 36.313);
+    tl.set("#ate-cam", { x: -72, y: -49.545, scale: 1.05 }, 0);
+    tl.to("#ate-cam", { x: -321.75, y: -136.125, scale: 1.25, duration: 1.2, ease: "power2.inOut" }, 1.3);
+    tl.to("#ate-cam", { x: -363.42, y: -637.47, scale: 1.3, duration: 1.2, ease: "power2.inOut" }, 8.929);
+    tl.to("#ate-cam", { x: -363.42, y: -980.865, scale: 1.3, duration: 1.2, ease: "power2.inOut" }, 11.729);
+    tl.to("#ate-cam", { x: -363.42, y: -1333.44, scale: 1.3, duration: 1.2, ease: "power2.inOut" }, 16.336);
+    tl.to("#ate-cam", { x: -864, y: -1828.08, scale: 1.6, duration: 0.9, ease: "power2.inOut" }, 22.648);
+    tl.to("#ate-cam", { x: 0, y: 0, scale: 1, duration: 0.01, ease: "power2.inOut" }, 24.348);
+    tl.to("#ate-cam", { x: -1008, y: -52.47, scale: 1.7, duration: 1, ease: "power2.inOut" }, 25.248);
+    tl.to("#ate-cam", { x: -696.78, y: 0, scale: 1.7, duration: 1, ease: "power2.inOut" }, 30.066);
+    tl.to("#ate-cam", { x: -1152, y: -648, scale: 1.8, duration: 0.01, ease: "power2.inOut" }, 36.313);
+    tl.fromTo("#ate-ring-0", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 25.648);
+    tl.to("#ate-ring-0", { opacity: 0, duration: 0.3, ease: "power2.in" }, 27.928);
+    tl.fromTo("#ate-ring-1", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 30.666);
+    tl.to("#ate-ring-1", { opacity: 0, duration: 0.3, ease: "power2.in" }, 33.346);
+    tl.fromTo("#ate-ring-2", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 36.913);
+    tl.to("#ate-ring-2", { opacity: 0, duration: 0.3, ease: "power2.in" }, 39.193);
+    tl.set("#ate-cursor-in", { x: 1329.15, y: 1629, opacity: 0 }, 0);
+    tl.to("#ate-cursor-in", { opacity: 1, duration: 0.3 }, 21.748);
+    tl.to("#ate-cursor-in", { x: 1209.15, y: 1541.25, duration: 0.8, ease: "power2.inOut" }, 22.498);
+    tl.to("#ate-cursor-in", { scale: 0.82, duration: 0.08, yoyo: true, repeat: 1, ease: "power1.inOut" }, 23.348);
+    tl.fromTo("#ate-ripple", { opacity: 0.9, scale: 0.4 }, { opacity: 0, scale: 2.2, duration: 0.5, ease: "power2.out" }, 23.348);
+    tl.to("#ate-cursor-in", { x: 1209.15, y: 705.69, duration: 0.8, ease: "power2.inOut" }, 36.563);
+    tl.to("#ate-cursor-in", { opacity: 0, duration: 0.3 }, 39.013);
+    tl.fromTo("#ate-note-0", { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 17.736);
+    tl.to("#ate-note-0", { opacity: 0, duration: 0.3, ease: "power2.in" }, 22.528);
+    window.__timelines["atencion"] = tl;
+  </script>
+</template>
