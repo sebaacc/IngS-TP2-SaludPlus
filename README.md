@@ -16,12 +16,7 @@ La demo usa pacientes y turnos ficticios. Los cambios se guardan en el almacenam
 
 ## Video de la aplicación
 
-<video controls preload="metadata" width="100%" poster="./video-demo/assets/screens/01-perfiles.png">
-  <source src="./video-demo/exports/saludplus-resumen.mp4" type="video/mp4">
-  Tu navegador no puede reproducir el video. [Abrir o descargar el MP4](./video-demo/exports/saludplus-resumen.mp4).
-</video>
-
-[![Ver el resumen de SaludPlus](./video-demo/assets/screens/01-perfiles.png)](./video-demo/exports/saludplus-resumen.mp4)
+<a href="https://www.youtube.com/watch?v=BGzDlqejJuc" target="_blank" rel="noopener">Link al video de la app</a>
 
 ## Cómo ejecutar la demo
 
